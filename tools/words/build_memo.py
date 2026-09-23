@@ -13,6 +13,15 @@ ORDER = {
     'pt': {2: 'NV', 3: 'NVN', 4: 'NAVN', 5: 'NAVNA'},
 }
 block = set(w for line in open('blocklist.txt') if not line.startswith('#') for w in line.split())
+# Memorable pools only (fine words elsewhere): read by hand on 23-sep-2026.
+# Dark or loaded verbs, gendered or sensitive adjectives, nationalities, slang, odd forms and
+# a Spanish form the model put in the Portuguese list.
+MEMO_DROP = {
+    'en': set('pregnant manly girly pious chokes scalps whacks bleeds strips robs mugs heists bribes cheats bullies '
+              'arrests cons crooks exiles harms hurts sues trusses'.split()),
+    'es': set('cutre guay pare yerra zafa idea basa muela lame mete chileno chino cubano europeo italiano romano ruso turco'.split()),
+    'pt': set('acorde cuenta bases arca pira geme sola mola rala roga estufa gere come carioca europeu italiana italiano latino mexicano russo turco'.split()),
+}
 
 # The model sometimes tags plurals (grandes, felices, birds); next to a singular
 # noun they read wrong, so drop any word whose singular is also a site word.
@@ -36,14 +45,15 @@ for lang, order in ORDER.items():
     seen = set()
     for f in glob.glob(f'memo/{lang}_*.txt'):
         for line in open(f, errors='ignore'):
-            m = re.fullmatch(r'([a-z]+)\|([NVA-]*)\|(\S*)', line.strip())
+            # Tags sometimes come as "N,V" or "N A", and the last "|" can be missing.
+            m = re.fullmatch(r'([a-z]+)\|([NVA, -]*)\|?(\S*)', line.strip())
             if not m or m[1] not in asked: continue
             w, tags, form = m[1], m[2], m[3].lower()
             seen.add(w)
-            if w in block: continue
+            if w in block or w in MEMO_DROP[lang]: continue
             if 'N' in tags and not is_plural(w, asked): pools['N'].add(w)
             if 'A' in tags and not is_plural(w, asked): pools['A'].add(w)
-            if 'V' in tags and re.fullmatch(r'[a-z]{3,8}', form) and form not in block and zipf_frequency(form, lang) >= 2:
+            if 'V' in tags and re.fullmatch(r'[a-z]{3,8}', form) and form not in block and form not in MEMO_DROP[lang] and zipf_frequency(form, lang) >= 2:
                 pools['V'].add(form)
     if '--adj-prompts' in sys.argv:
         ws = sorted(pools['A'])
