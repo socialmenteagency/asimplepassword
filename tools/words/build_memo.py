@@ -18,9 +18,9 @@ block = set(w for line in open('blocklist.txt') if not line.startswith('#') for 
 # a Spanish form the model put in the Portuguese list.
 MEMO_DROP = {
     'en': set('pregnant manly girly pious chokes scalps whacks bleeds strips robs mugs heists bribes cheats bullies '
-              'arrests cons crooks exiles harms hurts sues trusses'.split()),
-    'es': set('cutre guay pare yerra zafa idea basa muela lame mete chileno chino cubano europeo italiano romano ruso turco'.split()),
-    'pt': set('acorde cuenta bases arca pira geme sola mola rala roga estufa gere come carioca europeu italiana italiano latino mexicano russo turco'.split()),
+              'arrests cons crooks exiles harms hurts sues trusses polish'.split()),
+    'es': set('cutre guay pare yerra zafa idea basa muela lame mete chileno chino cubano europeo italiano romano ruso turco belga checo griego oriental vasco'.split()),
+    'pt': set('acorde cuenta bases arca pira geme sola mola rala roga estufa gere come carioca europeu italiana italiano latino mexicano russo turco belga grego persa sueco'.split()),
 }
 
 # The model sometimes tags plurals (grandes, felices, birds); next to a singular
