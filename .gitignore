@@ -4,3 +4,4 @@ tools/words/venv/
 tools/words/raw/
 tools/words/judge/
 tools/words/candidates.json
+.claude/worktrees/

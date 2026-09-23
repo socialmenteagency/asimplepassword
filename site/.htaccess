@@ -10,7 +10,7 @@ RewriteRule ^ https://asimplepassword.com%{REQUEST_URI} [L,R=301]
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "no-referrer"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://gc.zgo.at; connect-src 'self' https://asimplepassword.goatcounter.com; img-src 'self' data: https://asimplepassword.goatcounter.com; style-src 'self'; font-src https://cdn.jsdelivr.net; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://gc.zgo.at; connect-src 'self' https://socialmente.goatcounter.com; img-src 'self' data: https://socialmente.goatcounter.com; style-src 'self'; font-src https://cdn.jsdelivr.net; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
   <FilesMatch "\.(html)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
