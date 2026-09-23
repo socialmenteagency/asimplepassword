@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Simple Password: design proposal</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://asimplepassword.com/">
+<meta name="theme-color" content="#0B0B3B">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&amp;display=swap">
+<link rel="stylesheet" href="index2.css?v=1">
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="grain"></span></div>
+
+<nav class="nav" aria-label="Main">
+  <a class="mark" href="#top">a<b>simple</b>password</a>
+  <div class="nav-links">
+    <a href="#options">Options</a>
+    <a href="#how">How it works</a>
+    <a href="#why">Why words</a>
+  </div>
+  <button type="button" class="nav-cta" data-action="new">New password</button>
+</nav>
+
+<main class="page">
+
+  <!-- Attention -->
+  <section class="hero" id="top">
+    <div class="shell hero-shell">
+      <div class="hero-copy">
+        <h1 class="reveal">Strong passwords, made of words you already know.</h1>
+        <p class="lede reveal">Three simple words and a number, put together in your browser. Nothing is sent anywhere, and the first tap copies it.</p>
+        <div class="ctas reveal">
+          <button type="button" class="btn btn-light" data-action="copy">Copy password</button>
+          <button type="button" class="btn btn-ghost" data-action="new">New password <kbd>Space</kbd></button>
+        </div>
+      </div>
+
+      <div class="pw-card" id="pwCard">
+        <div class="pw-card-inner">
+          <output class="pw" id="pw" tabindex="0" title="Click to copy">found-PLANT-dance-3</output>
+          <p class="pw-status" id="status" role="status" aria-live="polite">Tap anywhere to copy it</p>
+          <ul class="checks" id="checks">
+            <li data-check="upper">Uppercase <i>✓</i></li>
+            <li data-check="lower">Lowercase <i>✓</i></li>
+            <li data-check="num">Numbers <i>✓</i></li>
+            <li data-check="sym">Symbols <i>✓</i></li>
+            <li data-check="len"><span id="chkLength">19 characters</span> <i>✓</i></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interest: live marquee -->
+  <section class="marquee" aria-label="Passwords generated right now in English, Spanish and Portuguese">
+    <div class="marquee-row" id="row1"><div class="marquee-track"></div></div>
+    <div class="marquee-row reverse" id="row2"><div class="marquee-track"></div></div>
+  </section>
+
+  <!-- Interest: bento -->
+  <section class="chapter" id="options">
+    <div class="shell">
+      <h2 class="chapter-title">Everything a password needs. Nothing it doesn't.</h2>
+      <div class="bento">
+        <article class="card card-options">
+          <h3>Make it fit</h3>
+          <p class="card-text">Some sites refuse a dash or want it longer. Change it here; the password above follows.</p>
+          <div class="ctrl">
+            <span class="ctrl-label">Between words</span>
+            <div class="chips" id="sepChips">
+              <button type="button" class="chip" data-sep="-">-</button>
+              <button type="button" class="chip" data-sep="_">_</button>
+              <button type="button" class="chip" data-sep=".">.</button>
+              <button type="button" class="chip" data-sep="">none</button>
+            </div>
+          </div>
+          <div class="ctrl">
+            <span class="ctrl-label">Number at the end</span>
+            <div class="chips" id="numChips">
+              <button type="button" class="chip" data-num="1">Yes</button>
+              <button type="button" class="chip" data-num="0">No</button>
+            </div>
+          </div>
+          <div class="ctrl">
+            <span class="ctrl-label">Words</span>
+            <div class="chips" id="wordChips">
+              <button type="button" class="chip" data-words="3">3</button>
+              <button type="button" class="chip" data-words="4">4</button>
+              <button type="button" class="chip" data-words="5">5</button>
+            </div>
+          </div>
+          <p class="card-foot" id="optLength">19 characters</p>
+        </article>
+
+        <article class="card card-privacy">
+          <div class="visual visual-orb" aria-hidden="true"><span></span></div>
+          <div class="card-body">
+            <h3>Made on your device. Sent nowhere.</h3>
+            <p class="card-text">Your browser's own secure random generator picks every word. No server, no account, no log. Close the tab and it's gone.</p>
+          </div>
+        </article>
+
+        <article class="card card-langs">
+          <div class="visual visual-words" aria-hidden="true">
+            <span>found</span><span>gato</span><span>praia</span>
+          </div>
+          <h3>English, Spanish, Portuguese</h3>
+        </article>
+
+        <article class="card card-count">
+          <div class="visual visual-number" aria-hidden="true"><span>58</span></div>
+          <h3>billion possible passwords with the default options</h3>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Desire: inline typography -->
+  <section class="chapter statement-wrap">
+    <div class="shell">
+      <p class="statement">Stop inventing <span class="ipill ipill-bad">John131824</span> passwords. Take <span class="ipill ipill-good" id="inlinePw">found-PLANT-dance-3</span> and move on.</p>
+    </div>
+  </section>
+
+  <!-- Desire: pinned split -->
+  <section class="chapter how" id="how">
+    <div class="shell how-grid">
+      <div class="how-pin">
+        <h2 class="chapter-title">How one is made</h2>
+        <p class="card-text">Four small steps, all on your device, in a few milliseconds. This is the password you have right now.</p>
+      </div>
+      <div class="how-steps" id="steps">
+        <article class="step">
+          <div class="visual step-visual"><span class="build" data-step="1"></span></div>
+          <h3>Three words, drawn at random</h3>
+          <p class="card-text">Each one comes from about 1,800 simple, everyday words, picked by your browser's cryptographic random generator.</p>
+        </article>
+        <article class="step">
+          <div class="visual step-visual"><span class="build" data-step="2"></span></div>
+          <h3>The middle one in capitals</h3>
+          <p class="card-text">Upper and lower case in a pattern you can read aloud, so no site rejects it for missing capitals.</p>
+        </article>
+        <article class="step">
+          <div class="visual step-visual"><span class="build" data-step="3"></span></div>
+          <h3>A symbol between them</h3>
+          <p class="card-text">A dash by default. If a site wants something else, pick an underscore, a dot or nothing at all.</p>
+        </article>
+        <article class="step">
+          <div class="visual step-visual"><span class="build" data-step="4"></span></div>
+          <h3>A digit at the end</h3>
+          <p class="card-text">One number closes it. Nineteen characters that you can say, remember and type on a phone.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Desire: carousel of invented passwords -->
+  <section class="chapter why" id="why">
+    <div class="shell why-grid">
+      <div class="why-copy">
+        <h2 class="chapter-title">The passwords people invent</h2>
+        <p class="card-text">They feel personal, and that is the problem. Attackers try names, dates and common phrases first. Ours are random, with nothing about you in them.</p>
+        <div class="why-nav">
+          <button type="button" class="arrow" id="prevSlide" aria-label="Previous example">&larr;</button>
+          <span class="why-count" id="slideCount">1 / 4</span>
+          <button type="button" class="arrow" id="nextSlide" aria-label="Next example">&rarr;</button>
+        </div>
+      </div>
+      <div class="deck" id="deck">
+        <figure class="slide"><span class="slide-pw">John131824</span><figcaption>A first name and a few digits. Name lists plus number patterns reach it early.</figcaption></figure>
+        <figure class="slide"><span class="slide-pw">Iamhappy2023</span><figcaption>A common phrase and a year. Phrases like this sit on every cracking list.</figcaption></figure>
+        <figure class="slide"><span class="slide-pw">Qwerty123!</span><figcaption>A row of the keyboard and a count. One of the most leaked passwords there is.</figcaption></figure>
+        <figure class="slide"><span class="slide-pw">Fluffy2019</span><figcaption>A pet's name and a year. Anyone who follows you online can guess both.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Action -->
+  <section class="chapter final" id="get">
+    <div class="shell final-shell">
+      <h2 class="final-title">Your next password is ready.</h2>
+      <p class="final-pw" id="finalPw">found-PLANT-dance-3</p>
+      <div class="ctas">
+        <button type="button" class="btn btn-light btn-xl" data-action="copy">Copy it</button>
+        <button type="button" class="btn btn-ghost btn-xl" data-action="new">Make another</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot shell">
+    <span>asimplepassword.com</span>
+    <span>Generated in your browser. No cookies. · <a href="https://github.com/socialmenteagency/asimplepassword" rel="noopener">GitHub</a> · <a href="/">Current design</a></span>
+  </footer>
+</main>
+
+<script src="words-en.js?v=3"></script>
+<script src="words-es.js?v=3"></script>
+<script src="words-pt.js?v=3"></script>
+<script src="gen.js?v=3"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script src="index2.js?v=1"></script>
+</body>
+</html>
