@@ -1,0 +1,6 @@
+---
+# cPanel Git Version Control deploy: copies site/ into the domain's document root.
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/mqcapijl/asimplepassword.com/
+    - /bin/cp -R site/. $DEPLOYPATH

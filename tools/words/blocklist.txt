@@ -1,0 +1,22 @@
+# Words never allowed, in any language list. The model review catches most of these;
+# this list covers regional slang and double meanings it can miss (LATAM Spanish, BR Portuguese).
+# Spanish (vulgar or loaded in some LATAM countries)
+coger cojer concha pija polla verga bicho chucha pinga paja culo cagar mierda puta puto putas joder chingar
+pinche mamar mamada choto chota pedo cojones huevon boludo pendejo cabron marica maricon pene teta tetas
+sexo droga drogas coca cocaina porro morir muerte muerto matar arma armas bala balas sangre guerra cancer
+tumor diablo satan dios iglesia misa papa cura infierno negro negra indio gordo gorda feo fea tonto tonta
+idiota estupido loco loca enano cola cagada bolas pezon desnudo violar robo robar crimen carcel preso
+# Portuguese (Brazil)
+porra rola pica piroca buceta foder transar merda bosta caralho bunda pinto pau xota xoxota gozar
+veado viado bicha macaco morte morto matar sangue doenca inferno diabo deus igreja padre crente
+burro burra feio feia gordo gorda idiota louco louca preso cadeia roubo roubar crime arma tiro bomba
+# English
+kill dead death die dying gun guns blood war drug drugs sex sexy cock dick pussy ass butt bitch damn hell
+crap shit fuck slut whore nude naked porn rape cancer tumor bomb weapon prison jail crime murder satan devil
+jesus god allah church pray trump hitler nazi fag faggot nigger nigga retard spic chink kike dyke tranny homo
+fat ugly stupid idiot dumb crazy suicide virus sick wine beer vodka whisky
+# Added after reading samples of the built lists (23-sep-2026)
+moron toxin mucus sheik vicar souls gay thief cocky loser knife knives steal swine abort prisoner
+nalga nalgas macho fetal vello odios odio vino vinos cuchillo bobo bobos
+porca cueca axila pelve aorta faca facas vinho vinhos cerveja armado armados ladra
+butch odiar odeio penas pena triste tristes
