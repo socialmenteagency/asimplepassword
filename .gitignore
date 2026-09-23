@@ -5,3 +5,4 @@ tools/words/raw/
 tools/words/judge/
 tools/words/candidates.json
 .claude/worktrees/
+tools/words/memo/

@@ -118,6 +118,7 @@ kbd { font: 600 .72rem/1 var(--mono); padding: 4px 7px; border: 1px solid var(--
 /* Two digits, no more: sized to the digits, shaped like the chips beside it. */
 .field-max { width: calc(2ch + 30px); padding: 0 14px; border-radius: 999px; text-align: center; font-variant-numeric: tabular-nums; }
 .hint { margin: 10px 0 0; font-size: .9rem; color: var(--accent); }
+#memoHint { max-width: 24ch; }
 .error { margin: 24px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--field-deep); }
 .link { background: none; border: 0; padding: 4px 0; color: var(--soft); text-decoration: underline; text-underline-offset: 4px; font-size: .95rem; }
 .link:hover { color: var(--ink); }
@@ -136,14 +137,18 @@ details p { margin: 0 0 18px; }
 
 .foot { border-top: 1px solid var(--line); padding-block: 22px 28px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font: 400 .85rem/1.4 var(--mono); color: var(--soft); }
 
-/* Wide screens: four tools across the row; the first sits left, the last right,
-   the middle two centered in the space between. */
-@media (min-width: 880px) {
-  .opt-grid { grid-template-columns: repeat(4, auto); justify-content: space-between; }
-  .opt:nth-child(2) legend, .opt:nth-child(3) legend { margin-inline: auto; }
-  .opt:nth-child(2) .chips, .opt:nth-child(3) .chips { justify-content: center; }
-  .opt:nth-child(4) { text-align: right; }
-  .opt:nth-child(4) legend { margin-inline-start: auto; }
+/* Wide screens: five tools across the row; the first sits left, the last right,
+   the middle three centered in the space between. */
+@media (min-width: 1240px) {
+  .opt-grid { grid-template-columns: repeat(5, auto); justify-content: space-between; column-gap: 24px; }
+  .opt legend { font-size: 1.15rem; white-space: nowrap; }
+  .chips { flex-wrap: nowrap; }
+  .opt:nth-child(n+2):nth-child(-n+4) { text-align: center; }
+  .opt:nth-child(n+2):nth-child(-n+4) legend { margin-inline: auto; }
+  .opt:nth-child(n+2):nth-child(-n+4) .chips { justify-content: center; }
+  .opt:nth-child(n+2):nth-child(-n+4) .hint { margin-inline: auto; }
+  .opt:nth-child(5) { text-align: right; }
+  .opt:nth-child(5) legend { margin-inline-start: auto; }
 }
 
 @media (max-width: 560px) {

@@ -25,3 +25,24 @@ python3 jobs.py && ls raw/*.prompt | xargs -P 6 -n 1 ./run1.sh
 ls judge/*.prompt | xargs -P 8 -n 1 ./run2.sh
 ./venv/bin/python build_words.py ../../site/words.js   # writes words-en.js, words-es.js, words-pt.js
 ```
+
+## "Make it memorable" pools
+
+Builds `site/memo-en.js`, `memo-es.js` and `memo-pt.js`: the site words split into nouns (N),
+verbs in their "she does" form (V: paints, pinta) and adjectives (A), so a password reads like
+a tiny sentence (`otter-PAINTS-moon-4`). The page fills grammar slots (EN `NVN`, `ANVN`, `ANVAN`;
+ES/PT `NVN`, `NAVN`, `NAVNA`, adjective after the noun) with uniform `crypto.getRandomValues` draws. No AI runs on the page.
+
+1. **Tag** (`memo_prep.py` → `run2.sh`): a NaN model tags every site word as N, V and/or A in batches of 120.
+   Spanish and Portuguese adjectives must have one form for both genders (verde, feliz), so they fit any noun.
+   Batches that come back empty (provider content filter) are re-run split into 30-word pieces.
+2. **Vivid adjectives** (`build_memo.py --adj-prompts` → `run2.sh`): a second pass keeps adjectives that
+   paint a picture (fuzzy, loud) and drops administrative ones (annual, global).
+3. **Build** (`build_memo.py`): drops plurals whose singular is also a site word, blocklisted words,
+   and verb forms that aren't plain a–z (so no accented forms like `está`).
+
+```
+python3 memo_prep.py && ls memo/*.prompt | xargs -P 6 -n 1 ./run2.sh
+./venv/bin/python build_memo.py --adj-prompts && ls memo/adj-*.prompt | xargs -P 6 -n 1 ./run2.sh
+./venv/bin/python build_memo.py
+```

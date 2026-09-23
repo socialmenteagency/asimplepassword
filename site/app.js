@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var DEFAULTS = { sep: '-', number: true, words: 3, max: null };
+  var DEFAULTS = { sep: '-', number: true, words: 3, max: null, memo: false };
   var STORE = 'asp:v1';
   var LANGS = { en: 'en', es: 'es', pt: 'pt-BR' };
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -15,7 +15,7 @@
     try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; }
   }
   function save() {
-    try { localStorage.setItem(STORE, JSON.stringify({ sep: s.sep, number: s.number, words: s.words, max: s.max, lang: chosenLang })); } catch (e) {}
+    try { localStorage.setItem(STORE, JSON.stringify({ sep: s.sep, number: s.number, words: s.words, max: s.max, memo: s.memo, lang: chosenLang })); } catch (e) {}
   }
   function detectLang() {
     var list = navigator.languages || [navigator.language || 'en'];
@@ -31,7 +31,8 @@
     sep: typeof saved.sep === 'string' ? saved.sep : DEFAULTS.sep,
     number: typeof saved.number === 'boolean' ? saved.number : DEFAULTS.number,
     words: [2, 3, 4, 5].indexOf(saved.words) > -1 ? saved.words : DEFAULTS.words,
-    max: saved.max || null
+    max: saved.max || null,
+    memo: saved.memo === true
   };
   var chosenLang = LANGS[saved.lang] ? saved.lang : null; // only set when the visitor picks one
   var lang = chosenLang || detectLang();
@@ -151,10 +152,19 @@
     errorEl.hidden = !msg;
   }
 
+  // "Make it memorable" draws from grammar pools (noun, verb, adjective),
+  // split into length buckets the first time a language needs them.
+  var memoPools = {};
+  function make() {
+    if (!s.memo) return ASP.generate(s, ASP_WORDS[lang]);
+    memoPools[lang] = memoPools[lang] || ASP.prepareMemo(ASP_MEMO[lang]);
+    return ASP.generateMemorable(s, memoPools[lang]);
+  }
+
   // Make a new password. `gesture` is true inside a user event, where
   // browsers allow writing to the clipboard.
   function regenerate(gesture) {
-    var r = ASP.generate(s, ASP_WORDS[lang]);
+    var r = make();
     if (r.error) {
       showError(t('errTooShort', r.n));
       if (current) return;
@@ -208,6 +218,8 @@
     document.querySelectorAll('#sepChips .chip').forEach(function (c) { c.setAttribute('aria-pressed', String(!custom && c.dataset.sep === s.sep)); });
     document.querySelectorAll('#numSeg .chip').forEach(function (c) { c.setAttribute('aria-checked', String((c.dataset.num === '1') === s.number)); });
     document.querySelectorAll('#wordSeg .chip').forEach(function (c) { c.setAttribute('aria-checked', String(Number(c.dataset.words) === s.words)); });
+    document.querySelectorAll('#memoSeg .chip').forEach(function (c) { c.setAttribute('aria-checked', String((c.dataset.memo === '1') === s.memo)); });
+    $('memoHint').hidden = !s.memo;
     if (document.activeElement !== maxInput) maxInput.value = s.max || '';
   }
   function changed() { save(); syncControls(); regenerate(true); }
@@ -227,6 +239,9 @@
   document.querySelectorAll('#wordSeg .chip').forEach(function (c) {
     c.addEventListener('click', function () { s.words = Number(c.dataset.words); changed(); });
   });
+  document.querySelectorAll('#memoSeg .chip').forEach(function (c) {
+    c.addEventListener('click', function () { s.memo = c.dataset.memo === '1'; changed(); });
+  });
   // Max length: two digits at most; empty means no limit.
   maxInput.addEventListener('input', function () { maxInput.value = maxInput.value.replace(/\D/g, '').slice(0, 2); });
   maxInput.addEventListener('change', function () {
@@ -236,7 +251,7 @@
   });
 
   $('resetBtn').addEventListener('click', function () {
-    s = { sep: DEFAULTS.sep, number: DEFAULTS.number, words: DEFAULTS.words, max: null };
+    s = { sep: DEFAULTS.sep, number: DEFAULTS.number, words: DEFAULTS.words, max: null, memo: false };
     sepHint.hidden = true;
     changed();
   });

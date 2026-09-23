@@ -70,3 +70,41 @@ for (const words of [2, 3, 4, 5]) {
   }
 }
 console.log(`ok — ${checked} generations checked`);
+
+// Memorable mode: grammar slots, max length, uniform over fitting combinations.
+{
+  const { generateMemorable, prepareMemo } = require('../site/gen.js');
+  const mk = (tag) => { const o = []; for (let L = 3; L <= 8; L++) for (let i = 0; i < 6; i++) o.push(tag + 'x'.repeat(L - 2) + String.fromCharCode(97 + i)); return o.join(' '); };
+  const memo = prepareMemo({ order: { 2: 'NV', 3: 'NVN', 4: 'ANVN', 5: 'ANVAN' }, N: mk('n'), V: mk('v'), A: mk('a') });
+  let memoChecked = 0;
+  for (const words of [2, 3, 4, 5]) {
+    const order = memo.order[words];
+    for (const sep of ['', '-', '__']) {
+      for (const number of [true, false]) {
+        const fixed = sep.length * (words - 1 + (number ? 1 : 0)) + (number ? 1 : 0);
+        for (const max of [null, 4, 10, 16, 22, 30, 45, 64]) {
+          const r = generateMemorable({ sep, number, words, max }, memo);
+          memoChecked++;
+          if (max !== null && max < 3 * words + fixed) { assert.strictEqual(r.error, 'tooShort'); assert.strictEqual(r.n, 3 * words + fixed); continue; }
+          assert.ok(!r.error, JSON.stringify({ words, sep, number, max, r }));
+          const w = r.parts.filter(p => p.type === 'lower' || p.type === 'upper');
+          assert.strictEqual(w.length, words);
+          w.forEach((x, i) => assert.strictEqual(x.text.toLowerCase()[0], order[i].toLowerCase(), 'slot type'));
+          if (max) assert.ok(r.password.length <= max, `${r.password} > ${max}`);
+          assert.strictEqual(r.parts.some(p => p.type === 'num'), number);
+        }
+      }
+    }
+  }
+  // Uniformity: N = {aaa, bbb, cccc}, V = {vvv, vvvvv}, 7 letters of room.
+  // Fitting combinations: aaa+vvv, bbb+vvv, cccc+vvv -> each about 1/3.
+  const tiny = prepareMemo({ order: { 2: 'NV' }, N: 'aaa bbb cccc', V: 'vvv vvvvv', A: 'x' });
+  const count = {};
+  for (let i = 0; i < 30000; i++) {
+    const r = generateMemorable({ sep: '', number: false, words: 2, max: 7 }, tiny);
+    count[r.password.toLowerCase()] = (count[r.password.toLowerCase()] || 0) + 1;
+  }
+  assert.deepStrictEqual(Object.keys(count).sort(), ['aaavvv', 'bbbvvv', 'ccccvvv']);
+  Object.values(count).forEach(c => assert.ok(Math.abs(c - 10000) < 600, 'uniform: ' + JSON.stringify(count)));
+  console.log(`ok — memorable: ${memoChecked} setups, uniform ${JSON.stringify(count)}`);
+}

@@ -108,7 +108,91 @@
     return { parts: parts, password: parts.map(function (x) { return x.text; }).join('') };
   }
 
-  var api = { plan: plan, generate: generate, defaultLength: defaultLength, randInt: randInt };
+  // Uniform integer in [0, n) for n up to 2^53, from two 32-bit draws.
+  function randBig(n) {
+    var limit = Math.floor(9007199254740992 / n) * n;
+    var buf = new Uint32Array(2), x;
+    do {
+      root.crypto.getRandomValues(buf);
+      x = (buf[0] & 0x1fffff) * 4294967296 + buf[1];
+    } while (x >= limit);
+    return x % n;
+  }
+
+  // Memorable mode: words fill grammar slots so the password reads like a tiny
+  // sentence (N noun, V verb in its "she does" form, A adjective), e.g.
+  // otter-PAINTS-moon-4. Every slot is still a uniform random draw. A max length
+  // is met by counting, for each slot, how many combinations fit the letters
+  // left; one weighted draw per slot then keeps every fitting combination
+  // equally likely, with no retry loop.
+  // memo: { order: {2: 'NV', ...}, N: {len: [words]}, V: {...}, A: {...} }
+  function generateMemorable(s, memo, rand) {
+    rand = rand || randBig;
+    var order = memo.order[s.words].split('');
+    var k = order.length, num = s.number ? 1 : 0;
+    var fixed = s.sep.length * (k - 1 + num) + num;
+    var budget = Math.min(s.max ? s.max - fixed : Infinity, MAX_WORD * k);
+    var slots = order.map(function (c) { return memo[c]; });
+
+    // ways[i][b]: combinations for slots i..k-1 using at most b letters.
+    var ways = [];
+    ways[k] = [];
+    for (var b = 0; b <= Math.max(budget, 0); b++) ways[k][b] = 1;
+    for (var i = k - 1; i >= 0; i--) {
+      ways[i] = [];
+      for (b = 0; b <= Math.max(budget, 0); b++) {
+        var total = 0;
+        for (var L = MIN_WORD; L <= Math.min(MAX_WORD, b); L++) {
+          if (slots[i][L]) total += slots[i][L].length * ways[i + 1][b - L];
+        }
+        ways[i][b] = total;
+      }
+    }
+    if (budget < 0 || !ways[0][budget]) {
+      var shortest = fixed;
+      slots.forEach(function (slot) { for (var L = MIN_WORD; L <= MAX_WORD; L++) if (slot[L] && slot[L].length) { shortest += L; break; } });
+      return { error: 'tooShort', n: shortest };
+    }
+
+    for (var attempt = 0; attempt < 20; attempt++) {
+      var left = budget, words = [], used = {}, dup = false;
+      for (i = 0; i < k; i++) {
+        var r = rand(ways[i][left]);
+        for (L = MIN_WORD; L <= Math.min(MAX_WORD, left); L++) {
+          if (!slots[i][L]) continue;
+          var per = ways[i + 1][left - L], w = slots[i][L].length * per;
+          if (r < w) { var word = slots[i][L][Math.floor(r / per)]; break; }
+          r -= w;
+        }
+        if (used[word]) { dup = true; break; }
+        used[word] = true; words.push(word); left -= L;
+      }
+      if (!dup) break;
+    }
+
+    var parts = [];
+    words.forEach(function (w, i) {
+      if (parts.length && s.sep) parts.push({ type: 'sep', text: s.sep });
+      parts.push({ type: i % 2 ? 'upper' : 'lower', text: i % 2 ? w.toUpperCase() : w });
+    });
+    if (num) {
+      if (s.sep) parts.push({ type: 'sep', text: s.sep });
+      parts.push({ type: 'num', text: String(randInt(10)) });
+    }
+    return { parts: parts, password: parts.map(function (x) { return x.text; }).join('') };
+  }
+
+  // Turns a memo data file ({ N: 'word word ...', ... }) into length buckets.
+  function prepareMemo(data) {
+    var out = { order: data.order };
+    ['N', 'V', 'A'].forEach(function (c) {
+      out[c] = {};
+      data[c].trim().split(/\s+/).forEach(function (w) { (out[c][w.length] = out[c][w.length] || []).push(w); });
+    });
+    return out;
+  }
+
+  var api = { plan: plan, generate: generate, generateMemorable: generateMemorable, prepareMemo: prepareMemo, defaultLength: defaultLength, randInt: randInt };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.ASP = api;
 })(typeof window !== 'undefined' ? window : globalThis);
