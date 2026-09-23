@@ -165,16 +165,17 @@
     if (active && active.focus) active.focus({ preventScroll: true });
     return ok;
   }
-  function copy(onLoad) {
+  // Only ever called inside a user gesture: a copy attempted without one
+  // makes Chrome show a clipboard permission prompt.
+  function copy() {
     var text = current;
     var done = function () { copiedValue = text; if (text === current) setStatus('copied'); };
-    var fail = function () { if (!onLoad) setStatus('copyFailed'); };
+    var fail = function () { setStatus('copyFailed'); };
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(text).then(done, function () {
-        if (onLoad) return;
         legacyCopy(text) ? done() : fail();
       });
-    } else if (!onLoad) {
+    } else {
       legacyCopy(text) ? done() : fail();
     }
   }
@@ -251,8 +252,5 @@
   syncControls();
   applyLang();
   regenerate(false);
-  // Some browsers (Chrome with the page focused) allow a copy without a
-  // gesture. Try it; if it's refused, the status keeps saying "tap to copy".
-  copy(true);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 })();

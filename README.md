@@ -9,7 +9,7 @@ No backend, no account, no cookies.
 - **Randomness:** every pick uses `crypto.getRandomValues` with rejection sampling (no modulo bias). See [`site/gen.js`](site/gen.js).
 - **Length options:** words are never cut. To meet a minimum/maximum the generator swaps in 3–8 letter words, adds or removes a whole word, or adds digits.
 - **Languages:** English, Spanish and Brazilian Portuguese, chosen from the browser language (no IP lookup). Visitors can switch.
-- **Clipboard:** browsers only allow clipboard writes inside a user gesture, so the page tries once on load (Chrome sometimes allows it) and otherwise copies on the first tap or key press anywhere.
+- **Clipboard:** browsers only allow clipboard writes inside a user gesture, so the page copies on the first tap or key press anywhere. It never tries on load: in Chrome that shows a clipboard permission prompt.
 - **Options** (separator, number, length, language) are saved in `localStorage`. Passwords are never stored.
 
 ## Word lists
