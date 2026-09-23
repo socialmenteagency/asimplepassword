@@ -16,9 +16,10 @@
 }
 
 /* Ambient background: soft radial light over deep ultramarine, with a little grain.
-   Built from plain gradients on one screen-sized layer: blurred shapes, an oversized
-   grain layer and blend modes crashed iPhone browsers (WebKit reloads the page when
-   it runs out of graphics memory, and it looped). */
+   Built from plain gradients on one screen-sized layer instead of blurred shapes, an
+   oversized grain layer and blend modes: same look, far less graphics memory on phones.
+   (Swapped after a reload loop on an iPhone on 23-sep-2026; the old version was later
+   seen working there, so it was a precaution, not a confirmed cause.) */
 .ambient { position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background:
     radial-gradient(circle 55vmax at 8% 0%, rgba(43, 43, 217, .55), transparent 70%),
