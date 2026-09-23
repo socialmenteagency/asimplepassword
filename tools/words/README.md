@@ -23,5 +23,5 @@ python3 -m venv venv && ./venv/bin/pip install wordfreq
 python3 jobs.py && ls raw/*.prompt | xargs -P 6 -n 1 ./run1.sh
 ./venv/bin/python candidates.py && ./venv/bin/python judge_prep.py
 ls judge/*.prompt | xargs -P 8 -n 1 ./run2.sh
-./venv/bin/python build_words.py ../../site/words.js   
+./venv/bin/python build_words.py ../../site/words.js   # writes words-en.js, words-es.js, words-pt.js
 ```

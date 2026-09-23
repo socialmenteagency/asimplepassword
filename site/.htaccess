@@ -4,7 +4,7 @@ RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://asimplepassword.com%{REQUEST_URI} [L,R=301]
 
-# Nothing but the site's own files; Outside hosts: jsDelivr (fonts only) and GoatCounter.
+# Only the site's own files, plus jsDelivr (fonts) and GoatCounter (analytics).
 <IfModule mod_headers.c>
   Header always set Strict-Transport-Security "max-age=31536000"
   Header always set X-Content-Type-Options "nosniff"
