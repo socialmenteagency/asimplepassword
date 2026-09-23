@@ -7,7 +7,7 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var $ = function (id) { return document.getElementById(id); };
-  var pwEl = $('pw'), stage = $('stage'), statusEl = $('status'), statusText = $('statusText'), countEl = $('count');
+  var pwEl = $('pw'), stage = $('stage'), statusEl = $('status'), statusText = $('statusText');
   var sepInput = $('sep'), minInput = $('min'), maxInput = $('max'), errorEl = $('error'), sepHint = $('sepHint');
 
   // ---------- settings ----------
@@ -77,9 +77,27 @@
       span.textContent = p.text;
       group.appendChild(span);
     });
-    countEl.textContent = '· ' + t('chars', current.length);
+    updateChecks(result);
     fit();
     if (animate && !reduceMotion && !document.hidden) scramble();
+  }
+
+  // The checklist under the buttons follows the options: no number or no
+  // separator turns that line into a cross.
+  function updateChecks(result) {
+    var has = {
+      upper: true,
+      lower: true,
+      num: result.parts.some(function (p) { return p.type === 'num'; }),
+      sym: /[^\s]/.test(s.sep),
+      len: true
+    };
+    document.querySelectorAll('#checks li').forEach(function (li) {
+      var ok = has[li.dataset.check];
+      li.classList.toggle('off', !ok);
+      li.querySelector('i').textContent = ok ? '✓' : '✗';
+    });
+    $('chkLength').textContent = t('chkLength', current.length);
   }
 
   // The signature: the password always fills the line. Anybody's width axis
@@ -181,9 +199,13 @@
   }
 
   // ---------- controls ----------
+  var SEP_CHIPS = ['-', '_', '.', ''];
   function syncControls() {
-    sepInput.value = s.sep;
-    document.querySelectorAll('#sepChips .chip').forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.sep === s.sep)); });
+    // The "other" field only shows a separator the chips don't offer.
+    var custom = SEP_CHIPS.indexOf(s.sep) === -1;
+    if (document.activeElement !== sepInput) sepInput.value = custom ? s.sep : '';
+    sepInput.classList.toggle('on', custom);
+    document.querySelectorAll('#sepChips .chip').forEach(function (c) { c.setAttribute('aria-pressed', String(!custom && c.dataset.sep === s.sep)); });
     document.querySelectorAll('#numSeg .chip').forEach(function (c) { c.setAttribute('aria-checked', String((c.dataset.num === '1') === s.number)); });
     minInput.value = s.min || '';
     maxInput.value = s.max || '';
