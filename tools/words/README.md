@@ -1,6 +1,6 @@
 # Word list pipeline
 
-Builds `site/words.js`: per language (en, es, pt-BR), pools of words by length 3–8,
+Builds `site/words-en.js`, `words-es.js` and `words-pt.js`: per language (en, es, pt-BR), pools of words by length 3–8,
 with 5-letter words as the default pool.
 
 1. **Generate** (`jobs.py` → `run1.sh`): NaN `deepseek-v4-flash` via `opencode run` writes
@@ -23,5 +23,5 @@ python3 -m venv venv && ./venv/bin/pip install wordfreq
 python3 jobs.py && ls raw/*.prompt | xargs -P 6 -n 1 ./run1.sh
 ./venv/bin/python candidates.py && ./venv/bin/python judge_prep.py
 ls judge/*.prompt | xargs -P 8 -n 1 ./run2.sh
-./venv/bin/python build_words.py ../../site/words.js
+./venv/bin/python build_words.py ../../site/words.js   
 ```

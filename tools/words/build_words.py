@@ -56,18 +56,18 @@ for lang, words in c.items():
         out[lang][L] = ws
     report[lang] = {L: len(v) for L, v in out[lang].items()}
 print(json.dumps(report))
-with open(sys.argv[-1] if sys.argv[-1].endswith('.js') else '../../site/words.js', 'w') as fh:
-    fh.write('// Word pools by language and length. Built by build_words.py (NaN generation + NaN review + wordfreq ranking).\n')
-    # Plain word blocks, 20 words per line: small, readable diffs, easy to review.
-    # The loop at the end turns each block into an array when the page loads.
-    fh.write('window.ASP_WORDS = {\n')
-    for li, (lang, pools) in enumerate(out.items()):
-        fh.write(f'  {lang}: {{\n')
+# One file per language (words-en.js, ...) next to the given path; each adds its pools
+# to window.ASP_WORDS. Plain word blocks, 20 per line: small, readable diffs.
+target = sys.argv[-1] if sys.argv[-1].endswith('.js') else 'site/words.js'
+base = target[:-3]
+for lang, pools in out.items():
+    with open(f'{base}-{lang}.js', 'w') as fh:
+        fh.write(f'// {lang} word pools by length. Built by tools/words/build_words.py (NaN generation + NaN review + wordfreq ranking).\n')
+        fh.write('(window.ASP_WORDS = window.ASP_WORDS || {}).' + lang + ' = {\n')
         for pi, (L, ws) in enumerate(pools.items()):
-            fh.write(f'    {L}: `\n')
+            fh.write(f'  {L}: `\n')
             for i in range(0, len(ws), 20):
                 fh.write(' '.join(ws[i:i+20]) + '\n')
             fh.write('`' + (',' if pi < len(pools) - 1 else '') + '\n')
-        fh.write('  }' + (',' if li < len(out) - 1 else '') + '\n')
-    fh.write('};\n')
-    fh.write('for (var l in ASP_WORDS) for (var n in ASP_WORDS[l]) ASP_WORDS[l][n] = ASP_WORDS[l][n].trim().split(/\\s+/);\n')
+        fh.write('};\n')
+        fh.write(f'for (var n in ASP_WORDS.{lang}) ASP_WORDS.{lang}[n] = ASP_WORDS.{lang}[n].trim().split(/\\s+/);\n')

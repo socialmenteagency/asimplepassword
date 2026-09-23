@@ -14,7 +14,7 @@ No backend, no account, no cookies.
 
 ## Word lists
 
-`site/words.js` is built by [`tools/words/`](tools/words/README.md): NaN models generate candidates, a second NaN pass reviews them, wordfreq ranks them by how common they are, and a hand-kept blocklist removes regional slang.
+`site/words-en.js`, `words-es.js` and `words-pt.js` are built by [`tools/words/`](tools/words/README.md): NaN models generate candidates, a second NaN pass reviews them, wordfreq ranks them by how common they are, and a hand-kept blocklist removes regional slang.
 
 ## Develop
 
@@ -30,7 +30,7 @@ The plan has no cPanel Git Version Control, so each file in `site/` is uploaded 
 cPanel MCP (`write_file`, domain `asimplepassword.com`). Then check that the live copy matches the repo:
 
 ```
-for f in index.html styles.css app.js gen.js i18n.js words.js favicon.svg robots.txt sitemap.xml; do
+for f in index.html styles.css app.js gen.js i18n.js words-en.js words-es.js words-pt.js favicon.svg robots.txt sitemap.xml; do
   curl -s "https://asimplepassword.com/$f" | cmp -s - "site/$f" && echo "ok $f" || echo "DIFF $f"
 done
 ```

@@ -7,4 +7,4 @@ Static site, no backend. Everything the visitor sees is in `site/`.
 - `npm test` must pass before pushing (length logic).
 - Don't add third-party requests to the page: the privacy promise ("generated in your browser, sent nowhere") is the product. The only outside hosts are jsDelivr (fonts, pinned versions) and GoatCounter; the CSP in `site/.htaccess` enforces it.
 - Changing CSS/JS → bump `?v=` in `site/index.html`.
-- Word lists: regenerate with `tools/words/` (NaN via `opencode`), never hand-edit `site/words.js`; add unwanted words to `tools/words/blocklist.txt` and rebuild.
+- Word lists: regenerate with `tools/words/` (NaN via `opencode`), never hand-edit `site/words-*.js`; add unwanted words to `tools/words/blocklist.txt` and rebuild.
