@@ -11,11 +11,13 @@
   var sepInput = $('sep'), maxInput = $('max'), errorEl = $('error'), sepHint = $('sepHint');
 
   // ---------- settings ----------
+  // Every visit starts with the default options; only the language the
+  // visitor picks is remembered.
   function load() {
     try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; }
   }
   function save() {
-    try { localStorage.setItem(STORE, JSON.stringify({ sep: s.sep, number: s.number, words: s.words, max: s.max, memo: s.memo, lang: chosenLang })); } catch (e) {}
+    try { localStorage.setItem(STORE, JSON.stringify({ lang: chosenLang })); } catch (e) {}
   }
   function detectLang() {
     var list = navigator.languages || [navigator.language || 'en'];
@@ -27,13 +29,7 @@
   }
 
   var saved = load();
-  var s = {
-    sep: typeof saved.sep === 'string' ? saved.sep : DEFAULTS.sep,
-    number: typeof saved.number === 'boolean' ? saved.number : DEFAULTS.number,
-    words: [2, 3, 4, 5].indexOf(saved.words) > -1 ? saved.words : DEFAULTS.words,
-    max: saved.max || null,
-    memo: saved.memo === true
-  };
+  var s = { sep: DEFAULTS.sep, number: DEFAULTS.number, words: DEFAULTS.words, max: DEFAULTS.max, memo: DEFAULTS.memo };
   var chosenLang = LANGS[saved.lang] ? saved.lang : null; // only set when the visitor picks one
   var lang = chosenLang || detectLang();
   var current = '', copiedValue = null;
@@ -58,6 +54,13 @@
       .replace('{words}', fmt(Math.round(n / 100) * 100))
       .replace('{combos}', fmt(Math.pow(n, 3) * 10, { notation: 'compact', compactDisplay: 'long', maximumSignificantDigits: 2 }));
     setStatus(copiedValue === current && current ? 'copied' : 'tapToCopy');
+    memoTip();
+  }
+
+  // Tooltip on "Make it memorable". With only 3 words it also says the
+  // honest part: a sentence is a bit easier to guess, so add a word.
+  function memoTip() {
+    $('memoOpt').title = t('memoTip') + (s.memo && s.words === 3 ? ' ' + t('memoTip3') : '');
   }
 
   // ---------- rendering ----------
@@ -168,7 +171,7 @@
     if (r.error) {
       showError(t('errTooShort', r.n));
       if (current) return;
-      // Nothing on screen yet (saved options can't be met): show a default one.
+      // Nothing on screen yet: show a default one.
       r = ASP.generate({ sep: DEFAULTS.sep, number: DEFAULTS.number, words: DEFAULTS.words }, ASP_WORDS[lang]);
     } else {
       showError('');
@@ -219,10 +222,12 @@
     document.querySelectorAll('#numSeg .chip').forEach(function (c) { c.setAttribute('aria-checked', String((c.dataset.num === '1') === s.number)); });
     document.querySelectorAll('#wordSeg .chip').forEach(function (c) { c.setAttribute('aria-checked', String(Number(c.dataset.words) === s.words)); });
     document.querySelectorAll('#memoSeg .chip').forEach(function (c) { c.setAttribute('aria-checked', String((c.dataset.memo === '1') === s.memo)); });
-    $('memoHint').hidden = !s.memo;
+    // Memorable passwords need at least 3 words.
+    document.querySelector('#wordSeg [data-words="2"]').disabled = s.memo;
+    memoTip();
     if (document.activeElement !== maxInput) maxInput.value = s.max || '';
   }
-  function changed() { save(); syncControls(); regenerate(true); }
+  function changed() { syncControls(); regenerate(true); }
 
   sepInput.addEventListener('input', function () {
     var clean = sepInput.value.replace(/[\p{L}\p{N}]/gu, '');
@@ -240,7 +245,11 @@
     c.addEventListener('click', function () { s.words = Number(c.dataset.words); changed(); });
   });
   document.querySelectorAll('#memoSeg .chip').forEach(function (c) {
-    c.addEventListener('click', function () { s.memo = c.dataset.memo === '1'; changed(); });
+    c.addEventListener('click', function () {
+      s.memo = c.dataset.memo === '1';
+      if (s.memo && s.words < 3) s.words = 3;
+      changed();
+    });
   });
   // Max length: two digits at most; empty means no limit.
   maxInput.addEventListener('input', function () { maxInput.value = maxInput.value.replace(/\D/g, '').slice(0, 2); });
@@ -250,11 +259,6 @@
     changed();
   });
 
-  $('resetBtn').addEventListener('click', function () {
-    s = { sep: DEFAULTS.sep, number: DEFAULTS.number, words: DEFAULTS.words, max: null, memo: false };
-    sepHint.hidden = true;
-    changed();
-  });
   document.querySelectorAll('.langs button').forEach(function (b) {
     b.addEventListener('click', function () {
       lang = chosenLang = b.dataset.lang;

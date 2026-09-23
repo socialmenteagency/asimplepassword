@@ -92,7 +92,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .checks i { font-style: normal; color: var(--accent); font-weight: 600; }
 .checks li.off { opacity: .5; }
 .checks li.off i { color: var(--soft); }
-.tests { margin: 14px 0 0; max-width: 80ch; font-size: .92rem; color: var(--soft); }
+.tests { margin: 14px 0 0; font-size: .92rem; color: var(--soft); }
 .tests a { color: var(--soft); text-underline-offset: 3px; margin-left: 10px; white-space: nowrap; }
 .tests a:hover { color: var(--accent); }
 kbd { font: 600 .72rem/1 var(--mono); padding: 4px 7px; border: 1px solid var(--line); border-radius: 6px; color: var(--soft); }
@@ -110,6 +110,7 @@ kbd { font: 600 .72rem/1 var(--mono); padding: 4px 7px; border: 1px solid var(--
   background: var(--field-deep); border: 1px solid var(--line); font: 600 1rem/1 var(--mono);
 }
 .chip:hover { border-color: var(--soft); }
+.chip:disabled { opacity: .35; cursor: not-allowed; border-color: var(--line); }
 .chip[aria-pressed="true"], .chip[aria-checked="true"] { background: var(--ink); color: var(--field); border-color: var(--ink); }
 .field {
   min-height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--field-deep);
@@ -122,10 +123,7 @@ kbd { font: 600 .72rem/1 var(--mono); padding: 4px 7px; border: 1px solid var(--
 /* Two digits, no more: sized to the digits, shaped like the chips beside it. */
 .field-max { width: calc(2ch + 30px); padding: 0 14px; border-radius: 999px; text-align: center; font-variant-numeric: tabular-nums; }
 .hint { margin: 10px 0 0; font-size: .9rem; color: var(--accent); }
-#memoHint { max-width: 24ch; }
 .error { margin: 24px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--field-deep); }
-.link { background: none; border: 0; padding: 4px 0; color: var(--soft); text-decoration: underline; text-underline-offset: 4px; font-size: .95rem; }
-.link:hover { color: var(--ink); }
 
 /* About / SEO */
 .about { border-top: 1px solid var(--line); padding-block: 44px 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px 64px; }
@@ -145,14 +143,25 @@ details p { margin: 0 0 18px; }
    the middle three centered in the space between. */
 @media (min-width: 1240px) {
   .opt-grid { grid-template-columns: repeat(5, auto); justify-content: space-between; column-gap: 24px; }
-  .opt legend { font-size: 1.15rem; white-space: nowrap; }
   .chips { flex-wrap: nowrap; }
+  /* Titles may take two lines (all but "Between words"). The legend keeps a
+     one-line box, so the gap under "Make it fit" doesn't move; a second line
+     grows upward from the bottom-aligned text. */
+  .opt:not(:first-child) { min-width: 9rem; }
+  .opt legend { position: relative; width: 100%; height: 1.2em; font-size: 1.15rem; }
+  .opt legend span { position: absolute; left: 0; right: 0; bottom: 0; }
+  .opt:first-child legend span { white-space: nowrap; }
   .opt:nth-child(n+2):nth-child(-n+4) { text-align: center; }
-  .opt:nth-child(n+2):nth-child(-n+4) legend { margin-inline: auto; }
   .opt:nth-child(n+2):nth-child(-n+4) .chips { justify-content: center; }
-  .opt:nth-child(n+2):nth-child(-n+4) .hint { margin-inline: auto; }
   .opt:nth-child(5) { text-align: right; }
-  .opt:nth-child(5) legend { margin-inline-start: auto; }
+  .opt:nth-child(5) .chips { justify-content: flex-end; }
+}
+
+/* Phones: the first screen is the password alone (header + hero); the
+   options start below the fold. 72px is the header's height. */
+@media (max-width: 640px) {
+  .fold { min-height: 0; }
+  .hero { min-height: calc(100vh - 72px); min-height: calc(100svh - 72px); }
 }
 
 @media (max-width: 560px) {
