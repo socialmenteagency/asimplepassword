@@ -18,7 +18,8 @@ block = set(w for line in open('blocklist.txt') if not line.startswith('#') for 
 # a Spanish form the model put in the Portuguese list.
 MEMO_DROP = {
     'en': set('pregnant manly girly pious chokes scalps whacks bleeds strips robs mugs heists bribes cheats bullies '
-              'arrests cons crooks exiles harms hurts sues trusses polish'.split()),
+              'arrests cons crooks exiles harms hurts sues trusses polish '
+              'victim injury pain filth flesh choke bribe cheat crook bully suspect bra madam creep freak gland lymph colon fatty'.split()),
     'es': set('cutre guay pare yerra zafa idea basa muela lame mete chileno chino cubano europeo italiano romano ruso turco belga checo griego oriental vasco'.split()),
     'pt': set('acorde cuenta bases arca pira geme sola mola rala roga estufa gere come carioca europeu italiana italiano latino mexicano russo turco belga grego persa sueco'.split()),
 }
