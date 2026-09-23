@@ -42,9 +42,12 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .langs button:hover { color: var(--ink); }
 .langs button[aria-pressed="true"] { color: var(--ink); border-color: var(--line); }
 
-/* Hero: the password is the page */
-/* No full-screen height: the options should stay above the fold wherever the screen allows. */
-.hero { display: flex; flex-direction: column; align-items: center; padding-block: 8px 28px; text-align: center; }
+/* First screen: header + password + options fill exactly one screen, so the
+   line under "Make it fit" is the fold. Spare height goes around the password. */
+.fold { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+.fold main { flex: 1 1 auto; display: flex; flex-direction: column; }
+.hero { flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; padding-bottom: 28px; text-align: center; }
+.hero-main { flex: 1 1 auto; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-block: 8px 12px; }
 .stage { width: 100%; overflow: hidden; }
 .pw {
   display: inline-block; white-space: nowrap; cursor: copy;
@@ -75,18 +78,19 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .btn:active { transform: scale(.97); }
 .btn-primary { background: var(--ink); color: var(--field); }
 .btn-primary:hover { background: #fff; }
-.checks { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font: 400 .9rem/1.4 var(--mono); color: var(--ink); }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font: 400 .9rem/1.4 var(--mono); color: var(--soft); }
 .checks i { font-style: normal; color: var(--accent); font-weight: 600; }
-.checks li.off { color: var(--soft); }
+.checks li.off { opacity: .5; }
 .checks li.off i { color: var(--soft); }
 .tests { margin: 14px 0 0; max-width: 80ch; font-size: .92rem; color: var(--soft); }
-.tests a { color: var(--ink); text-underline-offset: 3px; margin-left: 10px; white-space: nowrap; }
+.tests a { color: var(--soft); text-underline-offset: 3px; margin-left: 10px; white-space: nowrap; }
 .tests a:hover { color: var(--accent); }
 kbd { font: 600 .72rem/1 var(--mono); padding: 4px 7px; border: 1px solid var(--line); border-radius: 6px; color: var(--soft); }
 
 /* Options */
-.options { border-top: 1px solid var(--line); padding-block: 26px 36px; }
-.eyebrow { margin: 0 0 20px; font: 600 .78rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
+.options { border-top: 1px solid var(--line); padding-block: 26px; }
+.opt-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 20px; }
+.eyebrow { margin: 0; font: 600 .78rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
 .opt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px 40px; }
 .opt { border: 0; margin: 0; padding: 0; min-width: 0; }
 .opt legend { padding: 0; margin-bottom: 12px; font: 700 1.3rem/1.2 var(--display); font-stretch: 115%; }
@@ -110,7 +114,7 @@ kbd { font: 600 .72rem/1 var(--mono); padding: 4px 7px; border: 1px solid var(--
 .len label { display: inline-flex; align-items: center; color: var(--soft); font-size: .95rem; margin-right: 10px; }
 .hint { margin: 10px 0 0; font-size: .9rem; color: var(--accent); }
 .error { margin: 24px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--field-deep); }
-.link { margin-top: 26px; background: none; border: 0; padding: 4px 0; color: var(--soft); text-decoration: underline; text-underline-offset: 4px; font-size: .95rem; }
+.link { background: none; border: 0; padding: 4px 0; color: var(--soft); text-decoration: underline; text-underline-offset: 4px; font-size: .95rem; }
 .link:hover { color: var(--ink); }
 
 /* About / SEO */
@@ -127,9 +131,25 @@ details p { margin: 0 0 18px; }
 
 .foot { border-top: 1px solid var(--line); padding-block: 22px 28px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font: 400 .85rem/1.4 var(--mono); color: var(--soft); }
 
+/* Wide screens: the three tools sit left, center and right. */
+@media (min-width: 880px) {
+  .opt-grid { grid-template-columns: 1fr auto 1fr; }
+  .opt:nth-child(2) { justify-self: center; }
+  .opt:nth-child(2) legend { margin-inline: auto; }
+  .opt:nth-child(2) .chips { justify-content: center; }
+  .opt:nth-child(3) { justify-self: end; }
+  .opt:nth-child(3) legend { margin-inline-start: auto; }
+  .opt:nth-child(3) .row { justify-content: flex-end; }
+  .len label:last-child { margin-right: 0; }
+}
+
 @media (max-width: 560px) {
   .btn { flex: 1 1 auto; justify-content: center; }
   kbd { display: none; }
+  /* The four testers on one row under the question. */
+  .tests { width: 100%; }
+  .test-links { display: flex; justify-content: space-between; margin-top: 6px; }
+  .tests a { margin-left: 0; font-size: .82rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pw.pop { animation: none; }

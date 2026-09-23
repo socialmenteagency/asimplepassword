@@ -14,11 +14,12 @@
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/anybody@5.3.0/files/anybody-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"A Simple Password","url":"https://asimplepassword.com/","applicationCategory":"SecurityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":["en","es","pt-BR"]}</script>
 </head>
 <body>
 <div class="wrap">
+<div class="fold">
   <header class="top">
     <a class="mark" href="/" aria-label="asimplepassword.com">a<b>simple</b>password</a>
     <nav class="langs" aria-label="Language">
@@ -30,6 +31,7 @@
 
   <main>
     <section class="hero">
+      <div class="hero-main">
       <div class="stage" id="stage">
         <output class="pw" id="pw" data-i18n-title="pwLabel" title="Your password. Click to copy." tabindex="0">found-PLANT-dance-3</output>
       </div>
@@ -37,6 +39,7 @@
       <div class="actions">
         <button type="button" class="btn btn-primary" id="copyBtn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span data-i18n="copy">Copy</span></button>
         <button type="button" class="btn" id="newBtn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg><span data-i18n="newPassword">New password</span><kbd>Space</kbd></button>
+      </div>
       </div>
       <ul class="checks" id="checks">
         <li data-check="upper"><span data-i18n="chkUpper">Uppercase</span> <i>✓</i></li>
@@ -46,15 +49,18 @@
         <li data-check="len"><span id="chkLength">Length: 19 characters</span> <i>✓</i></li>
       </ul>
       <p class="tests"><span data-i18n="testIntro">Want to test how strong your new password is?</span>
-        <a href="https://www.security.org/how-secure-is-my-password/" target="_blank" rel="noopener noreferrer">security.org</a>
+        <span class="test-links"><a href="https://www.security.org/how-secure-is-my-password/" target="_blank" rel="noopener noreferrer">security.org</a>
         <a href="https://proton.me/pass/password-strength-tester" target="_blank" rel="noopener noreferrer">proton.me</a>
         <a href="https://password.kaspersky.com/" target="_blank" rel="noopener noreferrer">kaspersky.com</a>
-        <a href="https://bitwarden.com/password-strength/" target="_blank" rel="noopener noreferrer">bitwarden.com</a>
+        <a href="https://bitwarden.com/password-strength/" target="_blank" rel="noopener noreferrer">bitwarden.com</a></span>
       </p>
     </section>
 
     <section class="options" aria-labelledby="optTitle">
-      <h2 class="eyebrow" id="optTitle" data-i18n="optionsTitle">Make it fit</h2>
+      <div class="opt-head">
+        <h2 class="eyebrow" id="optTitle" data-i18n="optionsTitle">Make it fit</h2>
+        <button type="button" class="link" id="resetBtn" data-i18n="reset">Reset to default</button>
+      </div>
       <div class="opt-grid">
         <fieldset class="opt">
           <legend data-i18n="sepLabel">Between words</legend>
@@ -85,8 +91,9 @@
         </fieldset>
       </div>
       <p class="error" id="error" role="alert" hidden></p>
-      <button type="button" class="link" id="resetBtn" data-i18n="reset">Reset to default</button>
     </section>
+  </main>
+</div>
 
     <section class="about">
       <div class="about-col">
@@ -104,7 +111,6 @@
         <details><summary data-i18n="q5">Can I check how it works?</summary><p data-i18n="a5">Yes. The code is open on GitHub: github.com/socialmenteagency/asimplepassword</p></details>
       </div>
     </section>
-  </main>
 
   <footer class="foot"><a href="https://github.com/socialmenteagency/asimplepassword" rel="noopener">asimplepassword.com · GitHub</a><span data-i18n="footer">Generated in your browser. No cookies.</span></footer>
 </div>
