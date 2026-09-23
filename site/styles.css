@@ -1,6 +1,6 @@
-@font-face { font-family: 'Anybody'; src: url(fonts/anybody.woff2) format('woff2'); font-weight: 100 900; font-stretch: 50% 150%; font-display: swap; }
-@font-face { font-family: 'Atkinson Next'; src: url(fonts/atkinson-next.woff2) format('woff2'); font-weight: 200 800; font-display: swap; }
-@font-face { font-family: 'Atkinson Mono'; src: url(fonts/atkinson-mono.woff2) format('woff2'); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: 'Anybody'; src: url(https://cdn.jsdelivr.net/npm/@fontsource-variable/anybody@5.3.0/files/anybody-latin-wdth-normal.woff2) format('woff2'); font-weight: 100 900; font-stretch: 50% 150%; font-display: swap; }
+@font-face { font-family: 'Atkinson Next'; src: url(https://cdn.jsdelivr.net/npm/@fontsource-variable/atkinson-hyperlegible-next@5.3.0/files/atkinson-hyperlegible-next-latin-wght-normal.woff2) format('woff2'); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: 'Atkinson Mono'; src: url(https://cdn.jsdelivr.net/npm/@fontsource-variable/atkinson-hyperlegible-mono@5.3.0/files/atkinson-hyperlegible-mono-latin-wght-normal.woff2) format('woff2'); font-weight: 200 800; font-display: swap; }
 
 :root {
   --field: #2B2BD9;      /* ultramarine: the whole page is this color */

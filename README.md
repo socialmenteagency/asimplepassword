@@ -25,12 +25,19 @@ python3 -m http.server -d site # then open http://localhost:8000
 
 ## Deploy
 
-Hosted on Raiola `com1019` (cPanel account `mqcapijl`, document root `/home/mqcapijl/asimplepassword.com`).
-cPanel **Git Version Control** clones this repo; `.cpanel.yml` copies `site/` into the document root.
-After pushing to `main`: cPanel → Git Version Control → *Update from Remote* → *Deploy HEAD Commit*
-(or the UAPI calls `VersionControl::update` and `VersionControlDeployment::create`).
+Hosted on Raiola `com1019` (Hosting Base plan, cPanel account `mqcapijl`, document root `/home/mqcapijl/asimplepassword.com`).
+The plan has no cPanel Git Version Control, so each file in `site/` is uploaded as text with the
+cPanel MCP (`write_file`, domain `asimplepassword.com`). Then check that the live copy matches the repo:
+
+```
+for f in index.html styles.css app.js gen.js i18n.js words.js favicon.svg robots.txt sitemap.xml; do
+  curl -s "https://asimplepassword.com/$f" | cmp -s - "site/$f" && echo "ok $f" || echo "DIFF $f"
+done
+```
+
+`.htaccess` can't be fetched over HTTP; compare it with cPanel `Fileman::get_file_content`.
 Bump the `?v=` query on the assets in `site/index.html` whenever CSS/JS changes: they're cached for a year.
 
 ## Fonts
 
-Anybody and Atkinson Hyperlegible Next / Mono, self-hosted from Google Fonts (SIL Open Font License 1.1).
+Anybody and Atkinson Hyperlegible Next / Mono, served from jsDelivr (Fontsource builds, pinned to 5.3.0; SIL Open Font License 1.1). The hosting plan has no cPanel Git, so files are uploaded one by one and binaries were avoided.
