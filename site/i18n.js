@@ -41,7 +41,7 @@ window.ASP_I18N = {
     q3: 'Why did my clipboard change?',
     a3: 'Your first tap or key press on this page copies the password on screen, so it’s ready to paste. Every new password is copied too.',
     q4: 'Do you store my passwords?',
-    a4: 'No. Only your options (separator, number, length and language) are saved, and only in this browser.',
+    a4: 'No. Only your options (separator, number, words, max length, memorable mode and language) are saved, and only in this browser.',
     q5: 'Can I check how it works?',
     a5: 'Yes. The code is open on GitHub: github.com/socialmenteagency/asimplepassword',
     footer: 'Generated in your browser. No cookies.'
@@ -87,7 +87,7 @@ window.ASP_I18N = {
     q3: '¿Por qué cambió mi portapapeles?',
     a3: 'Tu primer toque o tecla en esta página copia la contraseña que ves, para que esté lista para pegar. Cada contraseña nueva también se copia.',
     q4: '¿Guardan mis contraseñas?',
-    a4: 'No. Solo se guardan tus opciones (separador, número, largo e idioma), y solo en este navegador.',
+    a4: 'No. Solo se guardan tus opciones (separador, número, palabras, largo máximo, modo memorable e idioma), y solo en este navegador.',
     q5: '¿Puedo revisar cómo funciona?',
     a5: 'Sí. El código es abierto y está en GitHub: github.com/socialmenteagency/asimplepassword',
     footer: 'Generada en tu navegador. Sin cookies.'
@@ -133,7 +133,7 @@ window.ASP_I18N = {
     q3: 'Por que minha área de transferência mudou?',
     a3: 'Seu primeiro toque ou tecla nesta página copia a senha que está na tela, pronta para colar. Cada senha nova também é copiada.',
     q4: 'Vocês guardam minhas senhas?',
-    a4: 'Não. Só suas opções (separador, número, tamanho e idioma) ficam salvas, e só neste navegador.',
+    a4: 'Não. Só suas opções (separador, número, palavras, tamanho máximo, modo memorável e idioma) ficam salvas, e só neste navegador.',
     q5: 'Posso conferir como funciona?',
     a5: 'Sim. O código é aberto e está no GitHub: github.com/socialmenteagency/asimplepassword',
     footer: 'Gerada no seu navegador. Sem cookies.'
