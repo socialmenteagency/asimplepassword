@@ -22,6 +22,7 @@
   // so the total lands inside [min, max]. Words are never cut.
   function plan(s, rand) {
     rand = rand || randInt;
+    if (s.words) return planWords(s, rand);
     var sep = s.sep.length, num = s.number;
     var min = s.min || 0, max = s.max || Infinity;
     if (s.min && s.max && s.min > s.max) return { error: 'range' };
@@ -48,6 +49,21 @@
       return target < shortest ? { error: 'tooShort', n: shortest } : { error: 'tooLong', n: longest };
     }
     return { lengths: split(best.letters, best.k, rand), digits: best.d };
+  }
+
+  // A fixed number of words (2-5), five letters each. A maximum length makes
+  // the words shorter (never under three letters) instead of dropping any.
+  function planWords(s, rand) {
+    var k = s.words, num = s.number ? 1 : 0;
+    var fixed = s.sep.length * (k - 1 + num) + num;
+    var letters = 5 * k;
+    if (s.max && letters + fixed > s.max) {
+      letters = s.max - fixed;
+      if (letters < MIN_WORD * k) return { error: 'tooShort', n: MIN_WORD * k + fixed };
+    }
+    var lengths = [];
+    for (var i = 0; i < k; i++) lengths.push(5);
+    return { lengths: letters === 5 * k ? lengths : split(letters, k, rand), digits: num };
   }
 
   // Spread `total` letters over `k` words as evenly as possible, with a

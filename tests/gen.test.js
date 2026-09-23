@@ -45,4 +45,28 @@ for (const sep of ['', '-', '__', '...']) {
   }
 }
 assert.strictEqual(plan({ sep: '-', number: true, min: 30, max: 20 }).error, 'range');
+
+// Fixed word count (2-5) with an optional maximum length.
+for (const words of [2, 3, 4, 5]) {
+  for (const sep of ['', '-', '__']) {
+    for (const number of [true, false]) {
+      const fixed = sep.length * (words - 1 + (number ? 1 : 0)) + (number ? 1 : 0);
+      // No max: five-letter words.
+      const d = generate({ sep, number, words }, pools);
+      assert.strictEqual(d.password.length, 5 * words + fixed);
+      for (let max = 4; max <= 70; max++) {
+        const r = generate({ sep, number, words, max }, pools);
+        checked++;
+        const shortest = 3 * words + fixed;
+        if (max < shortest) { assert.strictEqual(r.error, 'tooShort'); assert.strictEqual(r.n, shortest); continue; }
+        assert.ok(!r.error, JSON.stringify({ words, sep, number, max, r }));
+        const w = r.parts.filter(p => p.type === 'lower' || p.type === 'upper');
+        assert.strictEqual(w.length, words, 'word count');
+        assert.ok(r.password.length <= max, `len ${r.password.length} > ${max}`);
+        assert.strictEqual(r.password.length, Math.min(max, 5 * words + fixed), 'uses the room up to the max');
+        w.forEach(x => assert.ok(x.text.length >= 3 && x.text.length <= 5));
+      }
+    }
+  }
+}
 console.log(`ok — ${checked} generations checked`);

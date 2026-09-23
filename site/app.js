@@ -1,21 +1,21 @@
 (function () {
   'use strict';
 
-  var DEFAULTS = { sep: '-', number: true, min: null, max: null };
+  var DEFAULTS = { sep: '-', number: true, words: 3, max: null };
   var STORE = 'asp:v1';
   var LANGS = { en: 'en', es: 'es', pt: 'pt-BR' };
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var $ = function (id) { return document.getElementById(id); };
   var pwEl = $('pw'), stage = $('stage'), statusEl = $('status'), statusText = $('statusText');
-  var sepInput = $('sep'), minInput = $('min'), maxInput = $('max'), errorEl = $('error'), sepHint = $('sepHint');
+  var sepInput = $('sep'), maxInput = $('max'), errorEl = $('error'), sepHint = $('sepHint');
 
   // ---------- settings ----------
   function load() {
     try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; }
   }
   function save() {
-    try { localStorage.setItem(STORE, JSON.stringify({ sep: s.sep, number: s.number, min: s.min, max: s.max, lang: chosenLang })); } catch (e) {}
+    try { localStorage.setItem(STORE, JSON.stringify({ sep: s.sep, number: s.number, words: s.words, max: s.max, lang: chosenLang })); } catch (e) {}
   }
   function detectLang() {
     var list = navigator.languages || [navigator.language || 'en'];
@@ -30,7 +30,7 @@
   var s = {
     sep: typeof saved.sep === 'string' ? saved.sep : DEFAULTS.sep,
     number: typeof saved.number === 'boolean' ? saved.number : DEFAULTS.number,
-    min: saved.min || null,
+    words: [2, 3, 4, 5].indexOf(saved.words) > -1 ? saved.words : DEFAULTS.words,
     max: saved.max || null
   };
   var chosenLang = LANGS[saved.lang] ? saved.lang : null; // only set when the visitor picks one
@@ -156,10 +156,10 @@
   function regenerate(gesture) {
     var r = ASP.generate(s, ASP_WORDS[lang]);
     if (r.error) {
-      showError(r.error === 'range' ? t('errRange') : t(r.error === 'tooShort' ? 'errTooShort' : 'errTooLong', r.n));
+      showError(t('errTooShort', r.n));
       if (current) return;
       // Nothing on screen yet (saved options can't be met): show a default one.
-      r = ASP.generate({ sep: DEFAULTS.sep, number: DEFAULTS.number }, ASP_WORDS[lang]);
+      r = ASP.generate({ sep: DEFAULTS.sep, number: DEFAULTS.number, words: DEFAULTS.words }, ASP_WORDS[lang]);
     } else {
       showError('');
     }
@@ -207,8 +207,8 @@
     sepInput.classList.toggle('on', custom);
     document.querySelectorAll('#sepChips .chip').forEach(function (c) { c.setAttribute('aria-pressed', String(!custom && c.dataset.sep === s.sep)); });
     document.querySelectorAll('#numSeg .chip').forEach(function (c) { c.setAttribute('aria-checked', String((c.dataset.num === '1') === s.number)); });
-    minInput.value = s.min || '';
-    maxInput.value = s.max || '';
+    document.querySelectorAll('#wordSeg .chip').forEach(function (c) { c.setAttribute('aria-checked', String(Number(c.dataset.words) === s.words)); });
+    if (document.activeElement !== maxInput) maxInput.value = s.max || '';
   }
   function changed() { save(); syncControls(); regenerate(true); }
 
@@ -224,16 +224,19 @@
   document.querySelectorAll('#numSeg .chip').forEach(function (c) {
     c.addEventListener('click', function () { s.number = c.dataset.num === '1'; changed(); });
   });
-  function readLen(input) {
-    var v = parseInt(input.value, 10);
-    if (isNaN(v)) return null;
-    return Math.max(4, Math.min(64, v));
-  }
-  minInput.addEventListener('change', function () { s.min = readLen(minInput); changed(); });
-  maxInput.addEventListener('change', function () { s.max = readLen(maxInput); changed(); });
+  document.querySelectorAll('#wordSeg .chip').forEach(function (c) {
+    c.addEventListener('click', function () { s.words = Number(c.dataset.words); changed(); });
+  });
+  // Max length: two digits at most; empty means no limit.
+  maxInput.addEventListener('input', function () { maxInput.value = maxInput.value.replace(/\D/g, '').slice(0, 2); });
+  maxInput.addEventListener('change', function () {
+    var v = parseInt(maxInput.value, 10);
+    s.max = isNaN(v) || v < 1 ? null : v;
+    changed();
+  });
 
   $('resetBtn').addEventListener('click', function () {
-    s = { sep: DEFAULTS.sep, number: DEFAULTS.number, min: null, max: null };
+    s = { sep: DEFAULTS.sep, number: DEFAULTS.number, words: DEFAULTS.words, max: null };
     sepHint.hidden = true;
     changed();
   });
