@@ -36,6 +36,10 @@ done
 ```
 
 `.htaccess` can't be fetched over HTTP; compare it with cPanel `Fileman::get_file_content`.
+
+Two things learned the hard way (23-sep-2026):
+- Always pass `dir: /home/mqcapijl/asimplepassword.com` to `write_file`. Without it the tool writes to `public_html/<domain>` and fails with "no existe".
+- Upload `index.html` with `upload_file` (base64), not `write_file`. As plain text the request gets dropped ("fetch failed"), apparently by the server's web firewall, and repeated hits can get this Mac's IP banned from the whole server (it happened on 23-sep; Raiola's client area has an unblock option). Upload one file at a time and verify once at the end.
 Bump the `?v=` query on the assets in `site/index.html` whenever CSS/JS changes: they're cached for a year.
 
 ## Fonts
