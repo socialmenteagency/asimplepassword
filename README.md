@@ -1,4 +1,4 @@
-# asimplepassword.com
+# [asimplepassword.com](https://asimplepassword.com)
 
 A password you can read, remember and paste: `found-PLANT-dance-3`.
 Three simple words (lowercase, UPPERCASE, lowercase) and a number, generated in the browser.
@@ -10,7 +10,11 @@ No backend, no account, no cookies.
 - **Length options:** words are never cut. To meet a minimum/maximum the generator swaps in 3–8 letter words, adds or removes a whole word, or adds digits.
 - **Languages:** English, Spanish and Brazilian Portuguese, chosen from the browser language (no IP lookup). Visitors can switch.
 - **Clipboard:** browsers only allow clipboard writes inside a user gesture, so the page copies on the first tap or key press anywhere. It never tries on load: in Chrome that shows a clipboard permission prompt.
-- **Options** (separator, number, length, language) are saved in `localStorage`. Passwords are never stored.
+- **Options** (separator, number, words, length, "Make it memorable") always start at the defaults. Only the language is saved in `localStorage`. Passwords are never stored.
+
+## Press kit
+
+Logo (SVG, 1024 px PNG) and 1920×1080 screenshots in English, Spanish and Portuguese: [`press/`](press/).
 
 ## Word lists
 
