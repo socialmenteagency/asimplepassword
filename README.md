@@ -40,7 +40,7 @@ The plan has no cPanel Git Version Control, so each file in `site/` is uploaded 
 cPanel MCP (`write_file`, domain `asimplepassword.com`). Then check that the live copy matches the repo:
 
 ```
-for f in index.html es/index.html pt/index.html styles.css app.js gen.js i18n.js words-en.js words-es.js words-pt.js memo-en.js memo-es.js memo-pt.js favicon.svg robots.txt sitemap.xml llms.txt; do
+for f in index.html es/index.html pt/index.html styles.css app.js gen.js i18n.js words-en.js words-es.js words-pt.js memo-en.js memo-es.js memo-pt.js favicon.svg robots.txt sitemap.xml llms.txt fonts/anybody-latin-wdth-normal.woff2 fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2 fonts/atkinson-hyperlegible-mono-latin-wght-normal.woff2 fonts/OFL.txt; do
   curl -s "https://asimplepassword.com/$f" | cmp -s - "site/$f" && echo "ok $f" || echo "DIFF $f"
 done
 ```
@@ -54,4 +54,4 @@ Bump the `?v=` query on the assets in `site/index.html` whenever CSS/JS changes:
 
 ## Fonts
 
-Anybody and Atkinson Hyperlegible Next / Mono, served from jsDelivr (Fontsource builds, pinned to 5.3.0; SIL Open Font License 1.1). The hosting plan has no cPanel Git, so files are uploaded one by one and binaries were avoided.
+Anybody and Atkinson Hyperlegible Next / Mono, self-hosted in `site/fonts/` since 23-sep-2026 (unmodified Fontsource 5.3.0 builds; SIL Open Font License 1.1, notices in `site/fonts/OFL.txt`). The CSP allows fonts from `'self'` only. Upload them with `upload_file` (base64) into `/home/mqcapijl/asimplepassword.com/fonts`. Anybody uses `font-display: block` (it's preloaded) so the password doesn't jump when it arrives.

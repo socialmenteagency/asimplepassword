@@ -1,6 +1,6 @@
-@font-face { font-family: 'Anybody'; src: url(https://cdn.jsdelivr.net/npm/@fontsource-variable/anybody@5.3.0/files/anybody-latin-wdth-normal.woff2) format('woff2'); font-weight: 100 900; font-stretch: 50% 150%; font-display: swap; }
-@font-face { font-family: 'Atkinson Next'; src: url(https://cdn.jsdelivr.net/npm/@fontsource-variable/atkinson-hyperlegible-next@5.3.0/files/atkinson-hyperlegible-next-latin-wght-normal.woff2) format('woff2'); font-weight: 200 800; font-display: swap; }
-@font-face { font-family: 'Atkinson Mono'; src: url(https://cdn.jsdelivr.net/npm/@fontsource-variable/atkinson-hyperlegible-mono@5.3.0/files/atkinson-hyperlegible-mono-latin-wght-normal.woff2) format('woff2'); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: 'Anybody'; src: url(/fonts/anybody-latin-wdth-normal.woff2) format('woff2'); font-weight: 100 900; font-stretch: 50% 150%; font-display: block; }
+@font-face { font-family: 'Atkinson Next'; src: url(/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2) format('woff2'); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: 'Atkinson Mono'; src: url(/fonts/atkinson-hyperlegible-mono-latin-wght-normal.woff2) format('woff2'); font-weight: 200 800; font-display: swap; }
 
 :root {
   --field: #0B0B3B;      /* deep ultramarine base, lit by the ambient gradients */
@@ -68,8 +68,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
   user-select: all; -webkit-user-select: all; padding: .06em .08em; border-radius: .08em;
   font-variant-numeric: lining-nums;
 }
-.pw.stack { font-size: min(25vw, 12svh); line-height: .98; text-align: left; }
-.pw.stack .g { display: block; }
+/* Phones stack one word per line (the stage is under 520px wide here). It's
+   CSS, not script, so the sample in the HTML is already stacked on first
+   paint and swapping in the real password doesn't move the page. */
+@media (max-width: 565px) {
+  .pw { font-size: min(25vw, 12svh); line-height: .98; text-align: left; }
+  .pw .g { display: block; }
+}
 .pw .sep, .pw .num { color: var(--accent); }
 .pw .sep { font-weight: 500; }
 .pw.pop { animation: pop .42s cubic-bezier(.2, .9, .3, 1.3); }

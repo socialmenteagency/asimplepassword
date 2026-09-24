@@ -137,7 +137,6 @@
   function fit() {
     pwEl.style.fontSize = '';
     var avail = stage.clientWidth;
-    pwEl.classList.toggle('stack', avail < 520);
     var lo = 62, hi = 125;
     var width = function (st) { pwEl.style.fontStretch = st + '%'; return pwEl.getBoundingClientRect().width; };
     if (width(lo) > avail) {
@@ -184,7 +183,17 @@
 
   // "Make it memorable" draws from grammar pools (noun, verb, adjective),
   // split into length buckets the first time a language needs them.
-  var memoPools = {};
+  // Its data file is only fetched the first time the option is switched on.
+  var memoPools = {}, memoScript = null;
+  function memoReady() { return !!(window.ASP_MEMO && window.ASP_MEMO[lang]); }
+  function loadMemo(done) {
+    memoScript = document.createElement('script');
+    memoScript.src = '/memo-' + lang + '.js?v=1';
+    memoScript.addEventListener('load', done);
+    // A failed load can be retried with the next click.
+    memoScript.addEventListener('error', function () { memoScript.remove(); memoScript = null; });
+    document.body.appendChild(memoScript);
+  }
   function make() {
     if (!s.memo) return ASP.generate(s, ASP_WORDS[lang]);
     memoPools[lang] = memoPools[lang] || ASP.prepareMemo(ASP_MEMO[lang]);
@@ -203,7 +212,8 @@
     } else {
       showError('');
     }
-    render(r, true);
+    // No scramble on the first render: it would count as layout shift.
+    render(r, gesture);
     pwEl.classList.remove('pop'); void pwEl.offsetWidth; pwEl.classList.add('pop');
     if (gesture) copy(); else setStatus('tapToCopy');
   }
@@ -271,11 +281,17 @@
   document.querySelectorAll('#wordSeg .chip').forEach(function (c) {
     c.addEventListener('click', function () { s.words = Number(c.dataset.words); changed(); });
   });
+  var memoWanted = false;
+  function setMemo() {
+    s.memo = memoWanted;
+    if (s.memo && s.words < 3) s.words = 3;
+    changed();
+  }
   document.querySelectorAll('#memoSeg .chip').forEach(function (c) {
     c.addEventListener('click', function () {
-      s.memo = c.dataset.memo === '1';
-      if (s.memo && s.words < 3) s.words = 3;
-      changed();
+      memoWanted = c.dataset.memo === '1';
+      if (!memoWanted || memoReady()) setMemo();
+      else if (!memoScript) loadMemo(function () { if (memoWanted) setMemo(); });
     });
   });
   // Max length: two digits at most; empty means no limit.

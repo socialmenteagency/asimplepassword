@@ -38,6 +38,20 @@ function s2p(lang) {
   return I18N[lang].s2p.replace('{words}', new Intl.NumberFormat(loc).format(Math.round(n / 100) * 100)).replace('{combos}', combos);
 }
 
+// The sample password in the same markup app.js renders (a group per word,
+// its separator and the final number inside), so phones show it stacked
+// before the script runs and the swap doesn't shift the layout.
+function sampleHtml(sample) {
+  const type = (t) => /^[a-z]+$/.test(t) ? 'lower' : /^[A-Z]+$/.test(t) ? 'upper' : /^\d+$/.test(t) ? 'num' : 'sep';
+  let html = '', open = false;
+  for (const t of sample.match(/[a-z]+|[A-Z]+|\d+|[^A-Za-z\d]+/g)) {
+    const k = type(t);
+    if (k === 'lower' || k === 'upper') { html += (open ? '</span>' : '') + '<span class="g">'; open = true; }
+    html += '<span class="' + k + '">' + esc(t) + '</span>';
+  }
+  return html + (open ? '</span>' : '');
+}
+
 function faqSchema(lang) {
   const d = I18N[lang];
   return JSON.stringify({
@@ -93,8 +107,16 @@ function build(template, lang) {
   one(/(id="memoInfo"[^>]*aria-label=")[^"]*"/, (m, open) => open + escAttr(d.memoInfo) + '"');
   one(/(<span class="tip" id="memoTip" role="tooltip">)[^<]*(<\/span>)/, (m, open, close) => open + esc(d.memoTip) + close);
 
+  // /es/ and /pt/ only need their own word list; / keeps all three because it
+  // picks the language in the browser.
+  if (lang !== 'en') {
+    for (const other of Object.keys(PAGES)) {
+      if (other !== lang) one(new RegExp('<script src="/words-' + other + '\\.js[^"]*"></script>\\n'), () => '');
+    }
+  }
+
   // The sample password and its length, until the script draws a new one.
-  one(/(<output class="pw" id="pw"[^>]*>)[^<]*(<\/output>)/, (m, open, close) => open + p.sample + close);
+  one(/(<output class="pw" id="pw"[^>]*>)[\s\S]*?(<\/output>)/, (m, open, close) => open + sampleHtml(p.sample) + close);
   one(/(<span id="chkLength">)[^<]*(<\/span>)/, (m, open, close) => open + esc(d.chkLength.replace('{n}', p.sample.length)) + close);
   return h;
 }
