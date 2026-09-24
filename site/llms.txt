@@ -1,0 +1,20 @@
+# A Simple Password
+
+> Free password generator at https://asimplepassword.com. It makes passwords from three simple random words and a number, like found-PLANT-dance-3: easy to read, remember and type on a phone. Everything runs in the visitor's browser; nothing is sent to a server. English, Spanish and Brazilian Portuguese.
+
+## How it works
+
+- Words are drawn with the browser's cryptographic random generator (crypto.getRandomValues) from curated lists of common words without accents: about 1,800 five-letter words in English and about 1,130 in Spanish and in Portuguese.
+- The default password is 3 words (lowercase, UPPERCASE, lowercase), dashes between them and one digit at the end: 19 characters.
+- Options: separator (- _ . none or any symbol), number at the end (yes/no), 2 to 5 words, a maximum length, and "Make it memorable", which arranges the words like a tiny sentence (noun, verb, noun).
+- No account, no cookies, no logs. Only the chosen language is remembered, in the visitor's own browser.
+
+## Strength, honestly
+
+- Against an attacker who knows the method, the default (3 words + digit) has about 36 bits of entropy in English and about 34 in Spanish and Portuguese: about 58 billion combinations in English.
+- That is much harder to guess than typical invented passwords (names, dates, phrases such as John131824 or Iamhappy2023). For email or banking, use 4 or 5 words, and a password manager.
+
+## Links
+
+- Generator: https://asimplepassword.com/
+- Source code (open): https://github.com/socialmenteagency/asimplepassword
