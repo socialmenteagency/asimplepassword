@@ -57,11 +57,33 @@
     memoTip();
   }
 
-  // Tooltip on "Make it memorable". With only 3 words it also says the
-  // honest part: a sentence is a bit easier to guess, so add a word.
+  // Tip on "Make it memorable", behind the (i) button: tap or click to open
+  // it (phones have no hover), hover also shows it. With only 3 words it also
+  // says the honest part: a sentence is a bit easier to guess, so add a word.
   function memoTip() {
-    $('memoOpt').title = t('memoTip') + (s.memo && s.words === 3 ? ' ' + t('memoTip3') : '');
+    $('memoTip').textContent = t('memoTip') + (s.memo && s.words === 3 ? ' ' + t('memoTip3') : '');
+    $('memoInfo').setAttribute('aria-label', t('memoInfo'));
   }
+  function showTip(open) {
+    var tip = $('memoTip');
+    tip.classList.toggle('open', open);
+    $('memoInfo').setAttribute('aria-expanded', String(open));
+    // Keep the bubble on screen on narrow phones.
+    tip.style.transform = '';
+    if (!open) return;
+    // Measured against the options box: on phones the window itself can
+    // widen to fit an overflowing bubble, so it isn't a reliable edge.
+    var r = tip.getBoundingClientRect(), box = document.querySelector('.options').getBoundingClientRect(), dx = 0;
+    if (r.right > box.right) dx = box.right - r.right;
+    if (r.left + dx < box.left) dx = box.left - r.left;
+    if (dx) tip.style.transform = 'translateX(' + dx + 'px)';
+  }
+  $('memoInfo').addEventListener('click', function (e) {
+    e.stopPropagation();
+    showTip($('memoInfo').getAttribute('aria-expanded') !== 'true');
+  });
+  document.addEventListener('pointerdown', function (e) { if (!e.target.closest('.info-wrap')) showTip(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') showTip(false); });
 
   // ---------- rendering ----------
   function render(result, animate) {

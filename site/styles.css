@@ -111,6 +111,23 @@ kbd { font: 600 .72rem/1 var(--mono); padding: 4px 7px; border: 1px solid var(--
 }
 .chip:hover { border-color: var(--soft); }
 .chip:disabled { opacity: .35; cursor: not-allowed; border-color: var(--line); }
+/* (i) button and its tip on "Make it memorable". The tip opens on tap/click
+   (phones) and on hover; it floats above the icon so it never pushes layout. */
+.info-wrap { position: relative; display: inline-block; }
+.info {
+  position: relative; width: 1.15em; height: 1.15em; padding: 0; border-radius: 50%; vertical-align: .12em;
+  border: 1.5px solid var(--soft); background: none; color: var(--soft); font: 700 .62em/1 var(--mono);
+}
+.info::after { content: ''; position: absolute; inset: -12px; } /* bigger tap target */
+.info:hover, .info[aria-expanded="true"] { color: var(--ink); border-color: var(--ink); }
+.tip {
+  display: none; position: absolute; z-index: 5; bottom: calc(100% + 10px); left: -10px;
+  width: max-content; max-width: min(17rem, 80vw); padding: 10px 12px; border-radius: 12px;
+  background: #1c1c6b; border: 1px solid var(--line); box-shadow: 0 12px 30px -10px rgba(0, 0, 0, .6);
+  font: 400 .9rem/1.4 var(--body); color: var(--ink); text-align: left; white-space: normal; letter-spacing: 0;
+}
+.tip.open { display: block; }
+@media (hover: hover) { .info-wrap:hover .tip { display: block; } }
 .chip[aria-pressed="true"], .chip[aria-checked="true"] { background: var(--ink); color: var(--field); border-color: var(--ink); }
 .field {
   min-height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--field-deep);
@@ -149,12 +166,14 @@ details p { margin: 0 0 18px; }
      grows upward from the bottom-aligned text. */
   .opt:not(:first-child) { min-width: 9rem; }
   .opt legend { position: relative; width: 100%; height: 1.2em; font-size: 1.15rem; }
-  .opt legend span { position: absolute; left: 0; right: 0; bottom: 0; }
-  .opt:first-child legend span { white-space: nowrap; }
+  .opt legend > span { position: absolute; left: 0; right: 0; bottom: 0; }
+  .opt:first-child legend > span { white-space: nowrap; }
   .opt:nth-child(n+2):nth-child(-n+4) { text-align: center; }
   .opt:nth-child(n+2):nth-child(-n+4) .chips { justify-content: center; }
   .opt:nth-child(5) { text-align: right; }
   .opt:nth-child(5) .chips { justify-content: flex-end; }
+  /* Last column: the tip opens toward the left so it stays on screen. */
+  .opt:nth-child(5) .tip { left: auto; right: -10px; }
 }
 
 /* Phones: the first screen is the password alone (header + hero); the
@@ -165,6 +184,8 @@ details p { margin: 0 0 18px; }
 }
 
 @media (max-width: 560px) {
+  /* The (i) sits right of center here: open its tip toward the left. */
+  .tip { left: auto; right: -10px; }
   .btn { flex: 1 1 auto; justify-content: center; }
   kbd { display: none; }
   /* The four testers on one row under the question. */
