@@ -1,0 +1,18 @@
+name: Live site matches repo
+
+# Daily check that https://asimplepassword.com serves exactly the files in site/ on main.
+# A failure means the live site changed without a commit (or a deploy is still pending).
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./tools/check-live.sh

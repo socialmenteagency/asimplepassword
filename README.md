@@ -40,10 +40,10 @@ The plan has no cPanel Git Version Control, so each file in `site/` is uploaded 
 cPanel MCP (`write_file`, domain `asimplepassword.com`). Then check that the live copy matches the repo:
 
 ```
-for f in index.html es/index.html pt/index.html styles.css app.js gen.js i18n.js words-en.js words-es.js words-pt.js memo-en.js memo-es.js memo-pt.js favicon.svg robots.txt sitemap.xml llms.txt fonts/anybody-latin-wdth-normal.woff2 fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2 fonts/atkinson-hyperlegible-mono-latin-wght-normal.woff2 fonts/OFL.txt; do
-  curl -s "https://asimplepassword.com/$f" | cmp -s - "site/$f" && echo "ok $f" || echo "DIFF $f"
-done
+./tools/check-live.sh
 ```
+
+It compares every file in `site/` except `.htaccess` and `og.jpg`, and checks that the old design proposal (`index2.*`) is still offline. A GitHub Action (`.github/workflows/live-check.yml`) runs it every day and fails, with an email to the repo owner, if the live site differs from `main`.
 
 `.htaccess` can't be fetched over HTTP; compare it with cPanel `Fileman::get_file_content`.
 
@@ -51,6 +51,10 @@ Two things learned the hard way (23-sep-2026):
 - Always pass `dir: /home/mqcapijl/asimplepassword.com` to `write_file`. Without it the tool writes to `public_html/<domain>` and fails with "no existe".
 - Upload `index.html` with `upload_file` (base64), not `write_file`. As plain text the request gets dropped ("fetch failed"), apparently by the server's web firewall, and repeated hits can get this Mac's IP banned from the whole server (it happened on 23-sep; Raiola's client area has an unblock option). Upload one file at a time and verify once at the end.
 Bump the `?v=` query on the assets in `site/index.html` whenever CSS/JS changes: they're cached for a year.
+
+## Security
+
+Report problems privately: see [SECURITY.md](SECURITY.md) (also linked from `/.well-known/security.txt`, which expires every year: renew its `Expires` date before 24-sep-2027). HSTS covers subdomains and asks for preload. Visitors get only the site's own files: no third-party scripts, styles or fonts. `design/` keeps the old design proposal (`index2.*`) out of the deployed tree: it loaded GSAP and Fontshare from third-party servers, so it was taken offline on 24-sep-2026.
 
 ## Fonts
 

@@ -6,7 +6,7 @@ RewriteRule ^ https://asimplepassword.com%{REQUEST_URI} [L,R=301]
 
 # Only the site's own files (fonts included, in /fonts/). Visits are counted from the server logs (cPanel AWStats), with no script.
 <IfModule mod_headers.c>
-  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "no-referrer"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
@@ -14,10 +14,6 @@ RewriteRule ^ https://asimplepassword.com%{REQUEST_URI} [L,R=301]
   <FilesMatch "\.(html)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
-  # Design proposal page: also loads GSAP (jsDelivr) and Cabinet Grotesk (Fontshare).
-  <Files "index2.html">
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://api.fontshare.com; font-src https://cdn.fontshare.com https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
-  </Files>
   <FilesMatch "\.(css|js|svg|woff2)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>

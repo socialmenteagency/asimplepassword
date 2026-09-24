@@ -1,0 +1,5 @@
+Contact: https://github.com/socialmenteagency/asimplepassword/security/advisories/new
+Expires: 2027-09-24T00:00:00.000Z
+Preferred-Languages: en, es, pt
+Canonical: https://asimplepassword.com/.well-known/security.txt
+Policy: https://github.com/socialmenteagency/asimplepassword/security/policy
