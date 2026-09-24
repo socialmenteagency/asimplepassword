@@ -171,6 +171,8 @@ details p { margin: 0 0 18px; }
   .opt:nth-child(n+2):nth-child(-n+4) { text-align: center; }
   .opt:nth-child(n+2):nth-child(-n+4) .chips { justify-content: center; }
   .opt:nth-child(5) { text-align: right; }
+  /* Room for the last word plus the (i), so the icon never sits alone on a line. */
+  .opt:nth-child(5) { min-width: 10.5rem; }
   .opt:nth-child(5) .chips { justify-content: flex-end; }
   /* Last column: the tip opens toward the left so it stays on screen. */
   .opt:nth-child(5) .tip { left: auto; right: -10px; }
