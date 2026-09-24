@@ -46,12 +46,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .mark { color: var(--ink); text-decoration: none; font: 300 1.05rem/1 var(--display); font-stretch: 125%; letter-spacing: -.01em; }
 .mark b { font-weight: 700; }
 .langs { display: flex; gap: 4px; }
-.langs button {
+.langs a {
+  display: inline-block; text-decoration: none;
   background: none; border: 1px solid transparent; border-radius: 999px;
   padding: 6px 12px; font: 600 .85rem/1 var(--mono); letter-spacing: .06em; color: var(--soft);
 }
-.langs button:hover { color: var(--ink); }
-.langs button[aria-pressed="true"] { color: var(--ink); border-color: var(--line); }
+.langs a:hover { color: var(--ink); }
+.langs a[aria-current="page"] { color: var(--ink); border-color: var(--line); }
 
 /* First screen: header + password + options fill exactly one screen, so the
    line under "Make it fit" is the fold. Spare height goes around the password. */

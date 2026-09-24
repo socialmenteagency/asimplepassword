@@ -31,7 +31,10 @@
   var saved = load();
   var s = { sep: DEFAULTS.sep, number: DEFAULTS.number, words: DEFAULTS.words, max: DEFAULTS.max, memo: DEFAULTS.memo };
   var chosenLang = LANGS[saved.lang] ? saved.lang : null; // only set when the visitor picks one
-  var lang = chosenLang || detectLang();
+  // /es/ and /pt/ are their own pages: the language is fixed by the page.
+  // On / the visitor's pick wins, then the browser language.
+  var pageLang = LANGS[document.documentElement.getAttribute('data-page-lang')] ? document.documentElement.getAttribute('data-page-lang') : null;
+  var lang = pageLang || chosenLang || detectLang();
   var current = '', copiedValue = null;
 
   function t(key, n) { return (ASP_I18N[lang][key] || ASP_I18N.en[key]).replace('{n}', n); }
@@ -45,7 +48,9 @@
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = dict[el.getAttribute('data-i18n')]; });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) { el.placeholder = dict[el.getAttribute('data-i18n-placeholder')]; });
     document.querySelectorAll('[data-i18n-title]').forEach(function (el) { el.title = dict[el.getAttribute('data-i18n-title')]; });
-    document.querySelectorAll('.langs button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === lang)); });
+    document.querySelectorAll('.langs a').forEach(function (a) {
+      if (a.dataset.lang === lang) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
 
     // Honest numbers for the "why three words" paragraph, from the real list size.
     var n = ASP_WORDS[lang][5].length;
@@ -281,10 +286,12 @@
     changed();
   });
 
-  document.querySelectorAll('.langs button').forEach(function (b) {
-    b.addEventListener('click', function () {
-      lang = chosenLang = b.dataset.lang;
-      save(); applyLang(); regenerate(true);
+  // The language links go to /, /es/ or /pt/; the pick is remembered for /.
+  document.querySelectorAll('.langs a').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      chosenLang = a.dataset.lang;
+      save();
+      if (a.dataset.lang === lang && a.pathname === location.pathname) e.preventDefault();
     });
   });
 

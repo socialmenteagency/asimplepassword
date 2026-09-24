@@ -2,7 +2,9 @@
 
 A password you can read, remember and paste: `found-PLANT-dance-3`.
 Three simple words (lowercase, UPPERCASE, lowercase) and a number, generated in the browser.
-No backend, no account, no cookies.
+No backend, no account, no cookies. English at `/`, Spanish at `/es/`, Brazilian Portuguese at `/pt/`.
+
+**License:** the code is public so anyone can read it and check that passwords are made in the browser and sent nowhere. It is not open source: all rights reserved, see [LICENSE](LICENSE).
 
 ## How it works
 
@@ -27,6 +29,10 @@ npm test                       # length logic, every min/max/separator combinati
 python3 -m http.server -d site # then open http://localhost:8000
 ```
 
+## Language pages
+
+`site/index.html` is the English template. `node tools/build-pages.js` writes `site/es/index.html` and `site/pt/index.html` from it and `site/i18n.js`: translated text, canonical and `hreflang` links, and the FAQ schema per language. Run it after changing either file; never edit the generated pages by hand.
+
 ## Deploy
 
 Hosted on Raiola `com1019` (Hosting Base plan, cPanel account `mqcapijl`, document root `/home/mqcapijl/asimplepassword.com`).
@@ -34,7 +40,7 @@ The plan has no cPanel Git Version Control, so each file in `site/` is uploaded 
 cPanel MCP (`write_file`, domain `asimplepassword.com`). Then check that the live copy matches the repo:
 
 ```
-for f in index.html styles.css app.js gen.js i18n.js words-en.js words-es.js words-pt.js favicon.svg robots.txt sitemap.xml; do
+for f in index.html es/index.html pt/index.html styles.css app.js gen.js i18n.js words-en.js words-es.js words-pt.js memo-en.js memo-es.js memo-pt.js favicon.svg robots.txt sitemap.xml llms.txt; do
   curl -s "https://asimplepassword.com/$f" | cmp -s - "site/$f" && echo "ok $f" || echo "DIFF $f"
 done
 ```

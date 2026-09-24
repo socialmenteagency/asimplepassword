@@ -6,22 +6,26 @@
 <title>A Simple Password: three words, ready to paste</title>
 <meta name="description" content="A strong, easy-to-remember password made of three simple words and a number. Generated in your browser and copied for you.">
 <link rel="canonical" href="https://asimplepassword.com/">
+<link rel="alternate" hreflang="en" href="https://asimplepassword.com/">
+<link rel="alternate" hreflang="es" href="https://asimplepassword.com/es/">
+<link rel="alternate" hreflang="pt-BR" href="https://asimplepassword.com/pt/">
+<link rel="alternate" hreflang="x-default" href="https://asimplepassword.com/">
 <meta name="theme-color" content="#0B0B3B">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://asimplepassword.com/">
 <meta property="og:title" content="A Simple Password">
-<meta property="og:description" content="Three simple words and a number. Generated in your browser, copied for you.">
+<meta property="og:description" content="A strong, easy-to-remember password made of three simple words and a number. Generated in your browser and copied for you.">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/socialmenteagency/asimplepassword@fa381c2/site/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="A big password made of three simple words, pareja-VENDE-grito-6, with Copy and New password buttons">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/socialmenteagency/asimplepassword@fa381c2/site/og.jpg">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/anybody@5.3.0/files/anybody-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=13">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"A Simple Password","url":"https://asimplepassword.com/","applicationCategory":"SecurityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":["en","es","pt-BR"]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is it strong enough for my email or bank?","acceptedAnswer":{"@type":"Answer","text":"For most accounts, yes: it’s much harder to guess than a typical password. For your email or bank, add a word: set “Words” to 4 or 5. Want to check? Try the strength testers above. Better still, keep it in a password manager and use a different password on every site."}},{"@type":"Question","name":"The site I’m signing up for won’t accept a dash.","acceptedAnswer":{"@type":"Answer","text":"Type the character it does accept (_ or . or anything else) in “Between words”, or choose none."}},{"@type":"Question","name":"Why did my clipboard change?","acceptedAnswer":{"@type":"Answer","text":"Your first tap or key press on this page copies the password on screen, so it’s ready to paste. Every new password is copied too."}},{"@type":"Question","name":"Do you store my passwords?","acceptedAnswer":{"@type":"Answer","text":"No. Nothing is saved except the language you pick, and only in this browser. Every visit starts with the default options."}},{"@type":"Question","name":"Can I check how it works?","acceptedAnswer":{"@type":"Answer","text":"Yes. The code is open on GitHub: github.com/socialmenteagency/asimplepassword"}}]}</script>
+<link rel="stylesheet" href="/styles.css?v=14">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"A Simple Password","url":"https://asimplepassword.com/","description":"A strong, easy-to-remember password made of three simple words and a number. Generated in your browser and copied for you.","applicationCategory":"SecurityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"Is it strong enough for my email or bank?","acceptedAnswer":{"@type":"Answer","text":"For most accounts, yes: it’s much harder to guess than a typical password. For your email or bank, add a word: set “Words” to 4 or 5. Want to check? Try the strength testers above. Better still, keep it in a password manager and use a different password on every site."}},{"@type":"Question","name":"The site I’m signing up for won’t accept a dash.","acceptedAnswer":{"@type":"Answer","text":"Type the character it does accept (_ or . or anything else) in “Between words”, or choose none."}},{"@type":"Question","name":"Why did my clipboard change?","acceptedAnswer":{"@type":"Answer","text":"Your first tap or key press on this page copies the password on screen, so it’s ready to paste. Every new password is copied too."}},{"@type":"Question","name":"Do you store my passwords?","acceptedAnswer":{"@type":"Answer","text":"No. Nothing is saved except the language you pick, and only in this browser. Every visit starts with the default options. We count visits from the server’s standard logs, with no cookies and no trackers."}},{"@type":"Question","name":"Can I check how it works?","acceptedAnswer":{"@type":"Answer","text":"Yes. The code is public on GitHub, so anyone can check it: github.com/socialmenteagency/asimplepassword"}}]}</script>
 </head>
 <body>
 <div class="ambient" aria-hidden="true"></div>
@@ -30,9 +34,9 @@
   <header class="top">
     <a class="mark" href="/" aria-label="asimplepassword.com">a<b>simple</b>password</a>
     <nav class="langs" aria-label="Language">
-      <button type="button" data-lang="en" lang="en">EN</button>
-      <button type="button" data-lang="es" lang="es">ES</button>
-      <button type="button" data-lang="pt" lang="pt-BR">PT</button>
+      <a href="/" data-lang="en" lang="en" hreflang="en" aria-current="page">EN</a>
+      <a href="/es/" data-lang="es" lang="es" hreflang="es">ES</a>
+      <a href="/pt/" data-lang="pt" lang="pt-BR" hreflang="pt-BR">PT</a>
     </nav>
   </header>
 
@@ -129,23 +133,21 @@
         <details><summary data-i18n="q1">Is it strong enough for my email or bank?</summary><p data-i18n="a1">For most accounts, yes: it’s much harder to guess than a typical password. For your email or bank, add a word: set “Words” to 4 or 5. Want to check? Try the strength testers above. Better still, keep it in a password manager and use a different password on every site.</p></details>
         <details><summary data-i18n="q2">The site I’m signing up for won’t accept a dash.</summary><p data-i18n="a2">Type the character it does accept (_ or . or anything else) in “Between words”, or choose none.</p></details>
         <details><summary data-i18n="q3">Why did my clipboard change?</summary><p data-i18n="a3">Your first tap or key press on this page copies the password on screen, so it’s ready to paste. Every new password is copied too.</p></details>
-        <details><summary data-i18n="q4">Do you store my passwords?</summary><p data-i18n="a4">No. Nothing is saved except the language you pick, and only in this browser. Every visit starts with the default options.</p></details>
-        <details><summary data-i18n="q5">Can I check how it works?</summary><p data-i18n="a5">Yes. The code is open on GitHub: github.com/socialmenteagency/asimplepassword</p></details>
+        <details><summary data-i18n="q4">Do you store my passwords?</summary><p data-i18n="a4">No. Nothing is saved except the language you pick, and only in this browser. Every visit starts with the default options. We count visits from the server’s standard logs, with no cookies and no trackers.</p></details>
+        <details><summary data-i18n="q5">Can I check how it works?</summary><p data-i18n="a5">Yes. The code is public on GitHub, so anyone can check it: github.com/socialmenteagency/asimplepassword</p></details>
       </div>
     </section>
 
   <footer class="foot"><span>asimplepassword.com</span><span><span data-i18n="footer">Generated in your browser. No cookies.</span> · <a href="https://github.com/socialmenteagency/asimplepassword" rel="noopener">GitHub</a></span></footer>
 </div>
-<script src="words-en.js?v=3"></script>
-<script src="words-es.js?v=3"></script>
-<script src="words-pt.js?v=3"></script>
-<script src="memo-en.js?v=1"></script>
-<script src="memo-es.js?v=1"></script>
-<script src="memo-pt.js?v=1"></script>
-<script src="i18n.js?v=14"></script>
-<script src="gen.js?v=5"></script>
-<script src="app.js?v=9"></script>
-<!-- GoatCounter: cookieless analytics, Rafael's "socialmente" site. -->
-<script data-goatcounter="https://socialmente.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script src="/words-en.js?v=3"></script>
+<script src="/words-es.js?v=3"></script>
+<script src="/words-pt.js?v=3"></script>
+<script src="/memo-en.js?v=1"></script>
+<script src="/memo-es.js?v=1"></script>
+<script src="/memo-pt.js?v=1"></script>
+<script src="/i18n.js?v=15"></script>
+<script src="/gen.js?v=5"></script>
+<script src="/app.js?v=10"></script>
 </body>
 </html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR" data-page-lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Simple Password: três palavras, pronta para colar</title>
+<meta name="description" content="Uma senha forte e fácil de lembrar, feita com três palavras simples e um número. Gerada no seu navegador e copiada para você.">
+<link rel="canonical" href="https://asimplepassword.com/pt/">
+<link rel="alternate" hreflang="en" href="https://asimplepassword.com/">
+<link rel="alternate" hreflang="es" href="https://asimplepassword.com/es/">
+<link rel="alternate" hreflang="pt-BR" href="https://asimplepassword.com/pt/">
+<link rel="alternate" hreflang="x-default" href="https://asimplepassword.com/">
+<meta name="theme-color" content="#0B0B3B">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://asimplepassword.com/pt/">
+<meta property="og:title" content="A Simple Password">
+<meta property="og:description" content="Uma senha forte e fácil de lembrar, feita com três palavras simples e um número. Gerada no seu navegador e copiada para você.">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/socialmenteagency/asimplepassword@fa381c2/site/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A big password made of three simple words, pareja-VENDE-grito-6, with Copy and New password buttons">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/socialmenteagency/asimplepassword@fa381c2/site/og.jpg">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/anybody@5.3.0/files/anybody-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css?v=14">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"A Simple Password","url":"https://asimplepassword.com/pt/","description":"Uma senha forte e fácil de lembrar, feita com três palavras simples e um número. Gerada no seu navegador e copiada para você.","applicationCategory":"SecurityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"pt-BR"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"pt-BR","mainEntity":[{"@type":"Question","name":"É forte o bastante para meu e-mail ou banco?","acceptedAnswer":{"@type":"Answer","text":"Para a maioria das contas, sim: é muito mais difícil de adivinhar do que uma senha típica. Para seu e-mail ou banco, acrescente uma palavra: coloque 4 ou 5 em “Palavras”. Quer conferir? Teste nos medidores de força acima. Melhor ainda: guarde num gerenciador de senhas e use uma diferente em cada site."}},{"@type":"Question","name":"O site onde estou me cadastrando não aceita hífen.","acceptedAnswer":{"@type":"Answer","text":"Digite o caractere que ele aceita (_ ou . ou outro) em “Entre palavras”, ou escolha nada."}},{"@type":"Question","name":"Por que minha área de transferência mudou?","acceptedAnswer":{"@type":"Answer","text":"Seu primeiro toque ou tecla nesta página copia a senha que está na tela, pronta para colar. Cada senha nova também é copiada."}},{"@type":"Question","name":"Vocês guardam minhas senhas?","acceptedAnswer":{"@type":"Answer","text":"Não. Só o idioma que você escolher fica salvo, e só neste navegador. Cada visita começa com as opções padrão. Contamos as visitas pelos registros normais do servidor, sem cookies nem rastreadores."}},{"@type":"Question","name":"Posso conferir como funciona?","acceptedAnswer":{"@type":"Answer","text":"Sim. O código é público no GitHub, então qualquer pessoa pode conferir: github.com/socialmenteagency/asimplepassword"}}]}</script>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+<div class="wrap">
+<div class="fold">
+  <header class="top">
+    <a class="mark" href="/pt/" aria-label="asimplepassword.com">a<b>simple</b>password</a>
+    <nav class="langs" aria-label="Language">
+      <a href="/" data-lang="en" lang="en" hreflang="en">EN</a>
+      <a href="/es/" data-lang="es" lang="es" hreflang="es">ES</a>
+      <a href="/pt/" data-lang="pt" lang="pt-BR" hreflang="pt-BR" aria-current="page">PT</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="sr-only" data-i18n="h1">Gerador de senhas simples: três palavras aleatórias e um número</h1>
+    <section class="hero">
+      <div class="hero-main">
+      <div class="stage" id="stage">
+        <output class="pw" id="pw" data-i18n-title="pwLabel" title="Sua senha. Clique para copiar." tabindex="0">gato-PRAIA-verde-3</output>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"><span id="statusText" data-i18n="tapToCopy">Toque em qualquer lugar para copiar</span></p>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="copyBtn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span data-i18n="copy">Copiar</span></button>
+        <button type="button" class="btn" id="newBtn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg><span data-i18n="newPassword">Nova senha</span><kbd>Space</kbd></button>
+      </div>
+      </div>
+      <ul class="checks" id="checks">
+        <li data-check="upper"><span data-i18n="chkUpper">Maiúsculas</span> <i>✓</i></li>
+        <li data-check="lower"><span data-i18n="chkLower">Minúsculas</span> <i>✓</i></li>
+        <li data-check="num"><span data-i18n="chkNumbers">Números</span> <i>✓</i></li>
+        <li data-check="sym"><span data-i18n="chkSymbols">Símbolos</span> <i>✓</i></li>
+        <li data-check="len"><span id="chkLength">Tamanho: 18 caracteres</span> <i>✓</i></li>
+      </ul>
+      <p class="tests"><span data-i18n="testIntro">Quer testar a força da sua nova senha?</span>
+        <span class="test-links"><a href="https://www.security.org/how-secure-is-my-password/" target="_blank" rel="noopener noreferrer">security.org</a>
+        <a href="https://proton.me/pass/password-strength-tester" target="_blank" rel="noopener noreferrer">proton.me</a>
+        <a href="https://password.kaspersky.com/" target="_blank" rel="noopener noreferrer">kaspersky.com</a>
+        <a href="https://bitwarden.com/password-strength/" target="_blank" rel="noopener noreferrer">bitwarden.com</a></span>
+      </p>
+    </section>
+
+    <section class="options" aria-labelledby="optTitle">
+      <div class="opt-head">
+        <h2 class="eyebrow" id="optTitle" data-i18n="optionsTitle">Ajuste</h2>
+      </div>
+      <div class="opt-grid">
+        <fieldset class="opt">
+          <legend><span data-i18n="sepLabel">Entre palavras</span></legend>
+          <div class="chips" id="sepChips">
+            <button type="button" class="chip" data-sep="-">-</button>
+            <button type="button" class="chip" data-sep="_">_</button>
+            <button type="button" class="chip" data-sep=".">.</button>
+            <button type="button" class="chip" data-sep="" data-i18n="sepNone">nada</button>
+            <input id="sep" class="field field-sep" type="text" maxlength="3" autocomplete="off" spellcheck="false" aria-label="Other separator" aria-describedby="sepHint" data-i18n-placeholder="sepPlaceholder" placeholder="outro">
+          </div>
+          <p class="hint" id="sepHint" hidden data-i18n="sepHint">Letras e números não podem ser separadores.</p>
+        </fieldset>
+
+        <fieldset class="opt">
+          <legend><span data-i18n="numLabel">Número no final</span></legend>
+          <div class="chips seg" role="radiogroup" id="numSeg">
+            <button type="button" class="chip" role="radio" data-num="1" data-i18n="numOn">Sim</button>
+            <button type="button" class="chip" role="radio" data-num="0" data-i18n="numOff">Não</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="opt">
+          <legend><span data-i18n="wordsLabel">Palavras</span></legend>
+          <div class="chips seg" role="radiogroup" id="wordSeg">
+            <button type="button" class="chip" role="radio" data-words="2">2</button>
+            <button type="button" class="chip" role="radio" data-words="3">3</button>
+            <button type="button" class="chip" role="radio" data-words="4">4</button>
+            <button type="button" class="chip" role="radio" data-words="5">5</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="opt">
+          <legend id="maxLegend"><span data-i18n="maxLabel">Tamanho máximo</span></legend>
+          <input id="max" class="field field-max" type="text" inputmode="numeric" maxlength="2" pattern="[0-9]*" autocomplete="off" aria-labelledby="maxLegend" placeholder="∞">
+        </fieldset>
+
+        <fieldset class="opt" id="memoOpt">
+          <legend><span><span data-i18n="memoLabel">Deixar memorável</span>&nbsp;<span class="info-wrap"><button type="button" class="info" id="memoInfo" aria-expanded="false" aria-controls="memoTip" aria-label="Sobre esta opção">i</button><span class="tip" id="memoTip" role="tooltip">Parece uma frase curta.</span></span></span></legend>
+          <div class="chips seg" role="radiogroup" id="memoSeg">
+            <button type="button" class="chip" role="radio" data-memo="1" data-i18n="numOn">Sim</button>
+            <button type="button" class="chip" role="radio" data-memo="0" data-i18n="numOff">Não</button>
+          </div>
+        </fieldset>
+      </div>
+      <p class="error" id="error" role="alert" hidden></p>
+    </section>
+  </main>
+</div>
+
+    <section class="about">
+      <div class="about-col">
+        <h2 data-i18n="s1h">Feita no seu aparelho. Não vai para lugar nenhum.</h2>
+        <p data-i18n="s1p">Cada senha é montada no seu navegador com o gerador aleatório seguro dele. Não há servidor por trás, nem conta, nem registro. Fechou a aba, ela some.</p>
+        <h2 data-i18n="s2h">Por que três palavras?</h2>
+        <p data-i18n="s2p">Uma senha como gato-PRAIA-verde-3 é fácil de ler, lembrar e digitar no celular, e muito mais difícil de adivinhar do que as que as pessoas costumam inventar, como Joao131824 ou Soufeliz2023. Essas seguem padrões que qualquer atacante testa primeiro: nomes, datas, frases comuns. As nossas são sorteadas entre cerca de 14 bilhões de possibilidades, sem nada seu nelas.</p>
+      </div>
+      <div class="about-col">
+        <h2 data-i18n="s3h">Perguntas</h2>
+        <details><summary data-i18n="q1">É forte o bastante para meu e-mail ou banco?</summary><p data-i18n="a1">Para a maioria das contas, sim: é muito mais difícil de adivinhar do que uma senha típica. Para seu e-mail ou banco, acrescente uma palavra: coloque 4 ou 5 em “Palavras”. Quer conferir? Teste nos medidores de força acima. Melhor ainda: guarde num gerenciador de senhas e use uma diferente em cada site.</p></details>
+        <details><summary data-i18n="q2">O site onde estou me cadastrando não aceita hífen.</summary><p data-i18n="a2">Digite o caractere que ele aceita (_ ou . ou outro) em “Entre palavras”, ou escolha nada.</p></details>
+        <details><summary data-i18n="q3">Por que minha área de transferência mudou?</summary><p data-i18n="a3">Seu primeiro toque ou tecla nesta página copia a senha que está na tela, pronta para colar. Cada senha nova também é copiada.</p></details>
+        <details><summary data-i18n="q4">Vocês guardam minhas senhas?</summary><p data-i18n="a4">Não. Só o idioma que você escolher fica salvo, e só neste navegador. Cada visita começa com as opções padrão. Contamos as visitas pelos registros normais do servidor, sem cookies nem rastreadores.</p></details>
+        <details><summary data-i18n="q5">Posso conferir como funciona?</summary><p data-i18n="a5">Sim. O código é público no GitHub, então qualquer pessoa pode conferir: github.com/socialmenteagency/asimplepassword</p></details>
+      </div>
+    </section>
+
+  <footer class="foot"><span>asimplepassword.com</span><span><span data-i18n="footer">Gerada no seu navegador. Sem cookies.</span> · <a href="https://github.com/socialmenteagency/asimplepassword" rel="noopener">GitHub</a></span></footer>
+</div>
+<script src="/words-en.js?v=3"></script>
+<script src="/words-es.js?v=3"></script>
+<script src="/words-pt.js?v=3"></script>
+<script src="/memo-en.js?v=1"></script>
+<script src="/memo-es.js?v=1"></script>
+<script src="/memo-pt.js?v=1"></script>
+<script src="/i18n.js?v=15"></script>
+<script src="/gen.js?v=5"></script>
+<script src="/app.js?v=10"></script>
+</body>
+</html>

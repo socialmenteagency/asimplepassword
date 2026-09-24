@@ -43,9 +43,9 @@ window.ASP_I18N = {
     q3: 'Why did my clipboard change?',
     a3: 'Your first tap or key press on this page copies the password on screen, so it’s ready to paste. Every new password is copied too.',
     q4: 'Do you store my passwords?',
-    a4: 'No. Nothing is saved except the language you pick, and only in this browser. Every visit starts with the default options.',
+    a4: 'No. Nothing is saved except the language you pick, and only in this browser. Every visit starts with the default options. We count visits from the server’s standard logs, with no cookies and no trackers.',
     q5: 'Can I check how it works?',
-    a5: 'Yes. The code is open on GitHub: github.com/socialmenteagency/asimplepassword',
+    a5: 'Yes. The code is public on GitHub, so anyone can check it: github.com/socialmenteagency/asimplepassword',
     footer: 'Generated in your browser. No cookies.'
   },
   es: {
@@ -91,9 +91,9 @@ window.ASP_I18N = {
     q3: '¿Por qué cambió mi portapapeles?',
     a3: 'Tu primer toque o tecla en esta página copia la contraseña que ves, para que esté lista para pegar. Cada contraseña nueva también se copia.',
     q4: '¿Guardan mis contraseñas?',
-    a4: 'No. Solo se guarda el idioma que elijas, y solo en este navegador. Cada visita empieza con las opciones predeterminadas.',
+    a4: 'No. Solo se guarda el idioma que elijas, y solo en este navegador. Cada visita empieza con las opciones predeterminadas. Contamos las visitas con los registros normales del servidor, sin cookies ni rastreadores.',
     q5: '¿Puedo revisar cómo funciona?',
-    a5: 'Sí. El código es abierto y está en GitHub: github.com/socialmenteagency/asimplepassword',
+    a5: 'Sí. El código es público en GitHub, así que cualquiera puede revisarlo: github.com/socialmenteagency/asimplepassword',
     footer: 'Generada en tu navegador. Sin cookies.'
   },
   pt: {
@@ -139,9 +139,9 @@ window.ASP_I18N = {
     q3: 'Por que minha área de transferência mudou?',
     a3: 'Seu primeiro toque ou tecla nesta página copia a senha que está na tela, pronta para colar. Cada senha nova também é copiada.',
     q4: 'Vocês guardam minhas senhas?',
-    a4: 'Não. Só o idioma que você escolher fica salvo, e só neste navegador. Cada visita começa com as opções padrão.',
+    a4: 'Não. Só o idioma que você escolher fica salvo, e só neste navegador. Cada visita começa com as opções padrão. Contamos as visitas pelos registros normais do servidor, sem cookies nem rastreadores.',
     q5: 'Posso conferir como funciona?',
-    a5: 'Sim. O código é aberto e está no GitHub: github.com/socialmenteagency/asimplepassword',
+    a5: 'Sim. O código é público no GitHub, então qualquer pessoa pode conferir: github.com/socialmenteagency/asimplepassword',
     footer: 'Gerada no seu navegador. Sem cookies.'
   }
 };
