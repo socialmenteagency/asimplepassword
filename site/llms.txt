@@ -16,7 +16,7 @@
 
 ## Links
 
-- Generator (English): https://asimplepassword.com/
-- Generador (español): https://asimplepassword.com/es/
-- Gerador (português do Brasil): https://asimplepassword.com/pt/
-- Source code (public, all rights reserved; anyone can read and audit it): https://github.com/socialmenteagency/asimplepassword
+- [Generator (English)](https://asimplepassword.com/)
+- [Generador (español)](https://asimplepassword.com/es/)
+- [Gerador (português do Brasil)](https://asimplepassword.com/pt/)
+- [Source code](https://github.com/socialmenteagency/asimplepassword): public, all rights reserved; anyone can read and audit it
