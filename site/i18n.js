@@ -47,7 +47,7 @@ window.ASP_I18N = {
     a5: 'Yes. The code is public on GitHub, so anyone can check it: github.com/socialmenteagency/asimplepassword',
     q6: 'What does “Make it memorable” do?',
     a6: 'It builds the password as a tiny sentence you can picture, like couple-SELLS-scream-6: a couple selling a scream in a jar. A picture is easier to remember than a string of letters. It’s a bit easier to guess than three random words, so for your email or bank, add a word.',
-    watch: 'Watch the video (17 s)',
+    watch: 'Watch the video (20 s)',
     close: 'Close',
     footer: 'Generated in your browser. No cookies.'
   },
@@ -98,7 +98,7 @@ window.ASP_I18N = {
     a5: 'Sí. El código es público en GitHub, así que cualquiera puede revisarlo: github.com/socialmenteagency/asimplepassword',
     q6: '¿Qué hace “Hazla memorable”?',
     a6: 'Arma la contraseña como una frase corta que puedes imaginar, como pareja-VENDE-grito-6: una pareja que vende un grito en un frasco. Una imagen se recuerda mejor que una fila de letras. Es algo más fácil de adivinar que tres palabras al azar, así que para tu correo o tu banco agrega una palabra.',
-    watch: 'Mira el video (17 s)',
+    watch: 'Mira el video (20 s)',
     close: 'Cerrar',
     footer: 'Generada en tu navegador. Sin cookies.'
   },
@@ -149,7 +149,7 @@ window.ASP_I18N = {
     a5: 'Sim. O código é público no GitHub, então qualquer pessoa pode conferir: github.com/socialmenteagency/asimplepassword',
     q6: 'O que faz “Deixar memorável”?',
     a6: 'Monta a senha como uma frase curta que você consegue imaginar, como casal-VENDE-grito-6: um casal que vende um grito num pote. Uma imagem é mais fácil de lembrar do que uma fila de letras. É um pouco mais fácil de adivinhar do que três palavras aleatórias, então para o seu e-mail ou banco adicione uma palavra.',
-    watch: 'Veja o vídeo (17 s)',
+    watch: 'Veja o vídeo (20 s)',
     close: 'Fechar',
     footer: 'Gerada no seu navegador. Sem cookies.'
   }
