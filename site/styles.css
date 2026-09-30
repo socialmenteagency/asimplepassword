@@ -118,23 +118,22 @@ kbd { font: 600 .72rem/1 var(--mono); padding: 4px 7px; border: 1px solid var(--
 }
 .chip:hover { border-color: var(--soft); }
 .chip:disabled { opacity: .35; cursor: not-allowed; border-color: var(--line); }
-/* (i) button and its tip on "Make it memorable". The tip opens on tap/click
-   (phones) and on hover; it floats above the icon so it never pushes layout. */
-.info-wrap { position: relative; display: inline-block; }
-.info {
-  position: relative; width: 1.15em; height: 1.15em; padding: 0; border-radius: 50%; vertical-align: .12em;
-  border: 1.5px solid var(--soft); background: none; color: var(--soft); font: 700 .62em/1 var(--mono);
+/* ? (to its FAQ answer) and ▶ (the film) beside "Make it memorable". */
+.memo-icons { display: inline-flex; gap: .3em; vertical-align: .12em; white-space: nowrap; }
+.info, .play {
+  position: relative; display: inline-grid; place-items: center; width: 1.15em; height: 1.15em; padding: 0; border-radius: 50%;
+  border: 1.5px solid var(--soft); background: none; color: var(--soft); font: 700 .62em/1 var(--mono); text-decoration: none; cursor: pointer;
 }
-.info::after { content: ''; position: absolute; inset: -12px; } /* bigger tap target */
-.info:hover, .info[aria-expanded="true"] { color: var(--ink); border-color: var(--ink); }
-.tip {
-  display: none; position: absolute; z-index: 5; bottom: calc(100% + 10px); left: -10px;
-  width: max-content; max-width: min(17rem, 80vw); padding: 10px 12px; border-radius: 12px;
-  background: #1c1c6b; border: 1px solid var(--line); box-shadow: 0 12px 30px -10px rgba(0, 0, 0, .6);
-  font: 400 .9rem/1.4 var(--body); color: var(--ink); text-align: left; white-space: normal; letter-spacing: 0;
-}
-.tip.open { display: block; }
-@media (hover: hover) { .info-wrap:hover .tip { display: block; } }
+.play svg { width: .5em; height: .5em; fill: currentColor; margin-left: .08em; }
+.info::after, .play::after { content: ''; position: absolute; inset: -8px; } /* bigger tap target */
+.info:hover, .play:hover, .info:focus-visible, .play:focus-visible { color: var(--ink); border-color: var(--ink); }
+.watch { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid var(--accent); background: none; color: var(--accent); font: 600 1rem/1 var(--body); cursor: pointer; }
+.watch svg { fill: currentColor; }
+.watch:hover { background: var(--accent); color: var(--field); }
+dialog.video { padding: 0; border: 0; background: #000; width: min(92vw, calc(88vh * 16 / 9)); max-width: none; border-radius: 14px; overflow: hidden; }
+dialog.video::backdrop { background: rgba(5, 5, 30, .82); }
+dialog.video video { display: block; width: 100%; height: auto; }
+dialog.video .close { position: absolute; top: 10px; right: 10px; min-height: 36px; padding: 0 14px; border-radius: 999px; border: 0; background: rgba(0, 0, 0, .55); color: #fff; font: 600 .9rem/1 var(--body); cursor: pointer; }
 .chip[aria-pressed="true"], .chip[aria-checked="true"] { background: var(--ink); color: var(--field); border-color: var(--ink); }
 .field {
   min-height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--field-deep);
@@ -203,11 +202,9 @@ details p { margin: 0 0 18px; }
   .opt:nth-child(n+2):nth-child(-n+4) { text-align: center; }
   .opt:nth-child(n+2):nth-child(-n+4) .chips { justify-content: center; }
   .opt:nth-child(5) { text-align: right; }
-  /* Room for the last word plus the (i), so the icon never sits alone on a line. */
-  .opt:nth-child(5) { min-width: 10.5rem; }
+  /* Room for the last word plus ? and ▶, so the icons never sit alone on a line. */
+  .opt:nth-child(5) { min-width: 12rem; }
   .opt:nth-child(5) .chips { justify-content: flex-end; }
-  /* Last column: the tip opens toward the left so it stays on screen. */
-  .opt:nth-child(5) .tip { left: auto; right: -10px; }
 }
 
 /* Phones: the first screen is the password alone (header + hero); the
@@ -218,8 +215,6 @@ details p { margin: 0 0 18px; }
 }
 
 @media (max-width: 560px) {
-  /* The (i) sits right of center here: open its tip toward the left. */
-  .tip { left: auto; right: -10px; }
   .btn { flex: 1 1 auto; justify-content: center; }
   kbd { display: none; }
   /* The four testers on one row under the question. */

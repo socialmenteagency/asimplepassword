@@ -58,7 +58,7 @@ function faqSchema(lang) {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     inLanguage: PAGES[lang].htmlLang,
-    mainEntity: [1, 2, 3, 4, 5].map((i) => ({
+    mainEntity: [1, 2, 3, 4, 5, 6].map((i) => ({
       '@type': 'Question', name: d['q' + i],
       acceptedAnswer: { '@type': 'Answer', text: d['a' + i] }
     }))
@@ -105,7 +105,7 @@ function build(template, lang) {
   h = h.replace(/(data-i18n-title="(\w+)"[^>]*?\btitle=")[^"]*"/g, (m, open, key) => open + escAttr(d[key]) + '"');
   h = h.replace(/(data-i18n-placeholder="(\w+)"[^>]*?\bplaceholder=")[^"]*"/g, (m, open, key) => open + escAttr(d[key]) + '"');
   one(/(id="memoInfo"[^>]*aria-label=")[^"]*"/, (m, open) => open + escAttr(d.memoInfo) + '"');
-  one(/(<span class="tip" id="memoTip" role="tooltip">)[^<]*(<\/span>)/, (m, open, close) => open + esc(d.memoTip) + close);
+  one(/(id="memoPlay"[^>]*aria-label=")[^"]*"/, (m, open) => open + escAttr(d.memoPlay) + '"');
 
   // /es/ and /pt/ only need their own word list; / keeps all three because it
   // picks the language in the browser.

@@ -48,6 +48,7 @@
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = dict[el.getAttribute('data-i18n')]; });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) { el.placeholder = dict[el.getAttribute('data-i18n-placeholder')]; });
     document.querySelectorAll('[data-i18n-title]').forEach(function (el) { el.title = dict[el.getAttribute('data-i18n-title')]; });
+    $('memoInfo').setAttribute('aria-label', dict.memoInfo); $('memoPlay').setAttribute('aria-label', dict.memoPlay);
     document.querySelectorAll('.langs a').forEach(function (a) {
       if (a.dataset.lang === lang) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
@@ -67,36 +68,7 @@
       }).join('');
     }
     setStatus(copiedValue === current && current ? 'copied' : 'tapToCopy');
-    memoTip();
   }
-
-  // Tip on "Make it memorable", behind the (i) button: tap or click to open
-  // it (phones have no hover), hover also shows it. With only 3 words it also
-  // says the honest part: a sentence is a bit easier to guess, so add a word.
-  function memoTip() {
-    $('memoTip').textContent = t('memoTip') + (s.memo && s.words === 3 ? ' ' + t('memoTip3') : '');
-    $('memoInfo').setAttribute('aria-label', t('memoInfo'));
-  }
-  function showTip(open) {
-    var tip = $('memoTip');
-    tip.classList.toggle('open', open);
-    $('memoInfo').setAttribute('aria-expanded', String(open));
-    // Keep the bubble on screen on narrow phones.
-    tip.style.transform = '';
-    if (!open) return;
-    // Measured against the options box: on phones the window itself can
-    // widen to fit an overflowing bubble, so it isn't a reliable edge.
-    var r = tip.getBoundingClientRect(), box = document.querySelector('.options').getBoundingClientRect(), dx = 0;
-    if (r.right > box.right) dx = box.right - r.right;
-    if (r.left + dx < box.left) dx = box.left - r.left;
-    if (dx) tip.style.transform = 'translateX(' + dx + 'px)';
-  }
-  $('memoInfo').addEventListener('click', function (e) {
-    e.stopPropagation();
-    showTip($('memoInfo').getAttribute('aria-expanded') !== 'true');
-  });
-  document.addEventListener('pointerdown', function (e) { if (!e.target.closest('.info-wrap')) showTip(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') showTip(false); });
 
   // ---------- rendering ----------
   function render(result, animate) {
@@ -269,7 +241,6 @@
     document.querySelectorAll('#memoSeg .chip').forEach(function (c) { c.setAttribute('aria-checked', String((c.dataset.memo === '1') === s.memo)); });
     // Memorable passwords need at least 3 words.
     document.querySelector('#wordSeg [data-words="2"]').disabled = s.memo;
-    memoTip();
     if (document.activeElement !== maxInput) maxInput.value = s.max || '';
   }
   function changed() { syncControls(); regenerate(true); }
@@ -327,6 +298,7 @@
   // Space makes a new password, unless the visitor is typing or on a control.
   document.addEventListener('keydown', function (e) {
     if (e.key !== ' ' || e.ctrlKey || e.metaKey || e.altKey) return;
+    if ($('videoDlg').open) return;
     if (e.target.closest && e.target.closest('input, textarea, select, button, summary, a')) return;
     e.preventDefault();
     regenerate(true);
@@ -344,6 +316,27 @@
 
   var resizeTimer;
   window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fit, 60); });
+
+  // "Make it memorable": the ? opens its FAQ answer; ▶ and the FAQ button play the film in this page's language.
+  $('memoInfo').addEventListener('click', function (e) {
+    e.preventDefault();
+    var d = $('faqMemo'); d.open = true;
+    d.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    d.querySelector('summary').focus({ preventScroll: true });
+  });
+  var dlg = $('videoDlg'), vid = $('memoVideo');
+  document.querySelectorAll('[data-video]').forEach(function (b) {
+    b.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var src = '/media/memorable-' + lang + '.mp4';
+      if (vid.getAttribute('src') !== src) { vid.setAttribute('src', src); vid.setAttribute('poster', '/media/memorable-' + lang + '.jpg'); }
+      dlg.showModal(); vid.currentTime = 0; var p = vid.play(); if (p && p.catch) p.catch(function () {});
+    });
+  });
+  function closeVideo() { vid.pause(); if (dlg.open) dlg.close(); }
+  $('videoClose').addEventListener('click', closeVideo);
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) closeVideo(); });   // click on the backdrop
+  dlg.addEventListener('close', function () { vid.pause(); });
 
   // ---------- start ----------
   syncControls();

@@ -26,7 +26,7 @@
 <link rel="preload" href="/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css?v=17">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"A Simple Password","url":"https://asimplepassword.com/es/","description":"Una contraseña segura y fácil de recordar, hecha con tres palabras simples y un número. Se genera en tu navegador y se copia sola.","applicationCategory":"SecurityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"es"}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[{"@type":"Question","name":"¿Es suficiente para mi correo o mi banco?","acceptedAnswer":{"@type":"Answer","text":"Para la mayoría de las cuentas, sí: es mucho más difícil de adivinar que una contraseña típica. Para tu correo o tu banco, agrega una palabra: pon 4 o 5 en “Palabras”. ¿Quieres comprobarlo? Prueba los medidores de seguridad de arriba. Mejor aún: guárdala en un gestor de contraseñas y usa una distinta en cada sitio."}},{"@type":"Question","name":"El sitio donde me registro no acepta guiones.","acceptedAnswer":{"@type":"Answer","text":"Escribe el carácter que sí acepta (_ o . o el que sea) en “Entre palabras”, o elige nada."}},{"@type":"Question","name":"¿Por qué cambió mi portapapeles?","acceptedAnswer":{"@type":"Answer","text":"Tu primer toque o tecla en esta página copia la contraseña que ves, para que esté lista para pegar. Cada contraseña nueva también se copia."}},{"@type":"Question","name":"¿Guardan mis contraseñas?","acceptedAnswer":{"@type":"Answer","text":"No. Solo se guarda el idioma que elijas, y solo en este navegador. Cada visita empieza con las opciones predeterminadas. Contamos las visitas con los registros normales del servidor, sin cookies ni rastreadores."}},{"@type":"Question","name":"¿Puedo revisar cómo funciona?","acceptedAnswer":{"@type":"Answer","text":"Sí. El código es público en GitHub, así que cualquiera puede revisarlo: github.com/socialmenteagency/asimplepassword"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[{"@type":"Question","name":"¿Es suficiente para mi correo o mi banco?","acceptedAnswer":{"@type":"Answer","text":"Para la mayoría de las cuentas, sí: es mucho más difícil de adivinar que una contraseña típica. Para tu correo o tu banco, agrega una palabra: pon 4 o 5 en “Palabras”. ¿Quieres comprobarlo? Prueba los medidores de seguridad de arriba. Mejor aún: guárdala en un gestor de contraseñas y usa una distinta en cada sitio."}},{"@type":"Question","name":"El sitio donde me registro no acepta guiones.","acceptedAnswer":{"@type":"Answer","text":"Escribe el carácter que sí acepta (_ o . o el que sea) en “Entre palabras”, o elige nada."}},{"@type":"Question","name":"¿Por qué cambió mi portapapeles?","acceptedAnswer":{"@type":"Answer","text":"Tu primer toque o tecla en esta página copia la contraseña que ves, para que esté lista para pegar. Cada contraseña nueva también se copia."}},{"@type":"Question","name":"¿Guardan mis contraseñas?","acceptedAnswer":{"@type":"Answer","text":"No. Solo se guarda el idioma que elijas, y solo en este navegador. Cada visita empieza con las opciones predeterminadas. Contamos las visitas con los registros normales del servidor, sin cookies ni rastreadores."}},{"@type":"Question","name":"¿Puedo revisar cómo funciona?","acceptedAnswer":{"@type":"Answer","text":"Sí. El código es público en GitHub, así que cualquiera puede revisarlo: github.com/socialmenteagency/asimplepassword"}},{"@type":"Question","name":"¿Qué hace “Hazla memorable”?","acceptedAnswer":{"@type":"Answer","text":"Arma la contraseña como una frase corta que puedes imaginar, como pareja-VENDE-grito-6: una pareja que vende un grito en un frasco. Una imagen se recuerda mejor que una fila de letras. Es algo más fácil de adivinar que tres palabras al azar, así que para tu correo o tu banco agrega una palabra."}}]}</script>
 </head>
 <body>
 <div class="ambient" aria-hidden="true"></div>
@@ -110,7 +110,7 @@
         </fieldset>
 
         <fieldset class="opt" id="memoOpt">
-          <legend><span><span data-i18n="memoLabel">Hazla memorable</span>&nbsp;<span class="info-wrap"><button type="button" class="info" id="memoInfo" aria-expanded="false" aria-controls="memoTip" aria-label="Sobre esta opción">i</button><span class="tip" id="memoTip" role="tooltip">Se lee como una frase corta.</span></span></span></legend>
+          <legend><span><span data-i18n="memoLabel">Hazla memorable</span>&nbsp;<span class="memo-icons"><a class="info" id="memoInfo" href="#faqMemo" aria-label="¿Qué hace esta opción?">?</a><button type="button" class="play" id="memoPlay" data-video aria-label="Mira cómo funciona"><svg aria-hidden="true" viewBox="0 0 24 24" width="12" height="12"><path d="M7 4.5v15l12-7.5z"/></svg></button></span></span></legend>
           <div class="chips seg" role="radiogroup" id="memoSeg">
             <button type="button" class="chip" role="radio" data-memo="1" data-i18n="numOn">Sí</button>
             <button type="button" class="chip" role="radio" data-memo="0" data-i18n="numOff">No</button>
@@ -144,7 +144,7 @@
       <div class="about-col">
         <h2 data-i18n="s1h">Se crea en tu dispositivo. No se envía a ningún lado.</h2>
         <p data-i18n="s1p">Cada contraseña se arma en tu navegador con su generador aleatorio seguro. No hay servidor detrás, ni cuenta, ni registro de tus contraseñas. Cierras la pestaña y desaparece.</p>
-        <h2 data-i18n="s2h">¿Por qué tres palabras?</h2>
+        <h2 data-i18n="s2h">¿Por qué tres palabras por defecto?</h2>
         <p data-i18n="s2p">Una contraseña como gato-PLAYA-verde-3 es fácil de leer, recordar y escribir en el celular, y mucho más difícil de adivinar que las que la gente suele inventar, como Juan131824 o Soyfeliz2023. Esas siguen patrones que cualquier atacante prueba primero: nombres, fechas, frases comunes. Las nuestras salen al azar entre unos 14 mil millones de posibilidades, sin nada tuyo en ellas.</p>
       </div>
       <div class="about-col">
@@ -154,14 +154,20 @@
         <details><summary data-i18n="q3">¿Por qué cambió mi portapapeles?</summary><p data-i18n="a3">Tu primer toque o tecla en esta página copia la contraseña que ves, para que esté lista para pegar. Cada contraseña nueva también se copia.</p></details>
         <details><summary data-i18n="q4">¿Guardan mis contraseñas?</summary><p data-i18n="a4">No. Solo se guarda el idioma que elijas, y solo en este navegador. Cada visita empieza con las opciones predeterminadas. Contamos las visitas con los registros normales del servidor, sin cookies ni rastreadores.</p></details>
         <details><summary data-i18n="q5">¿Puedo revisar cómo funciona?</summary><p data-i18n="a5">Sí. El código es público en GitHub, así que cualquiera puede revisarlo: github.com/socialmenteagency/asimplepassword</p></details>
+        <details id="faqMemo"><summary data-i18n="q6">¿Qué hace “Hazla memorable”?</summary><p data-i18n="a6">Arma la contraseña como una frase corta que puedes imaginar, como pareja-VENDE-grito-6: una pareja que vende un grito en un frasco. Una imagen se recuerda mejor que una fila de letras. Es algo más fácil de adivinar que tres palabras al azar, así que para tu correo o tu banco agrega una palabra.</p><p><button type="button" class="watch" data-video><svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14"><path d="M7 4.5v15l12-7.5z"/></svg><span data-i18n="watch">Mira el video (20 s)</span></button></p></details>
       </div>
     </section>
 
   <footer class="foot"><span>asimplepassword.com</span><span><span data-i18n="footer">Generada en tu navegador. Sin cookies.</span> · <a href="https://github.com/socialmenteagency/asimplepassword" rel="noopener">GitHub</a></span></footer>
 </div>
+<dialog class="video" id="videoDlg" aria-labelledby="videoTitle">
+  <h2 class="sr-only" id="videoTitle" data-i18n="q6">¿Qué hace “Hazla memorable”?</h2>
+  <video id="memoVideo" controls playsinline preload="none" width="1920" height="1080"></video>
+  <button type="button" class="close" id="videoClose" data-i18n="close">Cerrar</button>
+</dialog>
 <script src="/words-es.js?v=3"></script>
-<script src="/i18n.js?v=18"></script>
+<script src="/i18n.js?v=19"></script>
 <script src="/gen.js?v=5"></script>
-<script src="/app.js?v=12"></script>
+<script src="/app.js?v=13"></script>
 </body>
 </html>
