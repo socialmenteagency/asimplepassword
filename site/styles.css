@@ -173,6 +173,21 @@ dialog.video .close { position: absolute; top: 10px; right: 10px; min-height: 36
   .cmp .ours { padding: 18px 16px; }
 }
 
+/* Password manager */
+.pm { border-top: 1px solid var(--line); padding-block: 44px 20px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.pm h2 { margin: 0 0 10px; font: 700 clamp(1.4rem, 2.6vw, 1.9rem)/1.15 var(--display); font-stretch: 112%; letter-spacing: -.01em; }
+.pm p { margin: 0; color: var(--soft); max-width: 58ch; }
+.pm-steps { list-style: none; margin: 0; padding: 0; counter-reset: pm; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.pm-steps li { counter-increment: pm; padding: 20px; background: var(--field-deep); border: 1px solid var(--line); border-radius: 14px; }
+.pm-steps li::before { content: counter(pm); display: block; margin-bottom: 8px; font: 700 1.6rem/1 var(--display); color: var(--accent); }
+.pm-steps h3 { margin: 0 0 6px; font: 700 1.1rem/1.25 var(--display); }
+.pm-steps p { font-size: .95rem; }
+.pm-apps ul { list-style: none; margin: 14px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.pm-apps li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 20px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.pm-apps li a { font: 600 1.05rem/1.3 var(--display); color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 4px; }
+.pm-apps li span { font: 400 .85rem/1.3 var(--mono); color: var(--soft); }
+.pm .fine { margin-top: 14px; font: 400 .8rem/1.4 var(--mono); }
+
 /* About / SEO */
 .about { border-top: 1px solid var(--line); padding-block: 44px 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px 64px; }
 .about h2 { margin: 0 0 10px; font: 700 clamp(1.4rem, 2.6vw, 1.9rem)/1.15 var(--display); font-stretch: 112%; letter-spacing: -.01em; }

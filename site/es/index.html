@@ -24,7 +24,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/anybody-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css?v=17">
+<link rel="stylesheet" href="/styles.css?v=18">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"A Simple Password","url":"https://asimplepassword.com/es/","description":"Una contraseña segura y fácil de recordar, hecha con tres palabras simples y un número. Se genera en tu navegador y se copia sola.","applicationCategory":"SecurityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"es"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[{"@type":"Question","name":"¿Es suficiente para mi correo o mi banco?","acceptedAnswer":{"@type":"Answer","text":"Para la mayoría de las cuentas, sí: es mucho más difícil de adivinar que una contraseña típica. Para tu correo o tu banco, agrega una palabra: pon 4 o 5 en “Palabras”. ¿Quieres comprobarlo? Prueba los medidores de seguridad de arriba. Mejor aún: guárdala en un gestor de contraseñas y usa una distinta en cada sitio."}},{"@type":"Question","name":"El sitio donde me registro no acepta guiones.","acceptedAnswer":{"@type":"Answer","text":"Escribe el carácter que sí acepta (_ o . o el que sea) en “Entre palabras”, o elige nada."}},{"@type":"Question","name":"¿Por qué cambió mi portapapeles?","acceptedAnswer":{"@type":"Answer","text":"Tu primer toque o tecla en esta página copia la contraseña que ves, para que esté lista para pegar. Cada contraseña nueva también se copia."}},{"@type":"Question","name":"¿Guardan mis contraseñas?","acceptedAnswer":{"@type":"Answer","text":"No. Solo se guarda el idioma que elijas, y solo en este navegador. Cada visita empieza con las opciones predeterminadas. Contamos las visitas con los registros normales del servidor, sin cookies ni rastreadores."}},{"@type":"Question","name":"¿Puedo revisar cómo funciona?","acceptedAnswer":{"@type":"Answer","text":"Sí. El código es público en GitHub, así que cualquiera puede revisarlo: github.com/socialmenteagency/asimplepassword"}},{"@type":"Question","name":"¿Qué hace “Hazla memorable”?","acceptedAnswer":{"@type":"Answer","text":"Arma la contraseña como una frase corta que puedes imaginar, como pareja-VENDE-grito-6: una pareja que vende un grito en un frasco. Una imagen se recuerda mejor que una fila de letras. Es algo más fácil de adivinar que tres palabras al azar, así que para tu correo o tu banco agrega una palabra."}}]}</script>
 </head>
@@ -140,6 +140,28 @@
       </div>
     </section>
 
+    <section class="pm" aria-labelledby="pmH">
+      <div class="pm-intro">
+        <h2 id="pmH" data-i18n="pmH">Ahora deja que un gestor de contraseñas se acuerde por ti.</h2>
+        <p data-i18n="pmP">Nadie puede recordar una contraseña distinta para cada sitio. No tienes que hacerlo. Un gestor de contraseñas las crea, las guarda y las escribe por ti. Tú solo recuerdas una.</p>
+      </div>
+      <ol class="pm-steps">
+        <li><h3 data-i18n="pm1h">Recuerda una sola contraseña.</h3><p data-i18n="pm1p">Hazla de cinco palabras aquí (pon 5 en “Palabras”) y apréndela de memoria. Abre tu gestor (o tu cuenta de Apple o Google), así que no la uses en ningún otro lado.</p></li>
+        <li><h3 data-i18n="pm2h">Guarda una copia en papel.</h3><p data-i18n="pm2p">Escríbela en papel y guarda copias en dos lugares seguros, como una caja fuerte en casa y la casa de un familiar o una caja de seguridad en un banco. No en una nota del celular. Si la olvidas, la mayoría de los gestores no puede restablecerla.</p></li>
+        <li><h3 data-i18n="pm3h">Deja que él haga el resto.</h3><p data-i18n="pm3p">Para cada otro sitio, el gestor crea una contraseña larga al azar, la guarda y la completa cada vez que entras. Tú nunca la ves, ni la escribes, ni la recuerdas.</p></li>
+      </ol>
+      <div class="pm-apps">
+        <p data-i18n="pmApps">Elige uno. Los dos primeros quizá ya estén en tu celular:</p>
+        <ul>
+          <li><a href="https://support.apple.com/en-us/120758" target="_blank" rel="noopener noreferrer">Apple Passwords</a><span data-i18n="pmA1">iPhone, iPad y Mac</span></li>
+          <li><a href="https://passwords.google/" target="_blank" rel="noopener noreferrer">Google Password Manager</a><span data-i18n="pmA2">Android y Chrome</span></li>
+          <li><a href="https://1password.com/" target="_blank" rel="noopener noreferrer">1Password</a><span data-i18n="pmA3">Todos los dispositivos, de pago</span></li>
+          <li><a href="https://bitwarden.com/" target="_blank" rel="noopener noreferrer">Bitwarden</a><span data-i18n="pmA4">Todos los dispositivos, con plan gratis</span></li>
+        </ul>
+        <p class="fine" data-i18n="pmFine">Consejo: activa la verificación en dos pasos en tu gestor y en tu correo.</p>
+      </div>
+    </section>
+
     <section class="about">
       <div class="about-col">
         <h2 data-i18n="s1h">Se crea en tu dispositivo. No se envía a ningún lado.</h2>
@@ -166,7 +188,7 @@
   <button type="button" class="close" id="videoClose" data-i18n="close">Cerrar</button>
 </dialog>
 <script src="/words-es.js?v=3"></script>
-<script src="/i18n.js?v=19"></script>
+<script src="/i18n.js?v=20"></script>
 <script src="/gen.js?v=5"></script>
 <script src="/app.js?v=13"></script>
 </body>
