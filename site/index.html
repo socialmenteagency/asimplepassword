@@ -24,7 +24,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/anybody-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css?v=18">
+<link rel="stylesheet" href="/styles.css?v=19">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"A Simple Password","url":"https://asimplepassword.com/","description":"A strong, easy-to-remember password made of three simple words and a number. Generated in your browser and copied for you.","applicationCategory":"SecurityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"Is it strong enough for my email or bank?","acceptedAnswer":{"@type":"Answer","text":"For most accounts, yes: it’s much harder to guess than a typical password. For your email or bank, add a word: set “Words” to 4 or 5. Want to check? Try the strength testers above. Better still, keep it in a password manager and use a different password on every site."}},{"@type":"Question","name":"The site I’m signing up for won’t accept a dash.","acceptedAnswer":{"@type":"Answer","text":"Type the character it does accept (_ or . or anything else) in “Between words”, or choose none."}},{"@type":"Question","name":"Why did my clipboard change?","acceptedAnswer":{"@type":"Answer","text":"Your first tap or key press on this page copies the password on screen, so it’s ready to paste. Every new password is copied too."}},{"@type":"Question","name":"Do you store my passwords?","acceptedAnswer":{"@type":"Answer","text":"No. Nothing is saved except the language you pick, and only in this browser. Every visit starts with the default options. We count visits from the server’s standard logs, with no cookies and no trackers."}},{"@type":"Question","name":"Can I check how it works?","acceptedAnswer":{"@type":"Answer","text":"Yes. The code is public on GitHub, so anyone can check it: github.com/socialmenteagency/asimplepassword"}},{"@type":"Question","name":"What does “Make it memorable” do?","acceptedAnswer":{"@type":"Answer","text":"It builds the password as a tiny sentence you can picture, like couple-SELLS-scream-6: a couple selling a scream in a jar. A picture is easier to remember than a string of letters. It’s a bit easier to guess than three random words, so for your email or bank, add a word."}}]}</script>
 </head>
@@ -110,7 +110,7 @@
         </fieldset>
 
         <fieldset class="opt" id="memoOpt">
-          <legend><span><span data-i18n="memoLabel">Make it memorable</span>&nbsp;<span class="memo-icons"><a class="info" id="memoInfo" href="#faqMemo" aria-label="What does this option do?">?</a><button type="button" class="play" id="memoPlay" data-video aria-label="Watch how it works"><svg aria-hidden="true" viewBox="0 0 24 24" width="12" height="12"><path d="M7 4.5v15l12-7.5z"/></svg></button></span></span></legend>
+          <legend><span><span class="memo-icons"><a class="info" id="memoInfo" href="#faqMemo" aria-label="What does this option do?">?</a><button type="button" class="play" id="memoPlay" data-video aria-label="Watch how it works"><svg aria-hidden="true" viewBox="0 0 24 24" width="12" height="12"><path d="M7 4.5v15l12-7.5z"/></svg></button></span>&nbsp;<span data-i18n="memoLabel">Make it memorable</span></span></legend>
           <div class="chips seg" role="radiogroup" id="memoSeg">
             <button type="button" class="chip" role="radio" data-memo="1" data-i18n="numOn">Yes</button>
             <button type="button" class="chip" role="radio" data-memo="0" data-i18n="numOff">No</button>
@@ -125,7 +125,7 @@
     <section class="cmp" aria-labelledby="cmpH">
       <div class="cmp-intro">
         <h2 id="cmpH" data-i18n="cmpH">Say it out loud.</h2>
-        <p data-i18n="cmpP">These are what other popular password generators hand you by default. All random. Now try reading one to a friend, or typing it on your phone.</p>
+        <p data-i18n="cmpP">Search Google for a strong password generator and these are the ones you find, with the password each hands you by default. All random. Now try reading one to a friend, or typing it on your phone.</p>
       </div>
       <ul class="cmp-list">
         <li><span class="who">Norton</span><code>y<i>9</i>s<i>#7</i>SWUwrL<i>*</i></code><span class="how"><span class="n"><b>12</b> <span data-i18n="cmpChars">characters</span></span><span class="kind" data-i18n="cmpRand">random</span></span></li>
@@ -136,17 +136,17 @@
       </ul>
       <div class="cmp-outro">
         <p data-i18n="cmpEnd">Ours you can say, picture and type without squinting. It’s made of words you know, so it sticks in your head. Need it stronger? Add a word.</p>
-        <p class="fine" data-i18n="cmpFine">Defaults seen on each generator’s own page in September 2026.</p>
       </div>
     </section>
 
     <section class="pm" aria-labelledby="pmH">
       <div class="pm-intro">
         <h2 id="pmH" data-i18n="pmH">Now let a password manager do the remembering.</h2>
-        <p data-i18n="pmP">Nobody can remember a different password for every site. You don’t have to. A password manager makes them, keeps them and types them for you. You remember just one.</p>
+        <p data-i18n="pmWhy">Why not use the same password everywhere? Sites get hacked and their passwords leak. Criminals then try the leaked ones on your email, your bank and everything else, so one leak opens every account.</p>
+        <p data-i18n="pmP">The fix is a different password for every site, and nobody can remember that many. You don’t have to. A password manager makes them, keeps them and types them for you. You remember just one.</p>
       </div>
       <ol class="pm-steps">
-        <li><h3 data-i18n="pm1h">Remember one password.</h3><p data-i18n="pm1p">Make it five words here (set “Words” to 5) and learn it by heart. It opens your manager (or your Apple or Google account), so never use it anywhere else.</p></li>
+        <li><h3 data-i18n="pm1h">Remember one password.</h3><p data-i18n="pm1p">Turn on “Make it memorable”, set “Words” to 4 or 5 and learn it by heart. It opens your manager (or your Apple or Google account), so never use it anywhere else.</p></li>
         <li><h3 data-i18n="pm2h">Keep a paper copy.</h3><p data-i18n="pm2p">Write it on paper and keep copies in two safe places, like a home safe and a relative’s house or a bank box. Not in a phone note. If you forget it, most managers can’t reset it for you.</p></li>
         <li><h3 data-i18n="pm3h">Let it do the rest.</h3><p data-i18n="pm3p">For every other site, the manager creates a long random password, saves it and fills it in each time you log in. You never see it, type it or remember it.</p></li>
       </ol>
@@ -157,6 +157,8 @@
           <li><a href="https://passwords.google/" target="_blank" rel="noopener noreferrer">Google Password Manager</a><span data-i18n="pmA2">Android and Chrome</span></li>
           <li><a href="https://1password.com/" target="_blank" rel="noopener noreferrer">1Password</a><span data-i18n="pmA3">All devices, paid</span></li>
           <li><a href="https://bitwarden.com/" target="_blank" rel="noopener noreferrer">Bitwarden</a><span data-i18n="pmA4">All devices, free plan</span></li>
+          <li><a href="https://nordpass.com/" target="_blank" rel="noopener noreferrer">NordPass</a><span data-i18n="pmA5">All devices, free and paid plans</span></li>
+          <li><a href="https://www.lastpass.com/" target="_blank" rel="noopener noreferrer">LastPass</a><span data-i18n="pmA6">All devices, free and paid plans</span></li>
         </ul>
         <p class="fine" data-i18n="pmFine">Tip: turn on two-step login for your manager and your email.</p>
       </div>
@@ -180,7 +182,7 @@
       </div>
     </section>
 
-  <footer class="foot"><span>asimplepassword.com</span><span><span data-i18n="footer">Generated in your browser. No cookies.</span> · <a href="https://github.com/socialmenteagency/asimplepassword" rel="noopener">GitHub</a></span></footer>
+  <footer class="foot"><span>asimplepassword.com</span><span><span data-i18n="footer">No cookies. No ads. No gluten.</span> · <a href="https://github.com/socialmenteagency/asimplepassword" rel="noopener">GitHub</a> · <a href="https://socialmente.agency" rel="noopener">SocialMente</a></span></footer>
 </div>
 <dialog class="video" id="videoDlg" aria-labelledby="videoTitle">
   <h2 class="sr-only" id="videoTitle" data-i18n="q6">What does “Make it memorable” do?</h2>
@@ -190,7 +192,7 @@
 <script src="/words-en.js?v=3"></script>
 <script src="/words-es.js?v=3"></script>
 <script src="/words-pt.js?v=3"></script>
-<script src="/i18n.js?v=20"></script>
+<script src="/i18n.js?v=21"></script>
 <script src="/gen.js?v=5"></script>
 <script src="/app.js?v=13"></script>
 </body>
