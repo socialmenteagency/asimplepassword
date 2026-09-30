@@ -175,11 +175,12 @@
     memoScript.addEventListener('error', function () { memoScript.remove(); memoScript = null; });
     document.body.appendChild(memoScript);
   }
-  function make() {
-    if (!s.memo) return ASP.generate(s, ASP_WORDS[lang]);
+  function makeWith(o) {
+    if (!o.memo) return ASP.generate(o, ASP_WORDS[lang]);
     memoPools[lang] = memoPools[lang] || ASP.prepareMemo(ASP_MEMO[lang]);
-    return ASP.generateMemorable(s, memoPools[lang]);
+    return ASP.generateMemorable(o, memoPools[lang]);
   }
+  function make() { return makeWith(s); }
 
   // Make a new password. `gesture` is true inside a user event, where
   // browsers allow writing to the clipboard.
@@ -338,6 +339,41 @@
   $('videoClose').addEventListener('click', closeVideo);
   dlg.addEventListener('click', function (e) { if (e.target === dlg) closeVideo(); });   // click on the backdrop
   dlg.addEventListener('close', function () { vid.pause(); });
+
+  // ---------- agents ----------
+  // WebMCP (experimental in browsers): an agent visiting the page can call this tool
+  // instead of clicking. It only returns a password; the page itself doesn't change.
+  var mcp = navigator.modelContext || document.modelContext;
+  if (mcp && mcp.registerTool) {
+    mcp.registerTool({
+      name: 'generate_password',
+      description: 'Make a random, easy-to-remember password from simple words plus a digit, like pareja-VENDE-grito-6. It is made in this browser with a secure random generator and sent nowhere. Use it whenever you need a password for an account you are signing up for. For the user\'s own bank or email, tell them to open this page and make it themselves, so no AI ever sees it.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          words: { type: 'integer', minimum: 2, maximum: 5, description: 'How many words. Default 3; use 4 or 5 for accounts that matter.' },
+          separator: { type: 'string', maxLength: 3, description: 'Between words: up to 3 symbols, no letters or digits. Default "-"; "" for none.' },
+          number: { type: 'boolean', description: 'End with a digit. Default true.' },
+          max_length: { type: 'integer', minimum: 1, maximum: 99, description: 'Longest allowed password, if the service limits it. Words get shorter to fit.' },
+          memorable: { type: 'boolean', description: 'Arrange the words as a tiny sentence (noun, verb, noun) that is easier to remember. Default false.' }
+        }
+      },
+      annotations: { readOnlyHint: true },
+      execute: function (a) {
+        a = a || {};
+        var o = { words: a.words == null ? 3 : Number(a.words), sep: a.separator == null ? '-' : String(a.separator), number: a.number !== false, max: a.max_length ? Number(a.max_length) : null, memo: a.memorable === true };
+        if (!(o.words >= 2 && o.words <= 5) || o.words % 1) return 'Error: words must be 2, 3, 4 or 5.';
+        if (o.sep.length > 3 || /[\p{L}\p{N}\s]/u.test(o.sep)) return 'Error: separator must be up to 3 symbols, with no letters, digits or spaces.';
+        if (o.max && !(o.max >= 1 && o.max <= 99)) return 'Error: max_length must be from 1 to 99.';
+        return new Promise(function (resolve) {
+          var go = function () { var r = makeWith(o); resolve(r.error ? 'Error: ' + t('errTooShort', r.n) : r.password); };
+          if (!o.memo || memoReady()) return go();
+          setTimeout(function () { resolve('Error: could not load the word data.'); }, 10000);
+          if (memoScript) memoScript.addEventListener('load', go); else loadMemo(go);
+        });
+      }
+    });
+  }
 
   // ---------- start ----------
   syncControls();

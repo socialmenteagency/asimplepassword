@@ -2,9 +2,18 @@
 
 A password you can read, remember and paste: `found-PLANT-dance-3`.
 Three simple words (lowercase, UPPERCASE, lowercase) and a number, generated in the browser.
-No backend, no account, no cookies. English at `/`, Spanish at `/es/`, Brazilian Portuguese at `/pt/`.
+No backend for the page, no account, no cookies. English at `/`, Spanish at `/es/`, Brazilian Portuguese at `/pt/`. One small PHP endpoint serves AI agents (see below).
 
-**License:** the code is public so anyone can read it and check that passwords are made in the browser and sent nowhere. It is not open source: all rights reserved, see [LICENSE](LICENSE).
+**License:** the code is public so anyone can read it and check that passwords are made in the browser and sent nowhere (the agent endpoint is the one exception, below). It is not open source: all rights reserved, see [LICENSE](LICENSE).
+
+## AI agents
+
+The site is meant to be the place agents get passwords, without giving them a recipe to copy:
+
+- `site/llms.txt` tells agents what to do: send users to the page for their own accounts; use the site themselves when they need a memorable password for a service they sign up for.
+- The page registers a `generate_password` WebMCP (`navigator.modelContext`, experimental in Chrome) tool (`site/app.js`, "agents" section). It runs in the browser and returns only a password.
+- `GET /api/password` ([`site/api/password.php`](site/api/password.php)) is for agents that can only fetch a URL: plain text or `format=json`, same options and word lists as the page. **This runs on the server**, so it is the one place a password is not made in the visitor's browser: it stores and logs nothing (the URL carries only the options), and the page says so in the last FAQ answer. Keep it in step with `site/gen.js`; `tools/check-api.js` tests it live.
+- The password written in the static HTML is a fixed example; an HTML comment and a `<noscript>` note say so.
 
 ## How it works
 
@@ -43,13 +52,15 @@ cPanel MCP (`write_file`, domain `asimplepassword.com`). Then check that the liv
 ./tools/check-live.sh
 ```
 
-It compares every file in `site/` except `.htaccess` and `og.jpg`, and checks that the old design proposal (`index2.*`) is still offline. A GitHub Action (`.github/workflows/live-check.yml`) runs it every day and fails, with an email to the repo owner, if the live site differs from `main`.
+It compares every file in `site/` except `.htaccess`, `og.jpg` and `api/password.php` (PHP runs instead of being served; `tools/check-api.js` tests its output), and checks that the old design proposal (`index2.*`) is still offline. A GitHub Action (`.github/workflows/live-check.yml`) runs it every day and fails, with an email to the repo owner, if the live site differs from `main`.
 
 `.htaccess` can't be fetched over HTTP; compare it with cPanel `Fileman::get_file_content`.
 
 Two things learned the hard way (23-sep-2026):
 - Always pass `dir: /home/mqcapijl/asimplepassword.com` to `write_file`. Without it the tool writes to `public_html/<domain>` and fails with "no existe".
 - Upload `index.html` with `upload_file` (base64), not `write_file`. As plain text the request gets dropped ("fetch failed"), apparently by the server's web firewall, and repeated hits can get this Mac's IP banned from the whole server (it happened on 23-sep; Raiola's client area has an unblock option). Upload one file at a time and verify once at the end.
+- `write_file` only overwrites: a new file (like `api/password.php` on 30-sep-2026) needs its folder (`call_api2_raw` Fileman `mkdir`) and a first `upload_file` before `write_file` works.
+
 Bump the `?v=` query on the assets in `site/index.html` whenever CSS/JS changes: they're cached for a year.
 
 ## Security

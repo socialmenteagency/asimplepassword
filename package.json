@@ -3,6 +3,6 @@
   "private": true,
   "description": "asimplepassword.com: three simple words and a number, generated in the browser.",
   "scripts": {
-    "test": "node tests/gen.test.js"
+    "test": "node tests/gen.test.js && node tests/api-format.test.js"
   }
 }

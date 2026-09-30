@@ -1,10 +1,10 @@
 # CLAUDE.md: asimplepassword
 
-Static site, no backend. Everything the visitor sees is in `site/`.
+Static site. Everything the visitor sees is in `site/`. The one server-side piece is the agent endpoint `site/api/password.php` (added 30-sep-2026, decided by Rafael): keep it in step with `site/gen.js`, and never log or store what it generates.
 
 - Docs and decisions live in the KB: `claude-code-kb/SocialMente/ASIMPLEPASSWORD/ASIMPLEPASSWORD_MASTER_MAP.md`.
 - Work in a worktree, stage by explicit path, and push to `main`. Then upload the changed files through the cPanel MCP and verify the live copies (README, Deploy).
-- `npm test` must pass before pushing (length logic).
+- `npm test` must pass before pushing (length logic, and the word-file layout the PHP endpoint parses). After a deploy, `./tools/check-live.sh` also runs `tools/check-api.js` against the live endpoint.
 - Don't add third-party requests to the page: the privacy promise ("generated in your browser, sent nowhere") is the product. The page loads nothing from other hosts (fonts are self-hosted in `site/fonts/`); the CSP in `site/.htaccess` enforces it. `memo-*.js` loads only when "Make it memorable" is switched on, and `/es/` and `/pt/` load only their own word list. Visits are counted from the server logs (cPanel AWStats), not a script.
 - Changing CSS/JS → bump `?v=` in `site/index.html`.
 - `site/index.html` is the English template. After changing it or `site/i18n.js`, run `node tools/build-pages.js`: it writes `site/es/index.html` and `site/pt/index.html`. Never hand-edit those two.

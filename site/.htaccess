@@ -4,6 +4,9 @@ RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://asimplepassword.com%{REQUEST_URI} [L,R=301]
 
+# Clean URL for the agent endpoint (api/password.php).
+RewriteRule ^api/password/?$ api/password.php [L]
+
 # Only the site's own files (fonts included, in /fonts/). Visits are counted from the server logs (cPanel AWStats), with no script.
 <IfModule mod_headers.c>
   Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"

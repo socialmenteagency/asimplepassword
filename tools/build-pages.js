@@ -58,7 +58,7 @@ function faqSchema(lang) {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     inLanguage: PAGES[lang].htmlLang,
-    mainEntity: [1, 2, 3, 4, 5, 6].map((i) => ({
+    mainEntity: [1, 2, 3, 4, 5, 6, 7].map((i) => ({
       '@type': 'Question', name: d['q' + i],
       acceptedAnswer: { '@type': 'Answer', text: d['a' + i] }
     }))

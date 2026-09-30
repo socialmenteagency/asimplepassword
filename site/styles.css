@@ -185,6 +185,7 @@ dialog.video .close { position: absolute; top: 10px; right: 10px; min-height: 36
 .pm h2 { margin: 0 0 10px; font: 700 clamp(1.4rem, 2.6vw, 1.9rem)/1.15 var(--display); font-stretch: 112%; letter-spacing: -.01em; }
 .pm p { margin: 0; color: var(--soft); text-wrap: balance; }
 .pm-intro p + p { margin-top: 12px; }
+.pm-intro a { color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 4px; }
 .pm-steps { list-style: none; margin: 0; padding: 0; counter-reset: pm; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
 .pm-steps li { counter-increment: pm; padding: 20px; background: var(--field-deep); border: 1px solid var(--line); border-radius: 14px; }
 .pm-steps li::before { content: counter(pm); display: block; margin-bottom: 8px; font: 700 1.6rem/1 var(--display); color: var(--accent); }
