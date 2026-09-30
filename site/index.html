@@ -24,7 +24,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/anybody-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css?v=15">
+<link rel="stylesheet" href="/styles.css?v=17">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"A Simple Password","url":"https://asimplepassword.com/","description":"A strong, easy-to-remember password made of three simple words and a number. Generated in your browser and copied for you.","applicationCategory":"SecurityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"Is it strong enough for my email or bank?","acceptedAnswer":{"@type":"Answer","text":"For most accounts, yes: it’s much harder to guess than a typical password. For your email or bank, add a word: set “Words” to 4 or 5. Want to check? Try the strength testers above. Better still, keep it in a password manager and use a different password on every site."}},{"@type":"Question","name":"The site I’m signing up for won’t accept a dash.","acceptedAnswer":{"@type":"Answer","text":"Type the character it does accept (_ or . or anything else) in “Between words”, or choose none."}},{"@type":"Question","name":"Why did my clipboard change?","acceptedAnswer":{"@type":"Answer","text":"Your first tap or key press on this page copies the password on screen, so it’s ready to paste. Every new password is copied too."}},{"@type":"Question","name":"Do you store my passwords?","acceptedAnswer":{"@type":"Answer","text":"No. Nothing is saved except the language you pick, and only in this browser. Every visit starts with the default options. We count visits from the server’s standard logs, with no cookies and no trackers."}},{"@type":"Question","name":"Can I check how it works?","acceptedAnswer":{"@type":"Answer","text":"Yes. The code is public on GitHub, so anyone can check it: github.com/socialmenteagency/asimplepassword"}}]}</script>
 </head>
@@ -122,6 +122,24 @@
   </main>
 </div>
 
+    <section class="cmp" aria-labelledby="cmpH">
+      <div class="cmp-intro">
+        <h2 id="cmpH" data-i18n="cmpH">Say it out loud.</h2>
+        <p data-i18n="cmpP">These are what other popular password generators hand you by default. All random. Now try reading one to a friend, or typing it on your phone.</p>
+      </div>
+      <ul class="cmp-list">
+        <li><span class="who">Norton</span><code>y<i>9</i>s<i>#7</i>SWUwrL<i>*</i></code><span class="how"><span class="n"><b>12</b> <span data-i18n="cmpChars">characters</span></span><span class="kind" data-i18n="cmpRand">random</span></span></li>
+        <li><span class="who">LastPass</span><code>R<i>?5</i>u<i>(5\2</i>Lr<i>02</i></code><span class="how"><span class="n"><b>12</b> <span data-i18n="cmpChars">characters</span></span><span class="kind" data-i18n="cmpRand">random</span></span></li>
+        <li><span class="who">Avast</span><code>Cd<i>2</i>MuutTD<i>0</i>cOfush</code><span class="how"><span class="n"><b>16</b> <span data-i18n="cmpChars">characters</span></span><span class="kind" data-i18n="cmpRand">random</span></span></li>
+        <li><span class="who">1Password</span><code>gNvAor<i>8</i>s<i>9</i>WEsv<i>5</i>Bk<i>6</i>FAX</code><span class="how"><span class="n"><b>20</b> <span data-i18n="cmpChars">characters</span></span><span class="kind" data-i18n="cmpRand">random</span></span></li>
+        <li class="ours"><span class="who">asimplepassword.com</span><code><span class="g">found</span><span class="sep">-</span><span class="g">PLANT</span><span class="sep">-</span><span class="g">dance</span><span class="sep">-</span><span class="num">3</span></code><span class="how"><span class="n"><b>19</b> <span data-i18n="cmpChars">characters</span></span><span class="kind" data-i18n="cmpMours">3 words and a number</span></span></li>
+      </ul>
+      <div class="cmp-outro">
+        <p data-i18n="cmpEnd">Ours you can say, picture and type without squinting. It’s made of words you know, so it sticks in your head. Need it stronger? Add a word.</p>
+        <p class="fine" data-i18n="cmpFine">Defaults seen on each generator’s own page in September 2026.</p>
+      </div>
+    </section>
+
     <section class="about">
       <div class="about-col">
         <h2 data-i18n="s1h">Made on your device. Sent nowhere.</h2>
@@ -144,8 +162,8 @@
 <script src="/words-en.js?v=3"></script>
 <script src="/words-es.js?v=3"></script>
 <script src="/words-pt.js?v=3"></script>
-<script src="/i18n.js?v=16"></script>
+<script src="/i18n.js?v=18"></script>
 <script src="/gen.js?v=5"></script>
-<script src="/app.js?v=11"></script>
+<script src="/app.js?v=12"></script>
 </body>
 </html>

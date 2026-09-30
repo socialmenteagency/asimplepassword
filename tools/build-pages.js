@@ -115,6 +115,12 @@ function build(template, lang) {
     }
   }
 
+  // Our row in the comparison: the same sample, one span per word (app.js does this too).
+  one(/(<li class="ours">[\s\S]*?<code>)[\s\S]*?(<\/code>)/, (m, open, close) => {
+    const parts = d.cmpSample.split('-');
+    return open + parts.map((t, i) => i < parts.length - 1 ? '<span class="g">' + esc(t) + '</span><span class="sep">-</span>' : '<span class="num">' + esc(t) + '</span>').join('') + close;
+  });
+
   // The sample password and its length, until the script draws a new one.
   one(/(<output class="pw" id="pw"[^>]*>)[\s\S]*?(<\/output>)/, (m, open, close) => open + sampleHtml(p.sample) + close);
   one(/(<span id="chkLength">)[^<]*(<\/span>)/, (m, open, close) => open + esc(d.chkLength.replace('{n}', p.sample.length)) + close);

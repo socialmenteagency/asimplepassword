@@ -58,6 +58,14 @@
     document.querySelector('[data-i18n="s2p"]').textContent = dict.s2p
       .replace('{words}', fmt(Math.round(n / 100) * 100))
       .replace('{combos}', fmt(Math.pow(n, 3) * 10, { notation: 'compact', compactDisplay: 'long', maximumSignificantDigits: 2 }));
+    // Our row in the comparison shows a sample in this language (found-PLANT-dance-3).
+    var ours = document.querySelector('.cmp .ours code');
+    if (ours) {
+      var parts = dict.cmpSample.split('-');
+      ours.innerHTML = parts.map(function (p, i) {
+        return (i < parts.length - 1 ? '<span class="g">' + p + '</span><span class="sep">-</span>' : '<span class="num">' + p + '</span>');
+      }).join('');
+    }
     setStatus(copiedValue === current && current ? 'copied' : 'tapToCopy');
     memoTip();
   }
