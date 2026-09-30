@@ -49,6 +49,7 @@
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) { el.placeholder = dict[el.getAttribute('data-i18n-placeholder')]; });
     document.querySelectorAll('[data-i18n-title]').forEach(function (el) { el.title = dict[el.getAttribute('data-i18n-title')]; });
     $('memoInfo').setAttribute('aria-label', dict.memoInfo); $('memoPlay').setAttribute('aria-label', dict.memoPlay);
+    $('vidPoster').setAttribute('src', '/media/memorable-' + lang + '.jpg');
     document.querySelectorAll('.langs a').forEach(function (a) {
       if (a.dataset.lang === lang) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });

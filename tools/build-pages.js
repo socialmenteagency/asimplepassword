@@ -106,6 +106,7 @@ function build(template, lang) {
   h = h.replace(/(data-i18n-placeholder="(\w+)"[^>]*?\bplaceholder=")[^"]*"/g, (m, open, key) => open + escAttr(d[key]) + '"');
   one(/(id="memoInfo"[^>]*aria-label=")[^"]*"/, (m, open) => open + escAttr(d.memoInfo) + '"');
   one(/(id="memoPlay"[^>]*aria-label=")[^"]*"/, (m, open) => open + escAttr(d.memoPlay) + '"');
+  one(/(id="vidPoster" src="\/media\/memorable-)\w+(\.jpg")/, (m, a, b) => a + lang + b);
 
   // /es/ and /pt/ only need their own word list; / keeps all three because it
   // picks the language in the browser.

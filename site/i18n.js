@@ -73,6 +73,8 @@ window.ASP_I18N = {
     q6: 'What does “Make it memorable” do?',
     a6: 'It builds the password as a tiny sentence you can picture, like couple-SELLS-scream-6: a couple selling a scream in a jar. A picture is easier to remember than a string of letters. It’s a bit easier to guess than three random words, so for your email or bank, add a word.',
     watch: 'Watch the video (20 s)',
+    vidH: 'See how it works',
+    vidP: 'A 20-second picture story: how a password turns into something you can remember.',
     close: 'Close',
     footer: 'No cookies. No ads. No gluten.'
   },
@@ -149,6 +151,8 @@ window.ASP_I18N = {
     q6: '¿Qué hace “Hazla memorable”?',
     a6: 'Arma la contraseña como una frase corta que puedes imaginar, como pareja-VENDE-grito-6: una pareja que vende un grito en un frasco. Una imagen se recuerda mejor que una fila de letras. Es algo más fácil de adivinar que tres palabras al azar, así que para tu correo o tu banco agrega una palabra.',
     watch: 'Mira el video (20 s)',
+    vidH: 'Mira cómo funciona',
+    vidP: 'Una historia en imágenes de 20 segundos: cómo una contraseña se vuelve algo que puedes recordar.',
     close: 'Cerrar',
     footer: 'Sin cookies. Sin anuncios. Sin gluten.'
   },
@@ -225,6 +229,8 @@ window.ASP_I18N = {
     q6: 'O que faz “Deixar memorável”?',
     a6: 'Monta a senha como uma frase curta que você consegue imaginar, como casal-VENDE-grito-6: um casal que vende um grito num pote. Uma imagem é mais fácil de lembrar do que uma fila de letras. É um pouco mais fácil de adivinhar do que três palavras aleatórias, então para o seu e-mail ou banco adicione uma palavra.',
     watch: 'Veja o vídeo (20 s)',
+    vidH: 'Veja como funciona',
+    vidP: 'Uma história em imagens de 20 segundos: como uma senha vira algo que você consegue lembrar.',
     close: 'Fechar',
     footer: 'Sem cookies. Sem anúncios. Sem glúten.'
   }

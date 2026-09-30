@@ -199,6 +199,17 @@ dialog.video .close { position: absolute; top: 10px; right: 10px; min-height: 36
 }
 .pm .fine { margin-top: 14px; font: 400 .8rem/1.4 var(--mono); }
 
+/* Film: poster with a big play button, above the footer */
+.vid { border-top: 1px solid var(--line); padding-block: 44px 56px; }
+.vid h2 { margin: 0 0 10px; font: 700 clamp(1.4rem, 2.6vw, 1.9rem)/1.15 var(--display); font-stretch: 112%; letter-spacing: -.01em; text-wrap: balance; }
+.vid p { margin: 0 0 24px; color: var(--soft); text-wrap: balance; }
+.vid-card { position: relative; display: block; width: 100%; max-width: 880px; padding: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--field-deep); }
+.vid-card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+.vid-play { position: absolute; inset: 0; margin: auto; display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: var(--ink); color: var(--field); transition: transform .15s ease, background-color .15s ease; }
+.vid-play svg { fill: currentColor; margin-left: 4px; }
+.vid-card:hover .vid-play { transform: scale(1.08); background: #fff; }
+@media (prefers-reduced-motion: reduce) { .vid-play { transition: none; } }
+
 /* About / SEO */
 .about { border-top: 1px solid var(--line); padding-block: 44px 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px 64px; }
 .about h2 { margin: 0 0 10px; font: 700 clamp(1.4rem, 2.6vw, 1.9rem)/1.15 var(--display); font-stretch: 112%; letter-spacing: -.01em; }
