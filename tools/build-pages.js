@@ -11,9 +11,9 @@ const vm = require('vm');
 const SITE = path.join(__dirname, '..', 'site');
 const ORIGIN = 'https://asimplepassword.com';
 const PAGES = {
-  en: { dir: '', htmlLang: 'en', sample: 'found-PLANT-dance-3' },
-  es: { dir: 'es', htmlLang: 'es', sample: 'gato-PLAYA-verde-3' },
-  pt: { dir: 'pt', htmlLang: 'pt-BR', sample: 'gato-PRAIA-verde-3' }
+  en: { dir: '', htmlLang: 'en', sample: 'pareja-VENDE-grito-6' },
+  es: { dir: 'es', htmlLang: 'es', sample: 'pareja-VENDE-grito-6' },
+  pt: { dir: 'pt', htmlLang: 'pt-BR', sample: 'pareja-VENDE-grito-6' }
 };
 
 // Load the same data files the page loads.
