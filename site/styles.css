@@ -152,7 +152,7 @@ dialog.video .close { position: absolute; top: 10px; right: 10px; min-height: 36
 .cmp { border-top: 1px solid var(--line); padding-block: 44px 20px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px 64px; }
 .cmp h2 { margin: 0 0 10px; font: 700 clamp(1.4rem, 2.6vw, 1.9rem)/1.15 var(--display); font-stretch: 112%; letter-spacing: -.01em; }
 .cmp h2, .pm h2 { text-wrap: balance; }
-.cmp p { margin: 0; color: var(--soft); max-width: 58ch; text-wrap: balance; }
+.cmp p { margin: 0; color: var(--soft); text-wrap: balance; }
 .cmp-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .cmp-list li { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) auto; align-items: center; gap: 4px 20px; padding: 16px 0; border-bottom: 1px solid var(--line); }
 .cmp .who { font: 600 .78rem/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
@@ -183,7 +183,7 @@ dialog.video .close { position: absolute; top: 10px; right: 10px; min-height: 36
 /* Password manager */
 .pm { border-top: 1px solid var(--line); padding-block: 44px 20px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 .pm h2 { margin: 0 0 10px; font: 700 clamp(1.4rem, 2.6vw, 1.9rem)/1.15 var(--display); font-stretch: 112%; letter-spacing: -.01em; }
-.pm p { margin: 0; color: var(--soft); max-width: 58ch; text-wrap: balance; }
+.pm p { margin: 0; color: var(--soft); text-wrap: balance; }
 .pm-intro p + p { margin-top: 12px; }
 .pm-steps { list-style: none; margin: 0; padding: 0; counter-reset: pm; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
 .pm-steps li { counter-increment: pm; padding: 20px; background: var(--field-deep); border: 1px solid var(--line); border-radius: 14px; }
