@@ -1,6 +1,6 @@
 <?php
 // Password endpoint for AI agents that can fetch a URL but can't run the page:
-//   GET https://asimplepassword.com/api/password?words=3&sep=-&number=1&max=&memorable=0&lang=en&format=text
+//   GET https://asimplepassword.com/api/password?words=3&sep=-&number=1&max=&memorable=1&lang=en&format=text
 // Same rules and same word lists as the page (gen.js, words-*.js, memo-*.js); randomness
 // from random_int() (the OS CSPRNG). Unlike the page, this runs on our server: nothing is
 // stored and the password is never written to a log (the URL only carries the options).
@@ -52,7 +52,8 @@ if (isset($q['sep'])) {
 }
 
 $number = flag($q, 'number', true, $format);
-$memorable = flag($q, 'memorable', false, $format);
+// On by default, as on the page, where it needs 3 or more words.
+$memorable = flag($q, 'memorable', $words >= 3, $format);
 
 $max = 0;
 if (isset($q['max']) && $q['max'] !== '') {

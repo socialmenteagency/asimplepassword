@@ -361,13 +361,15 @@
           separator: { type: 'string', maxLength: 3, description: 'Between words: up to 3 symbols, no letters or digits. Default "-"; "" for none.' },
           number: { type: 'boolean', description: 'End with a digit. Default true.' },
           max_length: { type: 'integer', minimum: 1, maximum: 99, description: 'Longest allowed password, if the service limits it. Words get shorter to fit.' },
-          memorable: { type: 'boolean', description: 'Arrange the words as a tiny sentence (noun, verb, noun) that is easier to remember. Default false.' }
+          memorable: { type: 'boolean', description: 'Arrange the words as a tiny sentence (noun, verb, noun) that is easier to remember. Default true (false with 2 words).' }
         }
       },
       annotations: { readOnlyHint: true },
       execute: function (a) {
         a = a || {};
-        var o = { words: a.words == null ? 3 : Number(a.words), sep: a.separator == null ? '-' : String(a.separator), number: a.number !== false, max: a.max_length ? Number(a.max_length) : null, memo: a.memorable === true };
+        var o = { words: a.words == null ? 3 : Number(a.words), sep: a.separator == null ? '-' : String(a.separator), number: a.number !== false, max: a.max_length ? Number(a.max_length) : null, memo: a.memorable !== false };
+        // On by default, as on the page, where it needs 3 or more words.
+        if (a.memorable == null && o.words < 3) o.memo = false;
         if (!(o.words >= 2 && o.words <= 5) || o.words % 1) return 'Error: words must be 2, 3, 4 or 5.';
         if (o.sep.length > 3 || /[\p{L}\p{N}\s]/u.test(o.sep)) return 'Error: separator must be up to 3 symbols, with no letters, digits or spaces.';
         if (o.max && !(o.max >= 1 && o.max <= 99)) return 'Error: max_length must be from 1 to 99.';

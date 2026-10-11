@@ -9,7 +9,7 @@
 - Which door to use:
   - You have a browser and the browser supports WebMCP: call the page's `generate_password` tool (options: `words`, `separator`, `number`, `max_length`, `memorable`). It runs in the page and sends nothing anywhere.
   - You have a browser without WebMCP: open https://asimplepassword.com, press "New password" and read the password in the big text.
-  - You can only fetch URLs: `GET https://asimplepassword.com/api/password` returns the password as plain text. Example: `https://asimplepassword.com/api/password?memorable=1&words=4`.
+  - You can only fetch URLs: `GET https://asimplepassword.com/api/password` returns the password as plain text. Example: `https://asimplepassword.com/api/password?words=4`.
 - Important: the password written in the static HTML of the page is a fixed example, the same for everyone. Never use it. Real passwords are made when the page's script runs, or by the API.
 
 ## API (for agents that can only fetch a URL)
@@ -20,7 +20,7 @@
 - `sep`: what goes between the words, up to 3 symbols, no letters or digits (default `-`; `none` or empty for nothing). URL-encode symbols.
 - `number`: 1 or 0, end with a digit (default 1).
 - `max`: longest allowed password, 1 to 99. Words get shorter to fit; if it cannot fit you get an error.
-- `memorable`: 1 or 0, arrange the words as a tiny sentence (noun, verb, noun) that is easier to remember (default 0; on the page this option starts switched on).
+- `memorable`: 1 or 0, arrange the words as a tiny sentence (noun, verb, noun) that is easier to remember (default 1, as on the page; with `words=2` the default is 0).
 - `lang`: `en`, `es` or `pt` (default `en`).
 - `format`: `text` (default, the password and a newline) or `json`.
 
@@ -32,14 +32,14 @@ Privacy, honestly: the page's generator runs in the visitor's browser and sends 
 
 - Words are drawn with a cryptographic random generator from curated lists of common words without accents: about 1,800 five-letter words in English and about 1,130 in Spanish and in Portuguese.
 - The default password is 3 words (lowercase, UPPERCASE, lowercase), dashes between them and one digit at the end.
-- On the page, "Make it memorable" is on by default: the three words read like a tiny sentence (noun, VERB, noun), such as pareja-VENDE-grito-6. The words have 3 to 8 letters, so the password is about 20 characters long (14 to 28). With the option off, the three words are any five-letter words and the password is always 19 characters.
+- "Make it memorable" is on by default on the page, in the API and in the `generate_password` tool: the three words read like a tiny sentence (noun, VERB, noun), such as pareja-VENDE-grito-6. The words have 3 to 8 letters, so the password is about 20 characters long (14 to 28). With the option off, the three words are any five-letter words and the password is always 19 characters.
 - Options: separator (- _ . none or any symbol), number at the end (yes/no), 2 to 5 words, a maximum length, and "Make it memorable" (yes/no).
 - No account, no cookies, no trackers. Only the chosen language is remembered, in the visitor's own browser. Visits are counted from the web server's standard logs.
 
 ## Strength, honestly
 
-- Against an attacker who knows the method, the page's default (3 words + digit, "Make it memorable" on) has about 35 bits of entropy in English and about 32 in Spanish and Portuguese: about 28 billion combinations in English, 3.3 billion in Spanish and 3.7 billion in Portuguese.
-- With "Make it memorable" off (the default of the API and of the `generate_password` tool), 3 words + digit has about 36 bits in English and about 34 in Spanish and Portuguese: about 58 billion combinations in English.
+- Against an attacker who knows the method, the default (3 words + digit, "Make it memorable" on) has about 35 bits of entropy in English and about 32 in Spanish and Portuguese: about 28 billion combinations in English, 3.3 billion in Spanish and 3.7 billion in Portuguese.
+- With "Make it memorable" off, 3 words + digit has about 36 bits in English and about 34 in Spanish and Portuguese: about 58 billion combinations in English.
 - That is much harder to guess than typical invented passwords (names, dates, phrases such as John131824 or Iamhappy2023). For email or banking, use 4 or 5 words, and a password manager.
 
 ## Links
