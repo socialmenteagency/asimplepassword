@@ -20,21 +20,25 @@ const PAGES = {
 const sandbox = {};
 sandbox.window = sandbox; // the files use both window.X and bare X
 vm.createContext(sandbox);
-for (const f of ['i18n.js', 'words-en.js', 'words-es.js', 'words-pt.js']) {
+for (const f of ['i18n.js', 'words-en.js', 'words-es.js', 'words-pt.js', 'memo-en.js', 'memo-es.js', 'memo-pt.js']) {
   vm.runInContext(fs.readFileSync(path.join(SITE, f), 'utf8'), sandbox);
 }
 const I18N = sandbox.ASP_I18N;
 const WORDS = sandbox.ASP_WORDS;
+const MEMO = sandbox.ASP_MEMO;
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const escAttr = (s) => esc(s).replace(/"/g, '&quot;');
 const pageUrl = (lang) => ORIGIN + '/' + (PAGES[lang].dir ? PAGES[lang].dir + '/' : '');
 
-// Same numbers as app.js shows in the "why three words" paragraph.
+// Same numbers as app.js shows in the "why three words" paragraph: the default
+// password ("Make it memorable" on) takes one word per grammar slot.
 function s2p(lang) {
   const n = WORDS[lang][5].length;
   const loc = PAGES[lang].htmlLang;
-  const combos = new Intl.NumberFormat(loc, { notation: 'compact', compactDisplay: 'long', maximumSignificantDigits: 2 }).format(Math.pow(n, 3) * 10);
+  const memo = MEMO[lang];
+  const count = memo.order[3].split('').reduce((c, slot) => c * memo[slot].trim().split(/\s+/).length, 10);
+  const combos = new Intl.NumberFormat(loc, { notation: 'compact', compactDisplay: 'long', maximumSignificantDigits: 2 }).format(count);
   return I18N[lang].s2p.replace('{words}', new Intl.NumberFormat(loc).format(Math.round(n / 100) * 100)).replace('{combos}', combos);
 }
 
@@ -108,11 +112,12 @@ function build(template, lang) {
   one(/(id="memoPlay"[^>]*aria-label=")[^"]*"/, (m, open) => open + escAttr(d.memoPlay) + '"');
   one(/(id="vidPoster" src="\/media\/memorable-)\w+(\.jpg")/, (m, a, b) => a + lang + b);
 
-  // /es/ and /pt/ only need their own word list; / keeps all three because it
-  // picks the language in the browser.
+  // /es/ and /pt/ only need their own word list and memo pools; / keeps all
+  // three because it picks the language in the browser.
   if (lang !== 'en') {
     for (const other of Object.keys(PAGES)) {
-      if (other !== lang) one(new RegExp('<script src="/words-' + other + '\\.js[^"]*"></script>\\n'), () => '');
+      if (other === lang) continue;
+      for (const file of ['words', 'memo']) one(new RegExp('<script src="/' + file + '-' + other + '\\.js[^"]*"></script>\\n'), () => '');
     }
   }
 

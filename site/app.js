@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var DEFAULTS = { sep: '-', number: true, words: 3, max: null, memo: false };
+  var DEFAULTS = { sep: '-', number: true, words: 3, max: null, memo: true };
   var STORE = 'asp:v1';
   var LANGS = { en: 'en', es: 'es', pt: 'pt-BR' };
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -56,10 +56,13 @@
 
     // Honest numbers for the "why three words" paragraph, from the real list size.
     var n = ASP_WORDS[lang][5].length;
+    // The default password takes one word per grammar slot ("Make it memorable" is on).
+    var memo = DEFAULTS.memo && memoReady() && ASP_MEMO[lang];
+    var combos = memo ? memo.order[3].split('').reduce(function (c, slot) { return c * memo[slot].trim().split(/\s+/).length; }, 10) : Math.pow(n, 3) * 10;
     var fmt = function (v, opts) { try { return new Intl.NumberFormat(LANGS[lang], opts).format(v); } catch (e) { return String(v); } };
     document.querySelector('[data-i18n="s2p"]').textContent = dict.s2p
       .replace('{words}', fmt(Math.round(n / 100) * 100))
-      .replace('{combos}', fmt(Math.pow(n, 3) * 10, { notation: 'compact', compactDisplay: 'long', maximumSignificantDigits: 2 }));
+      .replace('{combos}', fmt(combos, { notation: 'compact', compactDisplay: 'long', maximumSignificantDigits: 2 }));
     // Our row in the comparison shows a sample in this language (found-PLANT-dance-3).
     var ours = document.querySelector('.cmp .ours code');
     if (ours) {
@@ -164,9 +167,12 @@
 
   // "Make it memorable" draws from grammar pools (noun, verb, adjective),
   // split into length buckets the first time a language needs them.
-  // Its data file is only fetched the first time the option is switched on.
+  // The option is on by default, so the page loads its data file with the other
+  // scripts. If that file didn't arrive, start with the option off: switching
+  // it on fetches the file again.
   var memoPools = {}, memoScript = null;
   function memoReady() { return !!(window.ASP_MEMO && window.ASP_MEMO[lang]); }
+  if (!memoReady()) s.memo = false;
   function loadMemo(done) {
     memoScript = document.createElement('script');
     memoScript.src = '/memo-' + lang + '.js?v=1';
