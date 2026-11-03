@@ -75,15 +75,15 @@ console.log(`ok — ${checked} generations checked`);
 {
   const { generateMemorable, prepareMemo } = require('../site/gen.js');
   const mk = (tag) => { const o = []; for (let L = 3; L <= 8; L++) for (let i = 0; i < 6; i++) o.push(tag + 'x'.repeat(L - 2) + String.fromCharCode(97 + i)); return o.join(' '); };
-  const memo = prepareMemo({ order: { 2: 'NV', 3: 'NVN', 4: 'ANVN', 5: 'ANVAN' }, N: mk('n'), V: mk('v'), A: mk('a') });
+  const memo = prepareMemo({ order: { 2: 'NS', 3: 'ANS', 4: 'ANVN', 5: 'ANVAN' }, plain: { 3: 'NVN' }, N: mk('n'), V: mk('v'), S: mk('s'), A: mk('a') });
   let memoChecked = 0;
-  for (const words of [2, 3, 4, 5]) {
-    const order = memo.order[words];
+  for (const [words, shape] of [[2], [3], [4], [5], [3, 'NVN']]) {
+    const order = shape || memo.order[words];
     for (const sep of ['', '-', '__']) {
       for (const number of [true, false]) {
         const fixed = sep.length * (words - 1 + (number ? 1 : 0)) + (number ? 1 : 0);
         for (const max of [null, 4, 10, 16, 22, 30, 45, 64]) {
-          const r = generateMemorable({ sep, number, words, max }, memo);
+          const r = generateMemorable({ sep, number, words, max }, memo, null, shape);
           memoChecked++;
           if (max !== null && max < 3 * words + fixed) { assert.strictEqual(r.error, 'tooShort'); assert.strictEqual(r.n, 3 * words + fixed); continue; }
           assert.ok(!r.error, JSON.stringify({ words, sep, number, max, r }));
@@ -107,4 +107,43 @@ console.log(`ok — ${checked} generations checked`);
   assert.deepStrictEqual(Object.keys(count).sort(), ['aaavvv', 'bbbvvv', 'ccccvvv']);
   Object.values(count).forEach(c => assert.ok(Math.abs(c - 10000) < 600, 'uniform: ' + JSON.stringify(count)));
   console.log(`ok — memorable: ${memoChecked} setups, uniform ${JSON.stringify(count)}`);
+
+  // ES/PT: an adjective pair counts once and agrees with its noun (gato ROJO, luna ROJA).
+  const es = prepareMemo({ order: { 3: 'NAS' }, N: 'gato luna', F: 'luna', A: 'rojo|roja', S: 'baila' });
+  const seen = new Set();
+  for (let i = 0; i < 400; i++) seen.add(generateMemorable({ sep: '-', number: false, words: 3 }, es).password);
+  assert.deepStrictEqual([...seen].sort(), ['gato-ROJO-baila', 'luna-ROJA-baila']);
+}
+
+// The real word files: every shape draws from its own pools and the adjectives agree.
+{
+  const fs = require('fs'), path = require('path');
+  const { generateMemorable, prepareMemo } = require('../site/gen.js');
+  for (const lang of ['en', 'es', 'pt']) {
+    global.window = {};
+    eval(fs.readFileSync(path.join(__dirname, '..', 'site', `memo-${lang}.js`), 'utf8'));
+    const data = window.ASP_MEMO[lang];
+    const memo = prepareMemo(data);
+    const sets = {};
+    for (const c of ['N', 'V', 'S', 'A']) sets[c] = new Set(data[c].trim().split(/\s+/).flatMap(w => w.split('|')));
+    const shapes = Object.entries(data.order).map(([k, v]) => [Number(k), v, null]).concat(Object.entries(data.plain).map(([k, v]) => [Number(k), v, v]));
+    for (const [words, order, shape] of shapes) {
+      for (let i = 0; i < 300; i++) {
+        const r = generateMemorable({ sep: '-', number: true, words }, memo, null, shape);
+        const w = r.password.toLowerCase().split('-').slice(0, -1);
+        w.forEach((x, j) => assert.ok(sets[order[j]].has(x), `${lang} ${order}: ${x} is not in ${order[j]}`));
+        // Agreement: a feminine noun's adjective is the feminine form (first noun before it).
+        for (let j = 0; j < order.length; j++) {
+          if (order[j] !== 'A' || lang === 'en') continue;
+          let n = j - 1; while (n >= 0 && order[n] !== 'N') n--;
+          const pair = data.A.trim().split(/\s+/).find(t => t.split('|').includes(w[j]));
+          if (n < 0 || !pair.includes('|')) continue;
+          const want = pair.split('|')[memo.fem[w[n]] ? 1 : 0];
+          assert.strictEqual(w[j], want, `${lang}: ${w[n]} ${w[j]} should be ${want}`);
+        }
+      }
+    }
+  }
+  delete global.window;
+  console.log('ok — real memo files: shapes, pools and agreement');
 }

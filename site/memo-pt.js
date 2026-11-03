@@ -1,85 +1,160 @@
-// pt grammar pools for "Make it memorable". Built by tools/words/build_memo.py (NaN tagging of the site words).
+// pt grammar pools for "Make it memorable": N noun, V verb with an object, S verb on its own,
+// A adjective (ES/PT: masculine|feminine), F feminine nouns. Built by tools/words/picture.py.
 (window.ASP_MEMO = window.ASP_MEMO || {}).pt = {
-  order: {"2": "NV", "3": "NVN", "4": "NAVN", "5": "NAVNA"},
+  order: {"2": "NS", "3": "NAS", "4": "NAVN", "5": "NAVNA"},
+  plain: {"3": "NVN"},
   N: `
-aba abelha abismo abrigo academia adega adulto advogada advogado agenda agente agulha aipim alarme aldeia alho aliado alimento aluna aluno
-alvo ambiente ameba amido amiga amigo amora amostra andar anel anexo animal anta anzol aparelho apito arado arame aranha arara
-arco areia arena argila arquivo arroz artigo artista asa asilo assento astro atacante atlas atleta ator atriz atum autor autora
-auxiliar ave aveia avenida azeite bacia bagagem bagre bairro balde baleia balsa bambu banana banca bancada banco banda bandeira bando
-banha banheiro banho banjo bar barba barca barco barra barraca barragem barreira barriga barro base basquete bata batata bateria batom
-bazar bebida beco beijo beira bico bife bigode bilhete bingo bioma bloco blusa boate boca bocha bode boi boina bola
-bolha bolo bolsa bolso bonde boneca boneco bongo borda bordo borracha bosque bota bote boto brasa brejo brinco brinde brita
-broca bronze broto bruxa bruxo bucha bugio bule buraco busto cabana cabelo cabine cabo cabra cacau cacho cachorro cacto cadeira
-caderno cais caixa caju calda caldo calha calo cama camada caminho camisa campo cana canal caneca canela caneta canga canil
-cano canoa canto cantor cantora capa capim capital captura capuz caqui cara carbono carga cargo carnaval carne carpa carro carta
-cartaz carteira cartola carvalho casa casaco casal casca casco caspa castelo cauda caule cavalo caverna cebola cedro cego cela celular
-cena cenoura central centro cera cerca cervo cesta cesto cetim cetro chama chapa chave chefe cheiro choque chumbo chute chuva
-ciclone cidade cimento cinema cinta cinto cintura cinza circo circuito cisne classe cliente clipe clique cloro clube coala cobra cobre
-coco coelho cofre coisa colar colega colete colher colina colo coluna cometa comida complexo compra concerto concreto concurso conde cone
-conjunto conselho consulta conta contato contrato controle convite copa copo coque cor coral corda coro coroa corpo corredor correia correio
-corrente corrida corte cortina corvo cosmo costa couro couve coxa cozinha craque cravo creche creme crepe criador criatura crina cruzeiro
-cubo cume cunha cunhado cupim cupom curva dado dama damasco dardo dedal dedo defensor delta dente dentista descida desenho deserto
-desfile destino dezembro dia dinheiro diretor diretora disco discurso distrito diva doca doce doido domingo dona dono dorso dose dourado
-doutor doutora drama ducha dueto dupla duque eclipse eco editor editora eixo elemento elenco elevador elmo elo ema emenda emissora
-empresa entrada equipe erva escada escola escova escritor esfera esgoto espada espelho esposa esposo espuma esqui esquina estado estrada estranho
-estrela etanol euro fada faixa familiar fantasia fantasma farda fardo farinha farol farra fatia fauna fazenda feira feixe fenda fera
-feriado ferro festa festival feto fibra ficha figo figura fila filha filho filme filtro fio firma fiscal fita flecha flor
-flora floresta foca foco fogo foguete foice folha fone fonte forma formiga forno forro fosso foto foz frango frase freio
-frente frete frevo frota fruta fruto funda fundador fundo fungo funil furo futebol futsal gabinete gado gaita galera galeria galho
-galinha galo ganso garagem garfo garganta garoa garota garoto garra garrafa gasolina gata gato gaveta geada gel gelo genro gente
-gerente gesso gesto gibi gigante giro giz globo goela gol gola goleiro golfe golfo goma gongo gorro gota grade grama
-grana grilo grota grupo gruta guarda guia guitarra guri guria halo harpa haste hiena homem horda horta horto hotel humano
-iate idoso ilha imagem ingresso inimigo interior inverno item jaca jade janela janta jantar jardim jarra jato jaula jipe joelho
-jogada jogador jogo jornada jornal jovem juiz junco kiwi lacre lado lago lagoa laje lama lance lar laranja laser lata
-laudo lava lebre legenda leigo leite leito leitor leme lenha lente leque lesma letra lhama libra liceu licor liga lima
-lince linha linho lista litoral litro livro lixa lixo lobo local lodo loja lombo lona lote louro lousa lua lugar
-lupa luva luz machado madeira maestro magma mago mala malha malte malva manga mano manta manto manual mapa mar maratona
-marca marcha marco marfim margem marido martelo mascote massa mata material matiz mato matriz mecha medalha medida meia mel melodia
-melro membro menina menino mensagem menta mercado mesa mestre metal metro mico milha milho mimo mina mini minuto miolo mira
-mistura mochila modelo moeda moela moinho moita molde molho monge monitor monstro montanha monte morro morsa mosca mostra motel moto
-motor mula mulher multa mundo mural muro musa museu musgo naipe namorada namorado nariz nata natureza nau nave navio nervo
-neta neto neve ninfa ninho ninja nitro nobre noite noiva noivo nome nora nordeste norte nota novela noz nuca nuvem
-objeto obra ocaso oceano ocidente oeste oferta oficial oficina olho oliva ombro onda opala orelha orla osso ostra ouro outono
-outubro ouvido ovo paciente pacote padaria pai painel paisagem palavra palco palha palma panda panela pano papai papel papo par
-parada parceira parceiro parede parente parque parte partida passagem passe passeio passo pasta pasto pata pato pedal pedra peito peixe
-pele pelo pente pequi pera percurso perfil perfume perna peru perua peso pessoa pia piano pico pijama pilar pilha piloto
-pimenta pingo pinheiro pinho pino pinta pintor pintura pipa pipoca pique pirata pires piscina piso pista pizza placa placar planeta
-planta pluma pneu pobre poeira poema poeta polo polpa polvo pomar pomba pombo ponta ponte ponto porco porta portal porto
-postal poste posto pote potro povo povoado prado praia prata prato prego presa presente prima primo princesa proa produto produtor
-promotor pudim pulga pulso puma punho quadra quadro quartel quarto quati queijo queixo quibe quilo quina quinta quintal radar raia
-rainha raio raiz ralo ramal ramo rampa rapaz raposa rasgo rato real recado receita rede registro rei reino relva remo
-renda reserva reta retrato revista rim ringue rio rival rocha roda rodovia rolha rolo romance rosa rosca rosto rota roteiro
-roupa rua rubi saco sacola sagui saia sal sala salada salsa salto sapato sapo saque sarau sarda sarro sauna seda
-sede seiva seixo selo selva semente senha senhor senhora septo sereia serra servidor servo seta sinal sino siri sobrinha sobrinho
-sogra sogro soja sol soldado solo som sombra sonar sonda sopa sopro soro sorriso sorvete subida suco sudeste sujeito sul
-sulco sunga suor superior suporte surdo suspeito tabela taco talco tampa tanga tanque tapete tarja tatu teatro tecido tecla teclado
-tela telefone telha telhado tenda tenente tenor terminal terno terra terreno tesouro testa teto tia tiara tigre tijolo time tina
-tinta tio tira titia titio titular toalha tocha tomada tomate topo torcida tornado torre torso torta totem touca touro traje
-trapo trave trem trevo tribo trigo trilha trio tripa troco tronco trono tropa truco trufa trupe truta tubo turbo turista
-turma tutor tutu unha uniforme universo urso urubu usina uva vaca vagem vale vapor vara varal varanda vaso veia vela
-velho vencedor venda vendedor vento verme vespa veste vestido vidro viela viga vigia vila vinagre vinco vinil viola violino visor
-vizinha vizinho vocal vogal volante voleibol volta volume voo voz vulto xadrez xampu xeque zebra zinco zona zumbi
+abacate abacaxi abajur abano abelha abeto abridor abrigo academia acelga acerola adega adesivo adubo agenda agulha aipim alarme alavanca albatroz
+alce aldeia alecrim alface alfajor alfinete alga algema alho alicate almofada alpaca ameba ameixa amendoim ametista amora anchova anel angu
+anjo antena anzol apostila aquarela aqueduto aranha arara arbusto arco arenque argola ariranha armadura arroz asa aspargo assoalho atabaque ator
+atriz atum avental azeitona azulejo babador bacalhau bacia bacon bagre baguete balaio balde baleia balsa bambu banana banco bandana bandeira
+bandeja bandolim banheira banheiro banjo banqueta bar baralho barata barba barbante barbeiro barca barco barraca barranco barriga barril basquete batata
+bateria batom bazar beijinho beijo beliche bengala berimbau bermuda besouro bexiga bezerro bica bichinho bico bife bigode bigorna bike bilha
+bilhete bingo biombo biscoito bisnaga bisturi blazer bloco blusa blusinha bobina boca bochecha bode boi boia boina bola bolacha bolha
+bolinha bolinho bolo bolota bolsa bolsinha bolso bombeiro bombom bonde bondinho boneca boneco bongo borbulha borracha bosque bota bote botina
+botinha boto brasa brinco brioche broa broca broche brownie bruxa bruxo bueiro bule bumbo buraco busto buzina cabana cabelo cabide
+cabine cabo cabra cabresto cabrito cacau cachecol cacho cachorro cacto cadeado cadeira caderno caiaque cais caixa caixinha caixote cajado caju
+cajueiro calango calda caldinho caldo calzone cama camelo camisa camiseta camisola cana caneca canela caneta canguru canil canivete canoa cantil
+cantor cantora canudo capa capacete capela capivara capuz caqui caracol caramelo caramujo carimbo carne carneiro carpa carreta carretel carrinho carro
+carta cartaz carteira carteiro cartola carvalho casa casaco cascavel casinha castanha castelo castor casulo catraca cavala cavalo caverna cebola cedro
+cegonha celeiro celular cenoura centauro cerca cereja cervo cesta cestinha cesto cetro chacal chafariz chaleira chama charrete chave chaveiro chiclete
+chicote chifre chinelo chocalho choupana chuchu chupeta chuteira chuva chuveiro cigarra cinema cinto cinzeiro circo cisne coador coala cobertor cobra
+cobrinha cocada coco codorna coelha coelho cofre cofrinho cogumelo coiote colar colcha coleira colete colher colina colmeia colo cometa comida
+compasso cone confete cookie copinho copo coque coqueiro coracao coral corda cordeiro corneta coroa corpo correia corrente cortina coruja corvina
+corvo costela cotonete cotovelo couve coxa coxinha cozinha cratera cravo creme crepe cristal cruz cubo cupido curativo cuscuz dado dardo
+dedal dedo degrau dente dentista desenho deserto dia diamante dingo dinheiro disco doca doce docinho donut dourada drone ducha duende
+duna dvd eclipse edredom elefante elevador elfo elmo ema empada empanada enguia envelope enxada erva ervilha escada escola escova escudo
+esmalte espada espelho espeto espinha espinho espiral esponja esposa esposo espuma esquadro esqui esquilo estaca estante esteira estilete estojo estrada
+estrela etiqueta euro extintor fada fagote faia faixa fantasia fantasma fantoche farda fardo farinha farofa farol farpa fatia fazenda feira
+feltro feno ferro ferrolho festa ficha figo figueira figurino fila filha filho filhote filme filtro fio fita fivela flamingo flanela
+flauta flecha floco flor floresta foca focinho fogo fogueira foguete foice folha folheto fone fonte formiga forno foto fralda franga
+frango frasco freio freira freixo fronha fruta fruteira fungo funil furador fusca futebol gaiola gaita gaivota galho galinha galinho galo
+galocha gancho gangorra ganso garagem garfo garganta garota garoto garoupa garra garrafa gata gatinho gato gaveta gazela gecko gel gelatina
+geleia gelo gema gengibre gengiva gesso gibi gigante gilete girafa girassol girino giz glitter globo gnomo goblin goela goiaba goiabada
+gol gola goleiro golfinho gongo gorila gorro gota goteira gotinha gouda grade gradil grafite gralha grama grampo granola gravador gravata
+graveto graviola grelha grilo groselha gruta gude guepardo guincho guitarra halter hamster harpa headset hiena holofote homem horta hotel iate
+idosa idoso iglu iguana ilha ilhota inalador ingresso inhame inseto iogurte isca isopor isqueiro jabuti jaca jaleco janela jangada jaqueta
+jararaca jardim jarra jarro jasmim jato jaula javali jiboia jipe joaninha joelho jornal juba jujuba ketchup kibe kiwi ladeira lagarta
+lagarto lago lagoa lagoinha lagosta lama lambari lancha lanche lanterna laranja lareira lasanha lasca lata latinha lavadora lebre legume leite
+leiteira lenha lente lentilha leoa leopardo leque lesma lhama lichia lima limoeiro limonada lince linguado linha litro livraria livreto livro
+lixa lixeira lixo lobo loja lombada lombriga lona lontra losango lousa lua lula luneta lupa lustre luva luz maca machado
+madeira madrinha maestro mago maionese mala maleta malinha malote mamute mandioca manga manivela manta manteiga mapa mar maraca mariposa marisco
+marmita marreco marreta martelo mascote medalha medusa meia mel melancia melro menina menino mercado mesa mesinha meteoro mexerica mico migalha
+milho mingau minhoca mirtilo mocassim mochila moeda moedinha moedor moela moinho moita moldura moletom molho molusco monge monitor monstro montanha
+moranga morango morcego mordedor moringa morro morsa mosaico mosca mosquito mostarda moto motoca motor mouse mousse muffin mula muleta mulher
+mural muralha muro museu musgo nabo nadador naja namorada namorado nariz nave navio neblina nervo neta neto neve nhoque ninho
+ninja nogueira noiva noivo notebook novelo noz nuvem obelisco oca ocarina oceano oficina ogro olho oliva oliveira olmo ombro omelete
+onda orca orelha origami osso ostra ouro ouvido ovelha ovinho ovo paca pacote pacu padaria padeiro padrinho pai painel palanque
+palco paleta palha palito palma palmeira palmito pamonha panda pandeiro panela panfleto paninho pano panqueca pantera pantufa papagaio papai papel
+papinha papoula parafuso pardal parede parque pasta pastel pastilha pata patinete patinho pato pavio pecinha pedal pedra pedrinha peixe peixinho
+pele pelicano pelota pendrive peneira penhasco penico pente pepino pera perdiz pereira perfume perna persiana peru perua peruca pescada pescador
+pestana peteca petisco pia piano picape picareta picles pico pier pijama pilar pilha piloto pimenta pincel pingente pingo pinguim pinha
+pinheiro pino pintinho pintor pintora pintura piolho pipa pipoca pirarucu pirata pires piscina piso pistache pitanga pizza pizzaria placa placar
+planador planeta planta pluma pneu pochete pocilga poleiro polenta poltrona polvo pomar pomba pombo pompom poncho ponte ponteiro porco porrete
+porta portal porteira porto poste pote potinho potro pousada prado praia prancha prata pratinho prato pregador prego presente presilha presunto
+pretzel prima primo princesa projetor pua pudim pufe pulga pulseira pulso puma punho pupila puxador quadrado quadro quarto quati queijo
+queixo queque quiabo quibe quilha quindim quintal quiosque rabanete rabeca radar radiador raia rainha raio raiz ralador ralo ramo rampa
+rapadura raposa raquete rato ravioli recibo rede redinha regador regata rei remo rena repolho represa retrato revista riacho ribeiro rio
+riozinho ripa risoto rocha roda rodinha roleta rolete rolha rosa rosto roupa roupeiro rouxinol rua rubi sabonete sacola safira sagui
+saia sal sala salada salame salgado salsa salsicha salsinha samba sanfona sapato sapinho sapo sardinha sauna saveiro saxofone secador secadora
+sela selo semente sereia seringa serpente serra serrote seta shampoo sino sirene siri siso skate sogra sogro soja sol soldado
+solha sopa sopinha soprador sorriso sorvete suco sucuri sunga surf suricato suspiro tablet tacho taco talha talo tamanco tamara tambor
+tampa tampinha tanque tapete tapioca taquara tatame tatu tear teatro tecla teclado teia teixo tela telefone telha telhado tenaz tenda
+terno terra tesoura testa teto tia tiara tigela tigre tijolo tinta tio titia titio toalha tocha tomada tomate tonel tora
+tornado torneira torno torrada torre torta tortilha touca toupeira touro trator trem trevo triciclo trigo tromba trombeta trombone trompa trompete
+tronco trono trufa truta tsunami tuba tubo tucano tulipa turbante ukulele umbigo unha urso urubu uva vaca vagalume varal varanda
+vareta varinha vaso vassoura veia vela velcro veleiro veludo venda vento ventosa verde verdura verme vermelho verruga vespa veste vestido
+viaduto videira vidro viga vila vinagre vinil viola violeta violino viseira vitrine viveiro vizinha vizinho volante voo voz wafer webcam
+wok xadrez xale xampu xarope xilofone zebra zepelim zumbi
+`,
+  F: `
+abelha academia acelga acerola adega agenda agulha alavanca aldeia alface alga algema almofada alpaca ameba ameixa ametista amora anchova antena
+apostila aquarela aranha arara argola ariranha armadura asa atriz azeitona bacia baguete baleia balsa banana bandana bandeira bandeja banheira banqueta
+barata barba barca barraca barriga batata bateria bengala bermuda bexiga bica bigorna bike bilha bisnaga blusa blusinha bobina boca bochecha
+boia boina bola bolacha bolha bolinha bolota bolsa bolsinha boneca borbulha borracha bota botina botinha brasa broa broca bruxa buzina
+cabana cabine cabra cadeira caixa caixinha calda cama camisa camiseta camisola cana caneca canela caneta canoa cantora capa capela capivara
+carne carpa carreta carta carteira cartola casa cascavel casinha castanha catraca cavala caverna cebola cegonha cenoura cerca cereja cesta cestinha
+chaleira chama charrete chave choupana chupeta chuteira chuva cigarra cobra cobrinha cocada codorna coelha colcha coleira colher colina colmeia comida
+corda corneta coroa correia corrente cortina coruja corvina costela couve coxa coxinha cozinha cratera cruz doca dourada ducha duna ema
+empada empanada enguia enxada erva ervilha escada escola escova espada espinha espiral esponja esposa espuma estaca estante esteira estrada estrela
+etiqueta fada faia faixa fantasia farda farinha farofa farpa fatia fazenda feira festa ficha figueira fila filha fita fivela flanela
+flauta flecha flor floresta foca fogueira foice folha fonte formiga foto fralda franga freira fronha fruta fruteira gaiola gaita gaivota
+galinha galocha gangorra garagem garganta garota garoupa garra garrafa gata gaveta gazela gelatina geleia gema gengiva gilete girafa goela goiaba
+goiabada gola gota goteira gotinha grade gralha grama granola gravata graviola grelha groselha gruta guitarra harpa hiena horta idosa iguana
+ilha ilhota isca jaca janela jangada jaqueta jararaca jarra jaula jiboia joaninha juba jujuba ladeira lagarta lagoa lagoinha lagosta lama
+lancha lanterna laranja lareira lasanha lasca lata latinha lavadora lebre leiteira lenha lente lentilha leoa lesma lhama lichia lima limonada
+linha livraria lixa lixeira loja lombada lombriga lona lontra lousa lua lula luneta lupa luva luz maca madeira madrinha maionese
+mala maleta malinha mandioca manga manivela manta manteiga maraca mariposa marmita marreta medalha medusa meia melancia menina mesa mesinha mexerica
+migalha minhoca mochila moeda moedinha moela moita moldura montanha moranga moringa morsa mosca mostarda moto motoca mula muleta mulher muralha
+naja namorada nave neblina neta neve nogueira noiva noz nuvem oca ocarina oficina oliva oliveira omelete onda orca orelha ostra
+ovelha paca padaria paleta palha palma palmeira pamonha panela panqueca pantera pantufa papinha papoula parede pasta pastilha pata pecinha pedra
+pedrinha pele pelota peneira pera perdiz pereira perna persiana perua peruca pescada pestana peteca pia picape picareta pilha pimenta pinha
+pintora pintura pipa pipoca piscina pitanga pizza pizzaria placa planta pluma pochete pocilga polenta poltrona pomba ponte porta porteira pousada
+praia prancha prata presilha prima princesa pua pulga pulseira pupila quilha rabeca raia rainha raiz rampa rapadura raposa raquete rede
+redinha regata rena represa revista ripa rocha roda rodinha roleta rolha rosa roupa rua sacola safira saia sala salada salsa
+salsicha salsinha sanfona sardinha sauna secadora sela semente sereia seringa serpente serra seta sirene sogra soja solha sopa sopinha sucuri
+sunga talha tamara tampa tampinha tapioca taquara tecla teia tela telha tenaz tenda terra tesoura testa tia tiara tigela tinta
+titia toalha tocha tomada tora torneira torrada torre torta tortilha touca toupeira tromba trombeta trompa trufa truta tuba tulipa unha
+uva vaca varanda vareta varinha vassoura veia vela venda ventosa verdura verruga vespa veste videira viga vila viola violeta viseira
+vitrine vizinha voz webcam zebra
 `,
   V: `
-abre acaba aceita acessa acha acorda adia admite afasta afirma aguenta ajuda alia ama analisa anuncia apaga aperta apoia aprende
-aquece arruma assa assina assiste assume atende atinge atrai aumenta auxilia avalia avisa baixa bane bate bebe beija bota busca
-cala cancela canta captura carrega casa cata causa cava cede celebra chama chuta cita coloca comenta compra conduz confia conhece
-conta copia corre corta coze cozinha cria critica cuida cumpre curte decide defende define deita deixa demora derruba desce deseja
-desenha destaca deve diminui dirige discute dita diverte divide divulga diz doa dobra doma ecoa elimina emenda enche ensina entende
-entrega envia envolve erra escolhe esconde escreve escuta espalha espera esquece estreia estrela estuda evita executa exerce explica explora fala
-faz fecha finge fixa foca forma fornece freia fura ganha garante gasta gela gera gira grava grita guarda guia ignora
-imagina impede importa inclui indica informa inicia janta joga julga jura lava lembra leva levanta liberta liga limpa livra manda
-marca mede melhora mexe mina mira monta mostra move muda nega negocia nota observa ocupa oferece olha opera ousa ouve
-paga para parte passa passeia pede pega pensa percebe perde permite pesa pinta pisa planta possui posta pratica prende prepara
-presta previne procura produz promove protege prova provoca publica pula pune puxa quebra queima quer realiza recebe reclama reduz reflete
-rega rege regula rema remove repete resolve respira retira retorna revela roda sabe saca salta salva sana seca segue segura
-sela sente separa serve sobe sofre solta soma sonha suja supera suporta tapa tece tem teme tenta termina testa tira
-toca toma topa torce torna traduz trai trata traz treina troca une usa utiliza vale vaza vence vende veste veta
-vira visa visita vive volta vota zela zera
+abaixa abana abre acaba acaricia acelera acerta aduba afaga afasta afia afunda agarra agita ajeita ajuda alfineta alimenta alinha alisa
+alonga ama amarra amassa amola amolece amontoa anota apaga apalpa apanha apara aperta aponta aquece arranca arranha arrasta arruma aspira
+assa assina assopra atinge atira atrai avisa baixa banha bate beija belisca bica bloqueia bochecha borda borra borrifa bota canta
+capina captura carimba carrega cata cava cavalga celebra chama cheira chuta cisca clica colhe coloca colore comemora compra congela corta
+cose cospe costura coze crava cutuca degusta derrama derrete derruba descasca descobre desdobra desenha desliga desmonta despeja desvia devora digita
+dirige diverte dobra doma doura dribla embarca embrulha emenda empilha empina empurra encaixa enche encontra encosta enfeita enfia engole enrola
+enrosca enruga ensaboa ensaia ensina entorna entorta entra entrega envolve enxuga ergue escava escolhe esconde escora escova escreve esculpe escuta
+esfrega esfria esmaga espalha espelha espera espreme esquenta estende estica estoura estreia estuda esvazia explica explora fala fareja fatia faz
+fecha festeja fixa flagra freia frita fura ganha gasta gela gira grampeia grelha grita gruda imita inclina infla joga lambe
+lambuza lava levanta lima limpa lixa lustra mancha martela masca mastiga mexe mistura modela moe moi molda molha monta morde
+move nivela olha ouve parte passa pede pega pendura peneira penteia perde perfura persegue pesa pesca petisca pilota pinta pisa
+planta poda poli prega prende prepara procura produz protege prova provoca pune puxa quebra queima rabisca racha rasga raspa rebate
+rebenta reboca recebe recorta reflete rega remenda remexe remove repara reparte repete responde retira risca roi saboreia saca sacode salga
+salva seca segue segura sela semeia separa serra serve sinaliza soca solda solta sopra sorve sova suga suja tampa tapa
+tateia tece tempera testa tira toca toma torce tosta trai tranca treina tricota trinca tritura troca vaporiza varre vende veste
+vira visita volta vota
+`,
+  S: `
+abaixa abana abre acaba acaricia acelera acena acerta acorda aduba afaga afasta afia afunda agacha agarra agita ajeita ajoelha ajuda
+alfineta alimenta alinha alisa alonga ama amarra amassa amola amolece amontoa anda anota apaga apalpa apanha apara aparece aperta apita
+aponta aquece arranca arranha arrasta arrota arruma aspira assa assina assobia assopra atinge atira atrai avisa baila baixa banha bate
+beija belisca berra bica bloqueia boceja bochecha boia borbulha borda borra borrifa bota brilha brinca brinda bufa buzina cabeceia cai
+caminha canta capina captura carimba carrega cata cava cavalga celebra chama chega cheira chia chora chuta cintila cisca clica colhe
+coloca colore comemora compra congela corre corta cose cospe costura coze crava cutuca decola degusta deita derrama derrete derruba descansa
+descasca desce descobre desdobra desenha desfila desliga desliza desmonta despeja desvia devora digita dirige diverte dobra doma dorme doura dribla
+embarca embrulha emenda empilha empina empurra encaixa enche encolhe encontra encosta enfeita enfia engole enrola enrosca enruga ensaboa ensaia ensina
+entorna entorta entra entrega envolve enxuga ergue escapa escava escolhe esconde escora escorre escova escreve esculpe escuta esfrega esfria esmaga
+espalha espelha espera espirra espreme esquenta estala estende estica estoura estreia estuda esvazia explica explode explora fala fareja fatia faz
+fecha ferve festeja finge fixa flagra flutua foge freia frita funga fura galopa gane ganha gargalha gasta gela ginga gira
+goteja grampeia grelha grita gruda imita inclina infla janta joga jorra lambe lambuza late lava levanta lima limpa lixa lustra
+mancha marcha martela masca mastiga mergulha mexe mia mistura modela moe moi molda molha monta morde move muge murmura nada
+navega nivela olha ondula ouve parte passa passeia patina pedala pede pega pendura peneira penteia perde perfura persegue pesa pesca
+petisca pia pilota pinta pisa pisca plana planta poda poli pousa prega prende prepara procura produz protege prova provoca pula
+pulsa pune puxa quebra queima quica rabisca racha range rasga raspa rasteja rebate rebenta reboca rebola recebe reclama recorta reflete
+rega relincha reluz rema remenda remexe remove repara reparte repete requebra resmunga respinga respira responde retira retorna risca roda rodopia
+roi ronca ronrona rosna ruge saboreia saca sacode sai salga salta salva samba sapateia seca segue segura sela semeia senta
+separa serra serve sibila sinaliza soa sobe soca solda solta sonha sopra sorri sorve sova sua submerge suga suja surfa
+suspira sussurra tampa tapa tateia tece tempera testa tine tira toca toma torce tosse tosta trai tranca treina treme tricota
+trinca tritura troca trota troveja uiva vaporiza varre vaza veleja vende venta veste viaja vibra vira visita voa volta vota
+zune
 `,
   A: `
-alegre alerta azul bacana baita bege brega bronze caqui celeste chique cinza contente coral creme cruel doce enorme feliz feroz
-fiel firme forte gentil gigante grande humilde inocente jovem laranja leal leve malva marrom mirim mole nobre oval paciente pobre
-podre quente rosa ruim sagaz selvagem suave sutil valente veloz verde vivaz xadrez
+abafado|abafada aberto|aberta aceso|acesa achatado|achatada acordado|acordada agitado|agitada agudo|aguda alegre alerta alto|alta amarelo|amarela amargo|amarga amassado|amassada amplo|ampla andando andante animado|animada ansioso|ansiosa antigo|antiga apertado|apertada
+arenoso|arenosa arrumado|arrumada assado|assada atento|atenta ativo|ativa avoado|avoada azedo|azeda azul baixo|baixa barrento|barrenta batido|batida bege belo|bela bonito|bonita bordado|bordada branco|branca bravo|brava brega brilhoso|brilhosa bronze
+brusco|brusca bruto|bruta cabeludo|cabeluda cacheado|cacheada calado|calada calmo|calma cansado|cansada caqui careca castanho|castanha celeste chatinho|chatinha cheio|cheia cheiroso|cheirosa chique chuvoso|chuvosa cinza ciumento|ciumenta claro|clara coberto|coberta
+colorido|colorida colossal comprido|comprida confuso|confusa contente corado|corada corajoso|corajosa coral cortado|cortada cozido|cozida creme cremoso|cremosa crocante cru cruel curioso|curiosa curtinho|curtinha curto|curta curvo|curva danado|danada
+decorado|decorada delgado|delgada desperto|desperta doce doido|doida dormido|dormida dourado|dourada duplo|dupla durinho duro|dura elegante enevoado|enevoada enorme enrolado|enrolada enrugado|enrugada escuro|escura esguio|esguia esperto|esperta espesso|espessa esticado|esticada
+estranho|estranha estreito|estreita estufado|estufada falante falso|falsa faminto|faminta fechado|fechada fedido|fedida feliz felpudo|felpuda feroz fervente festeiro|festeira fibroso|fibrosa fininho|fininha fino|fina firme florido|florida fofinho|fofinha fofo|fofa
+folgado|folgada forte fortinho|fortinha fosco|fosca fraco|fraca frio|fria frito|frita frouxo|frouxa fundo|funda gasto|gasta gelado|gelada gentil gigante girante gracioso|graciosa grande grosso|grossa grudado|grudada grudento|grudenta imenso|imensa
+inchado|inchada inquieto|inquieta inteiro|inteira jeitoso|jeitosa jovem jubiloso|jubilosa laranja largo|larga lascado|lascada lento|lenta levado|levada leve ligado|ligada limpo|limpa lindo|linda lisinho|lisinha liso|lisa listado|listada listrado|listrada loiro|loira
+longo|longa luminoso|luminosa lunar lustroso|lustrosa macia macio|macia maduro|madura malandro|malandra malva manchado|manchada manhoso|manhosa manso|mansa marrom mau medonho|medonha medroso|medrosa meigo|meiga mexido|mexida mimado|mimada mirim
+moderno|moderna mole molenga molhado|molhada molinho|molinha montado|montada morno|morna mudo|muda murcho|murcha nadando nervoso|nervosa nevado|nevada novo|nova nublado|nublada oco|oca ocupado|ocupada ondulado|ondulada opaco|opaca oval parado|parada
+pardo|parda pastoso|pastosa pedroso|pedrosa pegajoso|pegajosa peludo|peluda penteado|penteada pequeno|pequena perdido|perdida pesado|pesada picado|picada picante pintado|pintada plano|plana poderoso|poderosa podre polido|polida pontudo|pontuda poroso|porosa prateado|prateada profundo|profunda
+quadrado|quadrada quebrado|quebrada queimado|queimada quente quieto|quieta rachado|rachada radiante radioso|radiosa raivoso|raivosa rajado|rajada ralado|ralada rasgado|rasgada raso|rasa recheado|recheada redondo|redonda retinho|retinha reto|reta rijo|rija riscado|riscada risonho|risonha
+robusto|robusta rochoso|rochosa rombo|romba rosa rouco|rouca roxo|roxa rugoso|rugosa ruivo|ruiva salgado|salgada saltado|saltada santo|santa seco|seca sedento|sedenta sedoso|sedosa selvagem serelepe sereno|serena solto|solta sonoro|sonora suado|suada
+suave sujo|suja surdo|surda surpreso|surpresa teimoso|teimosa tenro|tenra tenso|tensa torrado|torrada torto|torta tostado|tostada travesso|travessa tremido|tremida triplo|tripla unido|unida usado|usada vaidoso|vaidosa valente vasto|vasta vazio|vazia velhinho|velhinha
+veloz ventoso|ventosa verde vermelho|vermelha vibrante vistoso|vistosa vivaz vivo|viva volumoso|volumosa xadrez zangado|zangada zonzo|zonza
 `
 };

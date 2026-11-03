@@ -120,15 +120,17 @@
   }
 
   // Memorable mode: words fill grammar slots so the password reads like a tiny
-  // sentence (N noun, V verb in its "she does" form, A adjective), e.g.
-  // otter-PAINTS-moon-4. Every slot is still a uniform random draw. A max length
-  // is met by counting, for each slot, how many combinations fit the letters
-  // left; one weighted draw per slot then keeps every fitting combination
-  // equally likely, with no retry loop.
-  // memo: { order: {2: 'NV', ...}, N: {len: [words]}, V: {...}, A: {...} }
-  function generateMemorable(s, memo, rand) {
+  // picture (N noun, V verb with an object, S verb on its own, both in their
+  // "she does" form, A adjective), e.g. brave-APPLE-dances-4. Every slot is
+  // still a uniform random draw. A max length is met by counting, for each
+  // slot, how many combinations fit the letters left; one weighted draw per
+  // slot then keeps every fitting combination equally likely, with no retry loop.
+  // `shape` overrides memo.order[s.words] (the page uses memo.plain[3], NVN,
+  // when "Make it memorable" is off).
+  // memo: prepareMemo() output: { order, plain, N: {len: [words]}, V, S, A, fem }
+  function generateMemorable(s, memo, rand, shape) {
     rand = rand || randBig;
-    var order = memo.order[s.words].split('');
+    var order = (shape || memo.order[s.words]).split('');
     var k = order.length, num = s.number ? 1 : 0;
     var fixed = s.sep.length * (k - 1 + num) + num;
     var budget = Math.min(s.max ? s.max - fixed : Infinity, MAX_WORD * k);
@@ -170,6 +172,16 @@
       if (!dup) break;
     }
 
+    // ES/PT adjectives are stored as masculine|feminine (both the same length)
+    // and agree with the nearest noun before them (after, if there is none).
+    words = words.map(function (w, i) {
+      if (w.indexOf('|') < 0) return w;
+      var noun = null;
+      for (var j = i - 1; j >= 0 && noun === null; j--) if (order[j] === 'N') noun = words[j];
+      for (j = i + 1; j < k && noun === null; j++) if (order[j] === 'N') noun = words[j];
+      return w.split('|')[memo.fem[noun] ? 1 : 0];
+    });
+
     var parts = [];
     words.forEach(function (w, i) {
       if (parts.length && s.sep) parts.push({ type: 'sep', text: s.sep });
@@ -183,12 +195,19 @@
   }
 
   // Turns a memo data file ({ N: 'word word ...', ... }) into length buckets.
+  // An adjective pair 'rojo|roja' counts once, by the length of its forms.
+  // F lists the feminine nouns (ES/PT).
   function prepareMemo(data) {
-    var out = { order: data.order };
-    ['N', 'V', 'A'].forEach(function (c) {
+    var out = { order: data.order, plain: data.plain || {}, fem: {} };
+    ['N', 'V', 'S', 'A'].forEach(function (c) {
       out[c] = {};
-      data[c].trim().split(/\s+/).forEach(function (w) { (out[c][w.length] = out[c][w.length] || []).push(w); });
+      if (!data[c]) return;
+      data[c].trim().split(/\s+/).forEach(function (w) {
+        var len = w.split('|')[0].length;
+        (out[c][len] = out[c][len] || []).push(w);
+      });
     });
+    if (data.F) data.F.trim().split(/\s+/).forEach(function (w) { out.fem[w] = true; });
     return out;
   }
 

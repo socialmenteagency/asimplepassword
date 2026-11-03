@@ -175,16 +175,18 @@
   if (!memoReady()) s.memo = false;
   function loadMemo(done) {
     memoScript = document.createElement('script');
-    memoScript.src = '/memo-' + lang + '.js?v=1';
+    memoScript.src = '/memo-' + lang + '.js?v=2';
     memoScript.addEventListener('load', done);
     // A failed load can be retried with the next click.
     memoScript.addEventListener('error', function () { memoScript.remove(); memoScript = null; });
     document.body.appendChild(memoScript);
   }
   function makeWith(o) {
-    if (!o.memo) return ASP.generate(o, ASP_WORDS[lang]);
-    memoPools[lang] = memoPools[lang] || ASP.prepareMemo(ASP_MEMO[lang]);
-    return ASP.generateMemorable(o, memoPools[lang]);
+    var memo = memoReady() && (memoPools[lang] = memoPools[lang] || ASP.prepareMemo(ASP_MEMO[lang]));
+    if (o.memo) return ASP.generateMemorable(o, memo);
+    // Off with 3 words: still a scene, noun-VERB-noun (Rafael, 3-nov-2026). Other word counts are random site words.
+    if (memo && memo.plain[o.words]) return ASP.generateMemorable(o, memo, null, memo.plain[o.words]);
+    return ASP.generate(o, ASP_WORDS[lang]);
   }
   function make() { return makeWith(s); }
 
@@ -361,7 +363,7 @@
           separator: { type: 'string', maxLength: 3, description: 'Between words: up to 3 symbols, no letters or digits. Default "-"; "" for none.' },
           number: { type: 'boolean', description: 'End with a digit. Default true.' },
           max_length: { type: 'integer', minimum: 1, maximum: 99, description: 'Longest allowed password, if the service limits it. Words get shorter to fit.' },
-          memorable: { type: 'boolean', description: 'Arrange the words as a tiny sentence (noun, verb, noun) that is easier to remember. Default true (false with 2 words).' }
+          memorable: { type: 'boolean', description: 'Arrange the words as a tiny picture that is easier to remember: adjective, noun, verb with 3 words (brave-APPLE-dances-3); with 4 or 5 words a whole scene (brave-APPLE-hugs-cactus-3). Default true (false with 2 words). Off, 3 words come as noun-VERB-noun (panda-KICKS-pizza-3) and 2, 4 or 5 as random words.' }
         }
       },
       annotations: { readOnlyHint: true },

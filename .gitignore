@@ -6,3 +6,4 @@ tools/words/judge/
 tools/words/candidates.json
 .claude/worktrees/
 tools/words/memo/
+tools/words/picture/

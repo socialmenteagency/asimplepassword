@@ -19,9 +19,19 @@ for (const lang of ['en', 'es', 'pt']) {
   const memo = fs.readFileSync(path.join(SITE, `memo-${lang}.js`), 'utf8');
   const order = JSON.parse(memo.match(/order:\s*(\{[^}]*\})/)[1]);
   assert.deepStrictEqual(Object.keys(order), ['2', '3', '4', '5'], `${lang}: memo order needs 2..5`);
-  for (const c of ['N', 'V', 'A']) {
+  const plain = JSON.parse(memo.match(/plain:\s*(\{[^}]*\})/)[1]);
+  assert.deepStrictEqual(plain, { 3: 'NVN' }, `${lang}: memo plain shape should be 3: NVN`);
+  const memoPools = {};
+  for (const c of ['N', 'V', 'S', 'A'].concat(lang === 'en' ? [] : ['F'])) {
     const m = memo.match(new RegExp('\\b' + c + ':\\s*`([^`]*)`'));
     assert(m && m[1].trim().split(/\s+/).length > 20, `${lang}: memo pool ${c} not found`);
+    memoPools[c] = m[1].trim().split(/\s+/);
   }
+  // Adjective pairs (ES/PT): masculine|feminine, both a-z and the same length, as the endpoint counts them.
+  for (const t of memoPools.A) {
+    const f = t.split('|');
+    assert(f.length <= 2 && f.every(x => /^[a-z]{3,8}$/.test(x)) && f[0].length === f[f.length - 1].length, `${lang}: bad adjective ${t}`);
+  }
+  if (memoPools.F) { const N = new Set(memoPools.N); assert(memoPools.F.every(w => N.has(w)), `${lang}: F lists a word that isn't a noun`); }
 }
 console.log('api format ok');

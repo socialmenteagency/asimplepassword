@@ -4,7 +4,7 @@
 // Same rules and same word lists as the page (gen.js, words-*.js, memo-*.js); randomness
 // from random_int() (the OS CSPRNG). Unlike the page, this runs on our server: nothing is
 // stored and the password is never written to a log (the URL only carries the options).
-// Keep it in step with site/gen.js: planWords, split, generate, generateMemorable.
+// Keep it in step with site/gen.js: planWords, split, generate, generateMemorable, prepareMemo.
 ini_set('display_errors', '0');
 
 const MIN_WORD = 3;
@@ -69,15 +69,20 @@ function load_words(string $lang): array {
     return $pools;
 }
 
+// Slots: N noun, V verb with an object, S verb on its own, A adjective (ES/PT: masculine|feminine,
+// counted by the length of its forms). F lists the feminine nouns. `plain` is the shape used
+// when "memorable" is off (3 words: noun-VERB-noun).
 function load_memo(string $lang): array {
     $src = (string)file_get_contents(dirname(__DIR__) . "/memo-$lang.js");
     preg_match('/order:\s*(\{[^}]*\})/', $src, $o);
-    $memo = ['order' => json_decode($o[1], true)];
-    foreach (['N', 'V', 'A'] as $c) {
-        preg_match('/\b' . $c . ':\s*`([^`]*)`/', $src, $m);
+    preg_match('/plain:\s*(\{[^}]*\})/', $src, $p);
+    $memo = ['order' => json_decode($o[1], true), 'plain' => $p ? json_decode($p[1], true) : [], 'F' => []];
+    foreach (['N', 'V', 'S', 'A'] as $c) {
         $memo[$c] = [];
-        foreach (preg_split('/\s+/', trim($m[1])) as $w) $memo[$c][mb_strlen($w)][] = $w;
+        if (!preg_match('/\b' . $c . ':\s*`([^`]*)`/', $src, $m)) continue;
+        foreach (preg_split('/\s+/', trim($m[1])) as $w) $memo[$c][mb_strlen(explode('|', $w)[0])][] = $w;
     }
+    if (preg_match('/\bF:\s*`([^`]*)`/', $src, $m)) foreach (preg_split('/\s+/', trim($m[1])) as $w) $memo['F'][$w] = true;
     return $memo;
 }
 
@@ -127,10 +132,10 @@ function generate_plain(array $pools, int $k, string $sep, bool $num, int $max, 
     return $pw;
 }
 
-// Memorable mode: words fill grammar slots (N noun, V verb, A adjective); a max length is
-// met by counting the combinations that fit, so every fitting combination is equally likely.
-function generate_memorable(array $memo, int $k, string $sep, bool $num, int $max, string $format): string {
-    $order = str_split($memo['order'][(string)$k]);
+// Memorable mode: words fill grammar slots (see load_memo); a max length is met by counting
+// the combinations that fit, so every fitting combination is equally likely.
+function generate_memorable(array $memo, string $shape, string $sep, bool $num, int $max, string $format): string {
+    $order = str_split($shape);
     $kk = count($order);
     $n = $num ? 1 : 0;
     $fixed = mb_strlen($sep) * ($kk - 1 + $n) + $n;
@@ -181,14 +186,27 @@ function generate_memorable(array $memo, int $k, string $sep, bool $num, int $ma
     }
     if ($dup) fail($format, 'could not build a password, try again', 503);
 
+    // An adjective agrees with the nearest noun before it (after, if there is none).
+    $tokens = $words;
+    foreach ($tokens as $i => $w) {
+        if (strpos($w, '|') === false) continue;
+        $noun = null;
+        for ($j = $i - 1; $j >= 0 && $noun === null; $j--) if ($order[$j] === 'N') $noun = $tokens[$j];
+        for ($j = $i + 1; $j < $kk && $noun === null; $j++) if ($order[$j] === 'N') $noun = $tokens[$j];
+        $words[$i] = explode('|', $w)[isset($memo['F'][$noun ?? '']) ? 1 : 0];
+    }
+
     foreach ($words as $i => $w) if ($i % 2) $words[$i] = mb_strtoupper($w);
     $pw = implode($sep, $words);
     if ($n) $pw .= $sep . random_int(0, 9);
     return $pw;
 }
 
-$password = $memorable
-    ? generate_memorable(load_memo($lang), $words, $sep, $number, $max, $format)
+// Off with 3 words is still a scene, noun-VERB-noun (as on the page); other counts are random site words.
+$memo = load_memo($lang);
+$shape = $memorable ? $memo['order'][(string)$words] : ($memo['plain'][(string)$words] ?? null);
+$password = $shape
+    ? generate_memorable($memo, $shape, $sep, $number, $max, $format)
     : generate_plain(load_words($lang), $words, $sep, $number, $max, $format);
 
 if ($format === 'json') {

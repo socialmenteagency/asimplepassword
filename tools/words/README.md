@@ -28,21 +28,35 @@ ls judge/*.prompt | xargs -P 8 -n 1 ./run2.sh
 
 ## "Make it memorable" pools
 
-Builds `site/memo-en.js`, `memo-es.js` and `memo-pt.js`: the site words split into nouns (N),
-verbs in their "she does" form (V: paints, pinta) and adjectives (A), so a password reads like
-a tiny sentence (`otter-PAINTS-moon-4`). The page fills grammar slots (EN `NVN`, `ANVN`, `ANVAN`;
-ES/PT `NVN`, `NAVN`, `NAVNA`, adjective after the noun) with uniform `crypto.getRandomValues` draws. No AI runs on the page.
+Builds `site/memo-en.js`, `memo-es.js` and `memo-pt.js` with `picture.py` (3-nov-2026): words you can
+picture, so a password reads like a tiny cartoon. Slots: N noun, V verb with an object (kicks, patea),
+S verb on its own (dances, baila), both in their "she does" form, and A adjective. In Spanish and
+Portuguese an adjective is stored as `masculine|feminine` (same length) and agrees with its noun;
+`F` lists the feminine nouns. The page fills the slots with uniform `crypto.getRandomValues` draws:
 
-1. **Tag** (`memo_prep.py` → `run2.sh`): a NaN model tags every site word as N, V and/or A in batches of 120.
-   Spanish and Portuguese adjectives must have one form for both genders (verde, feliz), so they fit any noun.
-   Batches that come back empty (provider content filter) are re-run split into 30-word pieces.
-2. **Vivid adjectives** (`build_memo.py --adj-prompts` → `run2.sh`): a second pass keeps adjectives that
-   paint a picture (fuzzy, loud) and drops administrative ones (annual, global).
-3. **Build** (`build_memo.py`): drops plurals whose singular is also a site word, blocklisted words,
-   and verb forms that aren't plain a–z (so no accented forms like `está`).
+| | 2 words | 3 words | 4 words | 5 words |
+|---|---|---|---|---|
+| EN, memorable | NS | ANS `brave-APPLE-dances` | ANVN | ANVAN |
+| ES/PT, memorable | NS | NAS `manzana-VALIENTE-baila` | NAVN | NAVNA |
+| memorable off | random | NVN `panda-KICKS-pizza` (`plain`) | random | random |
+
+1. **Generate** (`gen`): NaN `deepseek-v4-flash` lists concrete nouns (98 topics), visible actions
+   (32 topics, each marked "reads well alone" / "with an object") and vivid adjectives (24 topics), a–z only.
+2. **Rate** (`rate`): every candidate, plus the pools that were live before, gets a 1–5 picture score and a
+   spelling check (accent-stripped forms like `camion`, plurals and verb forms that read as nouns are "bad").
+   Kept: nouns scored 4–5 and verbs and adjectives 3–5 (stricter verbs and adjectives left pools too small to be
+   safe), "ok", 3–8 letters, known to wordfreq (nouns Zipf ≥ 2, verbs and adjectives ≥ 1.5), and in Spanish and
+   Portuguese not an accent-stripped spelling: if the word with one accent mark is clearly more common in wordfreq
+   (camion → camión, chapeu → chapéu), it is dropped.
+3. **Safety** (`safety`): `deepseek-v4-flash` and `glm5.3-flash` each list words that could offend or upset
+   (slang in any country, body, violence, illness, religion, labels, insults). A word either model lists is dropped;
+   `blocklist.txt` and `MEMO_DROP` still apply. Nobody reads the full lists (Rafael, 3-nov-2026): an odd pairing
+   is fixed by regenerating on the page. The dropped words are in `picture/flagged-*.txt`.
+4. **Build** (`build`): writes the memo files and `picture/report.json` (pool sizes and bits per shape).
+
+Answers are cached in `picture/` (gitignored), so re-running a stage makes no new calls.
 
 ```
-python3 memo_prep.py && ls memo/*.prompt | xargs -P 6 -n 1 ./run2.sh
-./venv/bin/python build_memo.py --adj-prompts && ls memo/adj-*.prompt | xargs -P 6 -n 1 ./run2.sh
-./venv/bin/python build_memo.py
+python3 -m venv venv && ./venv/bin/pip install wordfreq httpx   # nanclient lives in ~/.nan-jobs
+for s in gen rate safety build; do ./venv/bin/python picture.py $s; done
 ```
