@@ -38,7 +38,7 @@ Privacy, honestly: the page's generator runs in the visitor's browser and sends 
 
 ## Strength, honestly
 
-- Against an attacker who knows the method, the default (3 words + digit, "Make it memorable" on) has about 34 bits of entropy in English, 31 in Spanish and 30.5 in Portuguese: about 15 billion combinations in English, 2.5 billion in Spanish and 1.5 billion in Portuguese.
+- Against an attacker who knows the method, the default (3 words + digit, "Make it memorable" on) has about 34 bits of entropy in English, 31 in Spanish and 30.5 in Portuguese: about 15 billion combinations in English, 2 billion in Spanish and 1.5 billion in Portuguese.
 - With "Make it memorable" off, 3 words + digit (noun-VERB-noun) has about 34.5 bits in English, 32.5 in Spanish and 32 in Portuguese: about 25 billion combinations in English, 6 billion in Spanish and 4.6 billion in Portuguese.
 - 4 words with "Make it memorable" on: about 44 bits in English, 41 in Spanish and 40 in Portuguese.
 - That is much harder to guess than typical invented passwords (names, dates, phrases such as John131824 or Iamhappy2023). For email or banking, use 4 or 5 words, and a password manager.

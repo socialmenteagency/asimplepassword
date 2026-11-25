@@ -52,11 +52,15 @@ Portuguese an adjective is stored as `masculine|feminine` (same length) and agre
    (slang in any country, body, violence, illness, religion, labels, insults). A word either model lists is dropped;
    `blocklist.txt` and `MEMO_DROP` still apply. Nobody reads the full lists (Rafael, 3-nov-2026): an odd pairing
    is fixed by regenerating on the page. The dropped words are in `picture/flagged-*.txt`.
-4. **Build** (`build`): writes the memo files and `picture/report.json` (pool sizes and bits per shape).
+4. **Adjectives, ES/PT** (`adjcheck`, 24-nov-2026): NaN answers whether each masculine/feminine pair is a real
+   adjective that follows a noun directly. The first build had nouns (queso, sopa, tofu) and made-up feminine forms
+   (higo|higa) that read as broken Spanish (gato-TOFU-baila); 84 ES and 5 PT were dropped. English is not checked:
+   a noun before a noun is natural there (stone apple).
+5. **Build** (`build`): writes the memo files and `picture/report.json` (pool sizes and bits per shape).
 
 Answers are cached in `picture/` (gitignored), so re-running a stage makes no new calls.
 
 ```
 python3 -m venv venv && ./venv/bin/pip install wordfreq httpx   # nanclient lives in ~/.nan-jobs
-for s in gen rate safety build; do ./venv/bin/python picture.py $s; done
+for s in gen rate safety adjcheck build; do ./venv/bin/python picture.py $s; done
 ```

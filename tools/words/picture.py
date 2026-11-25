@@ -4,6 +4,7 @@
 #   python3 picture.py gen      NaN writes concrete nouns, verbs and adjectives by topic
 #   python3 picture.py rate     NaN rates every candidate (new words + the old memo pools)
 #   python3 picture.py safety   two models flag words that could offend or upset; either flag drops it
+#   python3 picture.py adjcheck ES/PT only: is each adjective pair a real adjective that follows a noun?
 #   python3 picture.py build    writes site/memo-{en,es,pt}.js and picture/report.json
 #
 # Every answer is cached in picture/<stage>/, so re-running a stage makes no new calls.
@@ -284,9 +285,44 @@ def survivors(lang):
         except (TypeError, IndexError, ValueError):
             ok = False
         if (ok and m not in block and f not in block and min(zipf(m, lang), zipf(f, lang)) >= FLOOR['A']
-                and not stripped(m, lang) and not stripped(f, lang)):
+                and not stripped(m, lang) and not stripped(f, lang) and adjective_ok(lang, m)):
             out['A'][m] = f
     return out
+
+
+# 24-nov-2026: the ES/PT adjective lists had nouns (queso, sopa, tofu) and made-up feminine forms
+# (higo|higa, caldo|calda), which read as broken Spanish (gato-TOFU-baila). English is left alone:
+# a noun before a noun is natural there (stone apple).
+ADJCHECK = ('These are {name} words proposed as ADJECTIVES for passwords like "gato-DORMIDO-baila": a noun, then an '
+            'adjective that agrees with it, then a verb. Each item is masculine/feminine. Answer 1 if BOTH forms are '
+            'real, correctly spelled adjectives that can follow a noun directly (un gato dormido, una pizza dormida); '
+            'colors used that way count (un gato rosa, una pizza azul). Answer 0 if it is really a noun (queso, sopa, '
+            'tofu, piedra), the feminine form is wrong or made up (higo/higa), or it needs "de" to describe a thing. '
+            'Answer JSON only, keyed by the masculine form, every item once: {{"word": 1, ...}}\nItems: {items}')
+
+
+def adjcheck():
+    tasks = []
+    for lang, name in LANGS.items():
+        if lang == 'en': continue
+        _, _, A = candidates(lang)
+        items = [f'{m}/{A[m]}' for m in sorted(A)]
+        for i in range(0, len(items), 100):
+            tasks.append((f'adjcheck/{lang}-{i // 100:03d}', ADJCHECK.format(name=name, items=' '.join(items[i:i + 100]))))
+        print(lang, len(items), flush=True)
+    pmap(lambda t: ask(t[0], t[1]), tasks, workers=5)
+
+
+_ADJ = {}
+def adjective_ok(lang, m):
+    """ES/PT: kept only if the adjcheck pass answered 1 (no answer yet: kept, so older builds still run)."""
+    if lang == 'en': return True
+    if lang not in _ADJ:
+        _ADJ[lang] = {}
+        for f in glob.glob(f'{OUT}/adjcheck/{lang}-*.json'):
+            for k, v in json.load(open(f)).items(): _ADJ[lang][k.strip().lower().split('/')[0]] = v
+    v = _ADJ[lang].get(m)
+    return v is None or str(v) == '1'
 
 
 SAFETY = ('These {name} words may appear in random passwords like "brave-APPLE-dances". Rate EVERY word 0-3 for how '
@@ -376,4 +412,4 @@ def build():
 
 
 if __name__ == '__main__':
-    {'gen': gen, 'rate': rate, 'safety': safety, 'build': build}[sys.argv[1]]()
+    {'gen': gen, 'rate': rate, 'safety': safety, 'adjcheck': adjcheck, 'build': build}[sys.argv[1]]()
